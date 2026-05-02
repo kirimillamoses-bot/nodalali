@@ -209,13 +209,15 @@ document.querySelectorAll('.tab').forEach(tab => {
 
 // ============== STUDENT HOUSING ==============
 const CAMPUSES = [
-  // ── DAR ES SALAAM (15) ──
+  // ── DAR ES SALAAM (22) ──
   { id: 'udsm',     name: 'UDSM (Mlimani)',                 city: 'Dar es Salaam', area: 'Mlimani',          lat: -6.7787, lng: 39.2106, color: '#dc2626', icon: '🏛️' },
   { id: 'ardhi',    name: 'Ardhi University (ARU)',          city: 'Dar es Salaam', area: 'Ubungo',           lat: -6.7720, lng: 39.2092, color: '#0f766e', icon: '🏗️' },
   { id: 'muhas',    name: 'MUHAS',                          city: 'Dar es Salaam', area: 'Upanga',           lat: -6.8085, lng: 39.2814, color: '#7c3aed', icon: '⚕️' },
   { id: 'ifm',      name: 'IFM',                            city: 'Dar es Salaam', area: 'Shaaban Robert',   lat: -6.8120, lng: 39.2890, color: '#1e40af', icon: '💼' },
   { id: 'out',      name: 'Open University (OUT)',           city: 'Dar es Salaam', area: 'Kinondoni',        lat: -6.7720, lng: 39.2390, color: '#0891b2', icon: '📖' },
   { id: 'duce',     name: 'DUCE',                           city: 'Dar es Salaam', area: 'Chang\'ombe',       lat: -6.8400, lng: 39.2700, color: '#be185d', icon: '🎓' },
+  { id: 'dit',      name: 'DIT (Inst of Technology)',        city: 'Dar es Salaam', area: 'Bibi Titi',        lat: -6.8170, lng: 39.2780, color: '#1d4ed8', icon: '🔧' },
+  { id: 'tudarco',  name: 'TUDARCo (Tumaini Dar)',           city: 'Dar es Salaam', area: 'Mikocheni',        lat: -6.7700, lng: 39.2580, color: '#0f766e', icon: '⛪' },
   { id: 'kiu-dar',  name: 'KIU Dar es Salaam',              city: 'Dar es Salaam', area: 'Mikocheni',        lat: -6.7600, lng: 39.2540, color: '#ea580c', icon: '🌍' },
   { id: 'hkmu',     name: 'Hubert Kairuki Memorial Univ',    city: 'Dar es Salaam', area: 'Mikocheni',        lat: -6.7640, lng: 39.2560, color: '#9333ea', icon: '⚕️' },
   { id: 'imtu',     name: 'IMTU',                           city: 'Dar es Salaam', area: 'Mbweni',           lat: -6.6800, lng: 39.1800, color: '#16a34a', icon: '⚕️' },
@@ -225,23 +227,39 @@ const CAMPUSES = [
   { id: 'tia-dar',  name: 'Tanzania Institute of Acc (TIA)', city: 'Dar es Salaam', area: 'Bibi Titi',        lat: -6.8120, lng: 39.2790, color: '#a16207', icon: '📊' },
   { id: 'cbe-dar',  name: 'CBE Dar es Salaam',              city: 'Dar es Salaam', area: 'Bibi Titi',        lat: -6.8170, lng: 39.2810, color: '#be185d', icon: '💼' },
   { id: 'iaa-dar',  name: 'IAA Dar Centre',                 city: 'Dar es Salaam', area: 'Posta',            lat: -6.8150, lng: 39.2895, color: '#9a3412', icon: '📊' },
+  { id: 'tpsc',     name: 'TPSC (Public Service College)',   city: 'Dar es Salaam', area: 'Magogoni',         lat: -6.8200, lng: 39.2920, color: '#dc2626', icon: '🏛️' },
+  { id: 'mzumbe-dar',name:'Mzumbe University Dar Campus',   city: 'Dar es Salaam', area: 'Mbezi',            lat: -6.7100, lng: 39.1700, color: '#0891b2', icon: '📚' },
+  { id: 'tsj',      name: 'Tanzania School of Journalism',   city: 'Dar es Salaam', area: 'Kinondoni',        lat: -6.7780, lng: 39.2470, color: '#dc2626', icon: '📰' },
+  { id: 'esami',    name: 'ESAMI',                          city: 'Dar es Salaam', area: 'Mwanjelwa',        lat: -6.7900, lng: 39.2280, color: '#16a34a', icon: '💼' },
+  { id: 'cfr',      name: 'CFR (Foreign Relations)',         city: 'Dar es Salaam', area: 'Kurasini',         lat: -6.8550, lng: 39.2720, color: '#1e40af', icon: '🌍' },
+  { id: 'veta-dar', name: 'VETA Chang\'ombe',                city: 'Dar es Salaam', area: 'Chang\'ombe',       lat: -6.8430, lng: 39.2680, color: '#a16207', icon: '🔨' },
 
-  // ── DODOMA (4) ──
+  // ── DODOMA (6) ──
   { id: 'udom',     name: 'UDOM (University of Dodoma)',     city: 'Dodoma',        area: 'Chimwaga',         lat: -6.1881, lng: 35.7900, color: '#f59e0b', icon: '🏛️' },
   { id: 'cbe-dod',  name: 'CBE Dodoma',                     city: 'Dodoma',        area: 'CBE',              lat: -6.1714, lng: 35.7401, color: '#be185d', icon: '💼' },
   { id: 'irdp',     name: 'IRDP (Rural Development)',        city: 'Dodoma',        area: 'Nala',             lat: -6.1530, lng: 35.7510, color: '#16a34a', icon: '🌱' },
   { id: 'sjut',     name: "St John's University (SJUT)",     city: 'Dodoma',        area: 'Mlimwa',           lat: -6.1640, lng: 35.7270, color: '#7c2d12', icon: '✝️' },
+  { id: 'lita-dod', name: 'LITA Dodoma',                    city: 'Dodoma',        area: 'Mpwapwa Rd',       lat: -6.1860, lng: 35.7600, color: '#16a34a', icon: '🐄' },
+  { id: 'veta-dod', name: 'VETA Dodoma',                    city: 'Dodoma',        area: 'Veta',             lat: -6.1620, lng: 35.7580, color: '#dc2626', icon: '🔨' },
 
-  // ── MOROGORO (3) ──
+  // ── MOROGORO (5) ──
   { id: 'sua',      name: 'SUA (Sokoine Agriculture)',       city: 'Morogoro',      area: 'Mazimbu',          lat: -6.8489, lng: 37.6597, color: '#16a34a', icon: '🌾' },
   { id: 'mzumbe',   name: 'Mzumbe University',              city: 'Morogoro',      area: 'Mzumbe',           lat: -6.9128, lng: 37.4769, color: '#0891b2', icon: '📚' },
   { id: 'jordan',   name: 'Jordan University College',       city: 'Morogoro',      area: 'Morogoro',         lat: -6.8240, lng: 37.6610, color: '#a855f7', icon: '🎓' },
+  { id: 'mmuc',     name: 'Morogoro Muslim University',     city: 'Morogoro',      area: 'Mji Mkuu',         lat: -6.8200, lng: 37.6620, color: '#16a34a', icon: '☪️' },
+  { id: 'veta-mor', name: 'VETA Morogoro',                  city: 'Morogoro',      area: 'Kihonda',          lat: -6.8500, lng: 37.6850, color: '#dc2626', icon: '🔨' },
 
-  // ── ARUSHA (4) ──
+  // ── ARUSHA (10) ──
   { id: 'nm-aist',  name: 'NM-AIST (Mandela Institute)',     city: 'Arusha',        area: 'Tengeru',          lat: -3.3914, lng: 36.7965, color: '#dc2626', icon: '🔬' },
   { id: 'makumira', name: 'Tumaini Univ Makumira',          city: 'Arusha',        area: 'Makumira',         lat: -3.3650, lng: 36.8030, color: '#0f766e', icon: '⛪' },
-  { id: 'iaa',      name: 'IAA (Inst of Accountancy)',       city: 'Arusha',        area: 'Njiro',            lat: -3.4050, lng: 36.7050, color: '#9a3412', icon: '📊' },
+  { id: 'iaa',      name: 'IAA Arusha',                      city: 'Arusha',        area: 'Njiro',            lat: -3.4050, lng: 36.7050, color: '#9a3412', icon: '📊' },
   { id: 'ua',       name: 'University of Arusha',            city: 'Arusha',        area: 'Usa River',        lat: -3.3700, lng: 36.8550, color: '#0e7490', icon: '🎓' },
+  { id: 'atc',      name: 'ATC (Arusha Technical College)',   city: 'Arusha',        area: 'Themi',            lat: -3.3760, lng: 36.6920, color: '#1d4ed8', icon: '🔧' },
+  { id: 'patandi',  name: 'Patandi Teachers\' College',       city: 'Arusha',        area: 'Patandi',          lat: -3.3850, lng: 36.7800, color: '#7c3aed', icon: '🎓' },
+  { id: 'cuea-aru', name: 'CUEA Arusha Campus',              city: 'Arusha',        area: 'Sakina',           lat: -3.3680, lng: 36.6820, color: '#7c2d12', icon: '✝️' },
+  { id: 'veta-aru', name: 'VETA Arusha',                     city: 'Arusha',        area: 'Oljoro',           lat: -3.3950, lng: 36.7220, color: '#a16207', icon: '🔨' },
+  { id: 'mtkili',   name: 'Mt Kilimanjaro University',       city: 'Arusha',        area: 'Tengeru',          lat: -3.3900, lng: 36.8000, color: '#0891b2', icon: '⛰️' },
+  { id: 'iccs-aru', name: 'ICCS Arusha',                     city: 'Arusha',        area: 'Arusha CBD',       lat: -3.3680, lng: 36.6900, color: '#9333ea', icon: '💻' },
 
   // ── MOSHI / KILIMANJARO (12) ──
   { id: 'kcmc',     name: 'KCMUCo (Christian Medical)',      city: 'Moshi',         area: 'KCMC',             lat: -3.3520, lng: 37.3360, color: '#7c3aed', icon: '⚕️' },
@@ -257,27 +275,71 @@ const CAMPUSES = [
   { id: 'sjtc-mos', name: "St Joseph Teachers' College",     city: 'Moshi',         area: 'Old Moshi',        lat: -3.3120, lng: 37.3680, color: '#7c2d12', icon: '🎓' },
   { id: 'veta-kil', name: 'VETA Kilimanjaro',                city: 'Moshi',         area: 'Pasua',            lat: -3.3700, lng: 37.3580, color: '#a16207', icon: '🔨' },
 
-  // ── MWANZA (3) ──
+  // ── MWANZA (8) ──
   { id: 'saut',     name: 'SAUT (St Augustine)',            city: 'Mwanza',        area: 'Malimbe',          lat: -2.5350, lng: 32.9180, color: '#7c2d12', icon: '✝️' },
   { id: 'bugando',  name: 'CUHAS Bugando',                  city: 'Mwanza',        area: 'Bugando',          lat: -2.5160, lng: 32.9050, color: '#7c3aed', icon: '⚕️' },
   { id: 'kiu-mw',   name: 'KIU Mwanza',                     city: 'Mwanza',        area: 'Mwanza',           lat: -2.5180, lng: 32.9220, color: '#ea580c', icon: '🌍' },
+  { id: 'mwanza-poly',name:'Mwanza Polytechnic',            city: 'Mwanza',        area: 'Nyegezi',          lat: -2.5750, lng: 32.9050, color: '#1d4ed8', icon: '🔧' },
+  { id: 'tia-mw',   name: 'TIA Mwanza',                     city: 'Mwanza',        area: 'Pamba Rd',         lat: -2.5170, lng: 32.9080, color: '#a16207', icon: '📊' },
+  { id: 'veta-mw',  name: 'VETA Mwanza',                    city: 'Mwanza',        area: 'Nyegezi',          lat: -2.5780, lng: 32.9020, color: '#dc2626', icon: '🔨' },
+  { id: 'mw-health',name: 'Mwanza College of Health Sciences',city: 'Mwanza',      area: 'Bugando',          lat: -2.5170, lng: 32.9070, color: '#0d9488', icon: '⚕️' },
+  { id: 'cu-mw',    name: 'Catholic University Mwanza',     city: 'Mwanza',        area: 'Igoma',            lat: -2.4980, lng: 32.9320, color: '#7c2d12', icon: '✝️' },
 
-  // ── MBEYA (2) ──
+  // ── MBEYA (5) ──
   { id: 'must',     name: 'MUST (Science & Tech)',          city: 'Mbeya',         area: 'Iyunga',           lat: -8.9090, lng: 33.4540, color: '#1e40af', icon: '🔬' },
   { id: 'teku',     name: 'Teofilo Kisanji University',     city: 'Mbeya',         area: 'Mbeya',            lat: -8.9050, lng: 33.4470, color: '#a855f7', icon: '🎓' },
+  { id: 'tukuyu-tc',name: 'Tukuyu Teachers\' College',      city: 'Mbeya',         area: 'Tukuyu',           lat: -9.2500, lng: 33.6500, color: '#7c3aed', icon: '🎓' },
+  { id: 'veta-mbe', name: 'VETA Mbeya',                     city: 'Mbeya',         area: 'Iyunga',           lat: -8.9120, lng: 33.4520, color: '#dc2626', icon: '🔨' },
+  { id: 'mbe-iat',  name: 'Mbeya Inst of Sci & Tech',       city: 'Mbeya',         area: 'Mbeya',            lat: -8.9000, lng: 33.4500, color: '#1d4ed8', icon: '🔧' },
 
-  // ── IRINGA (3) ──
+  // ── IRINGA (5) ──
   { id: 'muce',     name: 'MUCE (Mkwawa Education)',        city: 'Iringa',        area: 'Mkwawa',           lat: -7.7700, lng: 35.6900, color: '#0891b2', icon: '📚' },
   { id: 'rucu',     name: 'RUCU (Ruaha Catholic)',          city: 'Iringa',        area: 'Iringa',           lat: -7.7660, lng: 35.6950, color: '#7c2d12', icon: '✝️' },
   { id: 'uoi',      name: 'University of Iringa',            city: 'Iringa',        area: 'Iringa',           lat: -7.7700, lng: 35.7000, color: '#0f766e', icon: '🎓' },
+  { id: 'veta-iri', name: 'VETA Iringa',                    city: 'Iringa',        area: 'Iringa',           lat: -7.7800, lng: 35.6850, color: '#dc2626', icon: '🔨' },
+  { id: 'iringa-tc',name: 'Iringa Teachers\' College',      city: 'Iringa',        area: 'Mkwawa',           lat: -7.7720, lng: 35.6920, color: '#a855f7', icon: '🎓' },
 
-  // ── TANGA / LUSHOTO (2) ──
+  // ── TANGA / LUSHOTO (6) ──
   { id: 'sekomu',   name: 'SEKOMU (Sebastian Kolowa)',      city: 'Tanga',         area: 'Lushoto',          lat: -4.7900, lng: 38.2810, color: '#16a34a', icon: '⛪' },
   { id: 'eckernfor',name: 'Eckernforde Tanga University',   city: 'Tanga',         area: 'Tanga',            lat: -5.0700, lng: 39.0980, color: '#0e7490', icon: '🌊' },
+  { id: 'korogwe-tc',name:'Korogwe Teachers\' College',     city: 'Tanga',         area: 'Korogwe',          lat: -5.1500, lng: 38.4830, color: '#7c2d12', icon: '🎓' },
+  { id: 'lushoto-tc',name:'Lushoto Teachers\' College',     city: 'Tanga',         area: 'Lushoto',          lat: -4.7860, lng: 38.2790, color: '#a16207', icon: '🎓' },
+  { id: 'tanga-iat',name: 'Tanga Institute of Accountancy',  city: 'Tanga',         area: 'Tanga CBD',        lat: -5.0680, lng: 39.0950, color: '#9a3412', icon: '📊' },
+  { id: 'veta-tng', name: 'VETA Tanga',                     city: 'Tanga',         area: 'Mwakidila',        lat: -5.0830, lng: 39.0780, color: '#dc2626', icon: '🔨' },
 
-  // ── ZANZIBAR (2) ──
+  // ── BUKOBA / KAGERA (5) ──
+  { id: 'st-anthony',name:'St Anthony of Padua University', city: 'Bukoba',        area: 'Kagondo',          lat: -1.3300, lng: 31.8200, color: '#7c2d12', icon: '✝️' },
+  { id: 'kagera-poly',name:'Kagera Polytechnic',            city: 'Bukoba',        area: 'Bukoba',           lat: -1.3320, lng: 31.8120, color: '#1d4ed8', icon: '🔧' },
+  { id: 'bukoba-tc',name: 'Bukoba Teachers\' College',      city: 'Bukoba',        area: 'Kashai',           lat: -1.3450, lng: 31.8270, color: '#7c3aed', icon: '🎓' },
+  { id: 'cu-bukoba',name: 'Catholic University Bukoba',     city: 'Bukoba',        area: 'Nyakato',          lat: -1.3180, lng: 31.8050, color: '#7c2d12', icon: '✝️' },
+  { id: 'veta-buk', name: 'VETA Bukoba',                    city: 'Bukoba',        area: 'Bukoba',           lat: -1.3370, lng: 31.8130, color: '#dc2626', icon: '🔨' },
+
+  // ── SONGEA / RUVUMA (3) ──
+  { id: 'peramiho', name: 'Peramiho Major Seminary',         city: 'Songea',        area: 'Peramiho',         lat: -10.5630, lng: 35.4280, color: '#7c2d12', icon: '⛪' },
+  { id: 'songea-tc',name: 'Songea Teachers\' College',      city: 'Songea',        area: 'Songea',           lat: -10.6850, lng: 35.6520, color: '#a855f7', icon: '🎓' },
+  { id: 'veta-songea',name:'VETA Songea',                  city: 'Songea',        area: 'Mletele',          lat: -10.6750, lng: 35.6480, color: '#dc2626', icon: '🔨' },
+
+  // ── MTWARA / LINDI (3) ──
+  { id: 'stella-maris',name:'Stella Maris Mtwara University',city:'Mtwara',        area: 'Mikindani',        lat: -10.2680, lng: 40.1080, color: '#7c2d12', icon: '⛪' },
+  { id: 'mtwara-tc',name: 'Mtwara Teachers\' College',      city: 'Mtwara',        area: 'Mtwara',           lat: -10.2630, lng: 40.1850, color: '#a855f7', icon: '🎓' },
+  { id: 'veta-mtw', name: 'VETA Mtwara',                    city: 'Mtwara',        area: 'Mtwara',           lat: -10.2750, lng: 40.1820, color: '#dc2626', icon: '🔨' },
+
+  // ── KIGOMA / TABORA / SUMBAWANGA (4) ──
+  { id: 'kigoma-tc',name: 'Kigoma Teachers\' College',      city: 'Kigoma',        area: 'Kigoma',           lat: -4.8770, lng: 29.6260, color: '#a855f7', icon: '🎓' },
+  { id: 'veta-kig', name: 'VETA Kigoma',                    city: 'Kigoma',        area: 'Kigoma',           lat: -4.8830, lng: 29.6320, color: '#dc2626', icon: '🔨' },
+  { id: 'tabora-tc',name: 'Tabora Teachers\' College',      city: 'Tabora',        area: 'Tabora',           lat: -5.0150, lng: 32.8050, color: '#7c3aed', icon: '🎓' },
+  { id: 'veta-sum', name: 'VETA Sumbawanga',                city: 'Sumbawanga',    area: 'Sumbawanga',       lat: -7.9650, lng: 31.6120, color: '#a16207', icon: '🔨' },
+
+  // ── SINGIDA / MANYARA (2) ──
+  { id: 'veta-sin', name: 'VETA Singida',                   city: 'Singida',       area: 'Singida',          lat: -4.8170, lng: 34.7470, color: '#dc2626', icon: '🔨' },
+  { id: 'veta-many',name: 'VETA Manyara',                   city: 'Babati',        area: 'Babati',           lat: -4.2120, lng: 35.7480, color: '#a16207', icon: '🔨' },
+
+  // ── ZANZIBAR (5) ──
   { id: 'suza',     name: 'SUZA (State Univ Zanzibar)',     city: 'Zanzibar',      area: 'Tunguu',           lat: -6.2570, lng: 39.2680, color: '#dc2626', icon: '🏛️' },
-  { id: 'zu',       name: 'Zanzibar University',            city: 'Zanzibar',      area: 'Tunguu',           lat: -6.2580, lng: 39.2710, color: '#0d9488', icon: '🎓' }
+  { id: 'zu',       name: 'Zanzibar University',            city: 'Zanzibar',      area: 'Tunguu',           lat: -6.2580, lng: 39.2710, color: '#0d9488', icon: '🎓' },
+  { id: 'sumait',   name: 'SUMAIT University',              city: 'Zanzibar',      area: 'Chukwani',         lat: -6.2230, lng: 39.2050, color: '#16a34a', icon: '☪️' },
+  { id: 'znz-edu',  name: 'Zanzibar Institute of Education', city: 'Zanzibar',      area: 'Beit el-Ras',      lat: -6.1450, lng: 39.1850, color: '#7c3aed', icon: '🎓' },
+  { id: 'veta-znz', name: 'VETA Zanzibar',                  city: 'Zanzibar',      area: 'Mtoni',            lat: -6.1380, lng: 39.1980, color: '#dc2626', icon: '🔨' }
 ];
 
 let activeCity = 'all';
