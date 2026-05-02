@@ -243,11 +243,19 @@ const CAMPUSES = [
   { id: 'iaa',      name: 'IAA (Inst of Accountancy)',       city: 'Arusha',        area: 'Njiro',            lat: -3.4050, lng: 36.7050, color: '#9a3412', icon: '📊' },
   { id: 'ua',       name: 'University of Arusha',            city: 'Arusha',        area: 'Usa River',        lat: -3.3700, lng: 36.8550, color: '#0e7490', icon: '🎓' },
 
-  // ── MOSHI / KILIMANJARO (4) ──
-  { id: 'kcmc',     name: 'KCMC (Christian Medical)',        city: 'Moshi',         area: 'Moshi',            lat: -3.3520, lng: 37.3360, color: '#7c3aed', icon: '⚕️' },
+  // ── MOSHI / KILIMANJARO (12) ──
+  { id: 'kcmc',     name: 'KCMUCo (Christian Medical)',      city: 'Moshi',         area: 'KCMC',             lat: -3.3520, lng: 37.3360, color: '#7c3aed', icon: '⚕️' },
   { id: 'mocu',     name: 'MoCU (Co-operative)',            city: 'Moshi',         area: 'Sokoine Rd',       lat: -3.3475, lng: 37.3380, color: '#16a34a', icon: '💰' },
-  { id: 'stefano',  name: 'Stefano Moshi Memorial',         city: 'Moshi',         area: 'Mawenzi',          lat: -3.3650, lng: 37.3250, color: '#a16207', icon: '⛪' },
   { id: 'mwecau',   name: 'Mwenge Catholic University',     city: 'Moshi',         area: 'Mwenge',           lat: -3.3540, lng: 37.3420, color: '#7c2d12', icon: '✝️' },
+  { id: 'stefano',  name: 'Stefano Moshi Memorial Univ',     city: 'Moshi',         area: 'Mawenzi',          lat: -3.3650, lng: 37.3250, color: '#a16207', icon: '⛪' },
+  { id: 'ksp',      name: 'Kilimanjaro School of Pharmacy',  city: 'Moshi',         area: 'Sango',            lat: -3.3380, lng: 37.3450, color: '#ec4899', icon: '💊' },
+  { id: 'kicom',    name: 'KICoM (Comm Med Centre)',        city: 'Moshi',         area: 'Kibong\'oto',       lat: -3.3010, lng: 37.0240, color: '#0e7490', icon: '⚕️' },
+  { id: 'kit',      name: 'Kilimanjaro Inst of Technology',  city: 'Moshi',         area: 'Karanga',          lat: -3.3780, lng: 37.3120, color: '#1d4ed8', icon: '🔧' },
+  { id: 'kith',     name: 'KITH (Tourism & Hospitality)',    city: 'Moshi',         area: 'Moshi Town',       lat: -3.3490, lng: 37.3320, color: '#0891b2', icon: '🏨' },
+  { id: 'tcdc',     name: 'Tengeru Inst Comm Dev (TICD)',    city: 'Moshi',         area: 'Tengeru',          lat: -3.3914, lng: 36.9070, color: '#16a34a', icon: '🌱' },
+  { id: 'out-mos',  name: 'OUT Moshi Centre',               city: 'Moshi',         area: 'Moshi Town',       lat: -3.3500, lng: 37.3400, color: '#0891b2', icon: '📖' },
+  { id: 'sjtc-mos', name: "St Joseph Teachers' College",     city: 'Moshi',         area: 'Old Moshi',        lat: -3.3120, lng: 37.3680, color: '#7c2d12', icon: '🎓' },
+  { id: 'veta-kil', name: 'VETA Kilimanjaro',                city: 'Moshi',         area: 'Pasua',            lat: -3.3700, lng: 37.3580, color: '#a16207', icon: '🔨' },
 
   // ── MWANZA (3) ──
   { id: 'saut',     name: 'SAUT (St Augustine)',            city: 'Mwanza',        area: 'Malimbe',          lat: -2.5350, lng: 32.9180, color: '#7c2d12', icon: '✝️' },
