@@ -239,8 +239,76 @@ function renderCampuses() {
 function selectCampus(id) {
   activeCampus = CAMPUSES.find(c => c.id === id);
   renderCampuses();
+  setTimeout(renderCampusMap, 100);
 }
 window.selectCampus = selectCampus;
+
+let campusMapInstance = null;
+let campusMapMarkers = [];
+
+function renderCampusMap() {
+  if (!activeCampus) return;
+  const el = document.getElementById('campusMap');
+  el.classList.add('active');
+
+  if (!campusMapInstance) {
+    campusMapInstance = L.map('campusMap').setView([activeCampus.lat, activeCampus.lng], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '© OpenStreetMap'
+    }).addTo(campusMapInstance);
+  } else {
+    campusMapInstance.invalidateSize();
+    campusMapInstance.setView([activeCampus.lat, activeCampus.lng], 14);
+  }
+
+  campusMapMarkers.forEach(m => campusMapInstance.removeLayer(m));
+  campusMapMarkers = [];
+
+  // Campus marker (big, distinctive)
+  const campusIcon = L.divIcon({
+    className: 'campus-pin',
+    html: activeCampus.icon,
+    iconSize: [38, 38]
+  });
+  const campusMarker = L.marker([activeCampus.lat, activeCampus.lng], { icon: campusIcon })
+    .addTo(campusMapInstance)
+    .bindPopup(`<strong>${activeCampus.name}</strong><br><small>${activeCampus.area}, ${activeCampus.city}</small>`)
+    .openPopup();
+  campusMapMarkers.push(campusMarker);
+
+  // Nearby house markers
+  const nearby = allListings
+    .filter(l => l.lat && l.lng && l.city === activeCampus.city)
+    .map(l => ({ ...l, _distance: distanceKm(activeCampus.lat, activeCampus.lng, l.lat, l.lng) }))
+    .filter(l => l._distance <= 8);
+
+  nearby.forEach(l => {
+    const priceShort = l.price >= 1000000
+      ? (l.price / 1000000).toFixed(1) + 'M'
+      : Math.round(l.price / 1000) + 'k';
+    const icon = L.divIcon({
+      className: 'price-marker',
+      html: `TZS ${priceShort}`,
+      iconSize: null
+    });
+    const marker = L.marker([l.lat, l.lng], { icon }).addTo(campusMapInstance);
+    marker.bindPopup(`
+      <div style="min-width:180px">
+        <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
+        <strong>${l.title}</strong><br>
+        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price)}</span><br>
+        <span class="dist-badge">${l._distance.toFixed(1)} km</span><br>
+        <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
+      </div>
+    `);
+    campusMapMarkers.push(marker);
+  });
+
+  if (campusMapMarkers.length > 1) {
+    const group = L.featureGroup(campusMapMarkers);
+    campusMapInstance.fitBounds(group.getBounds().pad(0.15));
+  }
+}
 
 function distanceKm(lat1, lng1, lat2, lng2) {
   const R = 6371;

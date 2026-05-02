@@ -6,6 +6,8 @@
   <title>Nyumba za Wanafunzi — Nodalali</title>
   <meta name="description" content="Pata chumba au self contained karibu na UDSM, Ardhi, IFM, MUHAS, UDOM, SUA, Mzumbe. Bei nafuu, hakuna dalali." />
   <link rel="icon" href="icon-192.png" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; color: #0f172a; }
@@ -68,6 +70,12 @@
       <div class="stat"><div class="stat-num">0%</div><div>Commission</div></div>
     </div>
   </section>
+
+  <div class="container">
+    <h2>🗺️ Ramani Hai ya Vyuo TZ</h2>
+    <p style="text-align:center;color:#64748b;margin-bottom:20px">Bonyeza chuo kuona nyumba zilizopo karibu</p>
+    <div id="liveMap" style="height:500px;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:30px"></div>
+  </div>
 
   <div class="container">
     <h2>Vyuo Tunavyofunika</h2>
@@ -175,5 +183,41 @@
     </p>
     <p style="margin-top:20px;opacity:.6">© 2026 Nodalali — Pangisha bila Dalali</p>
   </footer>
+
+  <script>
+    const CAMPUSES = [
+      { name: 'UDSM (Mlimani)', area: 'Mlimani, Dar', lat: -6.7787, lng: 39.2106, icon: '🏛️', color: '#dc2626' },
+      { name: 'Ardhi University', area: 'Ubungo, Dar', lat: -6.7720, lng: 39.2092, icon: '🏗️', color: '#0f766e' },
+      { name: 'IFM', area: 'Shaaban Robert, Dar', lat: -6.8120, lng: 39.2890, icon: '💼', color: '#1e40af' },
+      { name: 'MUHAS', area: 'Upanga, Dar', lat: -6.8085, lng: 39.2814, icon: '⚕️', color: '#7c3aed' },
+      { name: 'SUA', area: 'Mazimbu, Morogoro', lat: -6.8489, lng: 37.6597, icon: '🌾', color: '#16a34a' },
+      { name: 'UDOM', area: 'Chimwaga, Dodoma', lat: -6.1881, lng: 35.7900, icon: '🏛️', color: '#f59e0b' },
+      { name: 'Mzumbe University', area: 'Mzumbe, Morogoro', lat: -6.9128, lng: 37.4769, icon: '📚', color: '#0891b2' },
+      { name: 'CBE Dodoma', area: 'CBE, Dodoma', lat: -6.1714, lng: 35.7401, icon: '💼', color: '#be185d' }
+    ];
+    const map = L.map('liveMap').setView([-6.5, 37.5], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18, attribution: '© OpenStreetMap'
+    }).addTo(map);
+    const markers = [];
+    CAMPUSES.forEach(c => {
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="background:#fff;border:3px solid ${c.color};border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 3px 10px rgba(0,0,0,.3)">${c.icon}</div>`,
+        iconSize: [42, 42]
+      });
+      const m = L.marker([c.lat, c.lng], { icon }).addTo(map);
+      m.bindPopup(`
+        <div style="min-width:160px;text-align:center">
+          <strong style="color:${c.color};font-size:16px">${c.name}</strong><br>
+          <small>${c.area}</small><br>
+          <a href="/?tab=students" style="display:inline-block;margin-top:8px;background:${c.color};color:#fff;padding:6px 12px;border-radius:14px;text-decoration:none;font-weight:700;font-size:12px">Pata Nyumba →</a>
+        </div>
+      `);
+      markers.push(m);
+    });
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.2));
+  </script>
 </body>
 </html>

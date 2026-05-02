@@ -386,6 +386,29 @@ main { padding: 16px; }
 .campus-name { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 2px; }
 .campus-city { font-size: 11px; color: var(--muted); }
 
+.campus-map {
+  width: 100%;
+  height: 380px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  display: none;
+}
+.campus-map.active { display: block; }
+
+.campus-pin {
+  background: #fff;
+  border: 3px solid #dc2626;
+  border-radius: 50%;
+  width: 38px !important;
+  height: 38px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,.4);
+}
+
 .dist-badge {
   background: #dcfce7;
   color: #166534;
