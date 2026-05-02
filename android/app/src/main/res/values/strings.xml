@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Nodalali</string>
+    <string name="title_activity_main">Nodalali</string>
+    <string name="package_name">tz.nodalali.app</string>
+    <string name="custom_url_scheme">tz.nodalali.app</string>
+</resources>

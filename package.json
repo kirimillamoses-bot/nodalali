@@ -1,0 +1,20 @@
+{
+  "name": "nodalali",
+  "version": "1.0.0",
+  "description": "Tanzania house hunting without dalali — direct landlord to tenant",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npx serve -s . -l 3000",
+    "build": "mkdir -p www && cp index.html style.css script.js manifest.json firebase-config.js icon.svg sw.js www/ && npx cap sync android",
+    "open:android": "npx cap open android",
+    "apk": "npm run build && cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/cli": "^8.3.1",
+    "@capacitor/core": "^8.3.1",
+    "express": "^5.2.1",
+    "node-fetch": "^2.7.0",
+    "serve": "^14.2.3"
+  }
+}

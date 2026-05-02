@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function str(s, max) { return s is string && s.size() >= 1 && s.size() <= max; }
+    function strOpt(s, max) { return s == null || (s is string && s.size() <= max); }
+    function validPhone(p) { return p is string && p.matches('^255[67][0-9]{8}$'); }
+    function validPrice(n) { return n is number && n > 0 && n <= 999999999; }
+    function validCity(c) {
+      return c in ['Dar es Salaam','Arusha','Mwanza','Dodoma','Mbeya',
+                   'Zanzibar','Morogoro','Tanga','Iringa','Kigoma','Tabora','Moshi'];
+    }
+    function validType(t) { return t in ['house','apartment','room','self','commercial']; }
+    function noHtml(s) { return !(s.matches('.*<[^>]+>.*')); }
+    function safe(s, max) { return str(s, max) && noHtml(s); }
+
+    // ── LISTINGS ─────────────────────────────────────────────
+    match /listings/{listingId} {
+      allow read: if true;
+
+      allow create: if
+        isSignedIn() &&
+        request.resource.data.ownerId == request.auth.uid &&
+        safe(request.resource.data.title, 100) &&
+        validCity(request.resource.data.city) &&
+        safe(request.resource.data.area, 60) &&
+        request.resource.data.bedrooms is number &&
+        request.resource.data.bathrooms is number &&
+        validPrice(request.resource.data.price) &&
+        validType(request.resource.data.type) &&
+        strOpt(request.resource.data.description, 1000) &&
+        validPhone(request.resource.data.whatsapp) &&
+        request.resource.data.createdAt is number &&
+        request.resource.data.verified == false &&
+        request.resource.data.paid == false;
+
+      allow update, delete: if isOwner(resource.data.ownerId);
+    }
+
+    // ── FAVORITES ────────────────────────────────────────────
+    match /favorites/{favId} {
+      allow read, write: if isOwner(resource.data.userId)
+        || (isSignedIn() && request.resource.data.userId == request.auth.uid);
+    }
+
+    // ── PAYMENTS ─────────────────────────────────────────────
+    match /payments/{paymentId} {
+      allow read: if isOwner(resource.data.userId);
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // ── DENY ALL ELSE ────────────────────────────────────────
+    match /{document=**} { allow read, write: if false; }
+  }
+}
