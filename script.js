@@ -131,7 +131,59 @@ const DEMO_LISTINGS = [
     bedrooms: 3, bathrooms: 3, price: 2000000, type: 'house',
     description: 'Beach villa, bahari mbele, swimming pool, fully furnished.',
     images: ['https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800'],
-    lat: -5.7270, lng: 39.2980, whatsapp: '255713111216', ownerId: 'demo' }
+    lat: -5.7270, lng: 39.2980, whatsapp: '255713111216', ownerId: 'demo' },
+
+  // ── STUDENT HOUSING (near universities) ──
+  { id: 's1', title: 'Chumba kwa wanafunzi UDSM', city: 'Dar es Salaam', area: 'Mwenge',
+    bedrooms: 1, bathrooms: 1, price: 100000, type: 'room',
+    description: 'Karibu na UDSM (5 min walking). Maji, umeme LUKU, WiFi optional. Yafaa wanafunzi.',
+    images: ['https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800'],
+    lat: -6.7720, lng: 39.2200, whatsapp: '255713200001', ownerId: 'demo' },
+  { id: 's2', title: 'Self contained Mlimani City', city: 'Dar es Salaam', area: 'Mlimani',
+    bedrooms: 1, bathrooms: 1, price: 220000, type: 'self',
+    description: 'Karibu na Mlimani City Mall na UDSM. Salama, mlinzi 24/7, parking ya pikipiki.',
+    images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800'],
+    lat: -6.7800, lng: 39.2150, whatsapp: '255713200002', ownerId: 'demo' },
+  { id: 's3', title: 'Vyumba 2 Ubungo (Ardhi)', city: 'Dar es Salaam', area: 'Ubungo',
+    bedrooms: 2, bathrooms: 1, price: 350000, type: 'house',
+    description: 'Karibu na Ardhi University na bus stand ya Ubungo. Inafaa wanafunzi 2-3.',
+    images: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800'],
+    lat: -6.7780, lng: 39.2110, whatsapp: '255713200003', ownerId: 'demo' },
+  { id: 's4', title: 'Chumba MUHAS Upanga', city: 'Dar es Salaam', area: 'Upanga',
+    bedrooms: 1, bathrooms: 1, price: 180000, type: 'room',
+    description: 'Karibu na MUHAS na Muhimbili. Inafaa wanafunzi wa udaktari na wauguzi.',
+    images: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800'],
+    lat: -6.8100, lng: 39.2820, whatsapp: '255713200004', ownerId: 'demo' },
+  { id: 's5', title: 'Self contained IFM', city: 'Dar es Salaam', area: 'Shaaban Robert',
+    bedrooms: 1, bathrooms: 1, price: 250000, type: 'self',
+    description: 'Karibu sana na IFM. WiFi, security, parking. Mtaa wa utulivu.',
+    images: ['https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800'],
+    lat: -6.8140, lng: 39.2870, whatsapp: '255713200005', ownerId: 'demo' },
+  { id: 's6', title: 'Hostel ya wanafunzi UDOM', city: 'Dodoma', area: 'Chimwaga',
+    bedrooms: 1, bathrooms: 1, price: 80000, type: 'room',
+    description: 'Hostel ya UDOM, vyumba vya kushiriki au binafsi. Karibu na chuo, transport rahisi.',
+    images: ['https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800'],
+    lat: -6.1900, lng: 35.7920, whatsapp: '255713200006', ownerId: 'demo' },
+  { id: 's7', title: 'Vyumba 3 SUA Mazimbu', city: 'Morogoro', area: 'Mazimbu',
+    bedrooms: 3, bathrooms: 2, price: 280000, type: 'house',
+    description: 'Karibu na SUA campus. Inafaa wanafunzi 3 wa kushiriki.',
+    images: ['https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=800'],
+    lat: -6.8500, lng: 37.6620, whatsapp: '255713200007', ownerId: 'demo' },
+  { id: 's8', title: 'Chumba Mzumbe University', city: 'Morogoro', area: 'Mzumbe',
+    bedrooms: 1, bathrooms: 1, price: 90000, type: 'room',
+    description: 'Karibu sana na Mzumbe University. Bei nafuu, maji na umeme.',
+    images: ['https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800'],
+    lat: -6.9140, lng: 37.4790, whatsapp: '255713200008', ownerId: 'demo' },
+  { id: 's9', title: 'Self CBE Dodoma', city: 'Dodoma', area: 'CBE',
+    bedrooms: 1, bathrooms: 1, price: 150000, type: 'self',
+    description: 'Karibu na CBE Dodoma. Mpya, salama, karibu na bus stand.',
+    images: ['https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800'],
+    lat: -6.1730, lng: 35.7420, whatsapp: '255713200009', ownerId: 'demo' },
+  { id: 's10', title: 'Apartment ya wanafunzi UDSM', city: 'Dar es Salaam', area: 'Mlimani',
+    bedrooms: 2, bathrooms: 1, price: 400000, type: 'apartment',
+    description: 'Apartment mpya, vyumba 2 vya kushiriki, WiFi, security, karibu sana na UDSM.',
+    images: ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800'],
+    lat: -6.7790, lng: 39.2120, whatsapp: '255713200010', ownerId: 'demo' }
 ];
 
 let allListings = [...DEMO_LISTINGS];
@@ -151,8 +203,74 @@ document.querySelectorAll('.tab').forEach(tab => {
     if (tab.dataset.tab === 'map') setTimeout(initMap, 100);
     if (tab.dataset.tab === 'favorites') renderFavorites();
     if (tab.dataset.tab === 'my-listings') renderMyListings();
+    if (tab.dataset.tab === 'students') renderCampuses();
   });
 });
+
+// ============== STUDENT HOUSING ==============
+const CAMPUSES = [
+  { id: 'udsm', name: 'UDSM (Mlimani)', city: 'Dar es Salaam', area: 'Mlimani', lat: -6.7787, lng: 39.2106, color: '#dc2626', icon: '🏛️' },
+  { id: 'ardhi', name: 'Ardhi University', city: 'Dar es Salaam', area: 'Ubungo', lat: -6.7720, lng: 39.2092, color: '#0f766e', icon: '🏗️' },
+  { id: 'ifm', name: 'IFM', city: 'Dar es Salaam', area: 'Shaaban Robert', lat: -6.8120, lng: 39.2890, color: '#1e40af', icon: '💼' },
+  { id: 'muhas', name: 'MUHAS', city: 'Dar es Salaam', area: 'Upanga', lat: -6.8085, lng: 39.2814, color: '#7c3aed', icon: '⚕️' },
+  { id: 'sua', name: 'SUA', city: 'Morogoro', area: 'Mazimbu', lat: -6.8489, lng: 37.6597, color: '#16a34a', icon: '🌾' },
+  { id: 'udom', name: 'UDOM', city: 'Dodoma', area: 'Chimwaga', lat: -6.1881, lng: 35.7900, color: '#f59e0b', icon: '🏛️' },
+  { id: 'mzumbe', name: 'Mzumbe University', city: 'Morogoro', area: 'Mzumbe', lat: -6.9128, lng: 37.4769, color: '#0891b2', icon: '📚' },
+  { id: 'cbe', name: 'CBE Dodoma', city: 'Dodoma', area: 'CBE', lat: -6.1714, lng: 35.7401, color: '#be185d', icon: '💼' }
+];
+
+let activeCampus = null;
+
+function renderCampuses() {
+  const grid = document.getElementById('campusGrid');
+  grid.innerHTML = CAMPUSES.map(c => `
+    <button class="campus-card ${activeCampus?.id === c.id ? 'active' : ''}"
+            style="border-color:${c.color}"
+            onclick="selectCampus('${c.id}')">
+      <div class="campus-icon" style="background:${c.color}">${c.icon}</div>
+      <div class="campus-name">${c.name}</div>
+      <div class="campus-city">${c.area}, ${c.city}</div>
+    </button>
+  `).join('');
+  if (activeCampus) renderCampusListings();
+  else document.getElementById('campusListings').innerHTML = '<p class="hint" style="text-align:center;padding:30px">👆 Chagua chuo chako kuona nyumba za karibu</p>';
+}
+
+function selectCampus(id) {
+  activeCampus = CAMPUSES.find(c => c.id === id);
+  renderCampuses();
+}
+window.selectCampus = selectCampus;
+
+function distanceKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) ** 2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function renderCampusListings() {
+  if (!activeCampus) return;
+  const nearby = allListings
+    .filter(l => l.lat && l.lng && l.city === activeCampus.city)
+    .map(l => ({ ...l, _distance: distanceKm(activeCampus.lat, activeCampus.lng, l.lat, l.lng) }))
+    .filter(l => l._distance <= 8)
+    .sort((a, b) => a._distance - b._distance);
+
+  const out = document.getElementById('campusListings');
+  if (!nearby.length) {
+    out.innerHTML = `<div class="empty">Bado hakuna nyumba karibu na ${activeCampus.name}. Tangaza yako kwanza!</div>`;
+    return;
+  }
+  out.innerHTML = `
+    <p style="margin:14px 0;color:var(--muted);font-size:13px">📍 ${nearby.length} nyumba ndani ya 8km kutoka <b>${activeCampus.name}</b></p>
+    <div class="grid">
+      ${nearby.map(l => listingCard(l).replace('</div>\n        <div class="card-meta">\n          <span>📍',
+        `<span class="dist-badge">${l._distance.toFixed(1)} km kutoka chuo</span></div><div class="card-meta"><span>📍`)).join('')}
+    </div>
+  `;
+}
 
 // ============== RENDER LISTINGS ==============
 function formatPrice(p) {

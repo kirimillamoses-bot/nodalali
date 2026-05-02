@@ -253,6 +253,8 @@ app.post('/api/admin/reports/dismiss', requireAdmin, (req, res) => {
 app.get('/admin', (_, res) => res.sendFile(path.join(__dirname, 'admin.html')));
 app.get('/privacy', (_, res) => res.sendFile(path.join(__dirname, 'privacy.html')));
 app.get('/terms', (_, res) => res.sendFile(path.join(__dirname, 'terms.html')));
+app.get('/students', (_, res) => res.sendFile(path.join(__dirname, 'students.html')));
+app.get(['/wanafunzi', '/student'], (_, res) => res.redirect('/students'));
 
 app.use(express.static(__dirname));
 app.use((req, res) => res.sendFile(path.join(__dirname, 'index.html')));

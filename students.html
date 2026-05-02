@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nyumba za Wanafunzi — Nodalali</title>
+  <meta name="description" content="Pata chumba au self contained karibu na UDSM, Ardhi, IFM, MUHAS, UDOM, SUA, Mzumbe. Bei nafuu, hakuna dalali." />
+  <link rel="icon" href="icon-192.png" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; color: #0f172a; }
+    .hero {
+      background: linear-gradient(135deg, #0f766e 0%, #065f5b 100%), url('hero.jpg') center/cover;
+      background-blend-mode: multiply;
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 48px; margin-bottom: 16px; line-height: 1.2; }
+    .hero p { font-size: 20px; opacity: .95; max-width: 600px; margin: 0 auto 30px; }
+    .cta {
+      display: inline-block;
+      background: #fde047;
+      color: #7f1d1d;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,.3);
+    }
+    .cta:hover { transform: scale(1.05); transition: .2s; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+    h2 { color: #0f766e; font-size: 32px; margin-bottom: 20px; text-align: center; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin: 30px 0; }
+    .feature { background: #f8fafc; padding: 24px; border-radius: 14px; }
+    .feature-icon { font-size: 36px; margin-bottom: 12px; }
+    .feature h3 { color: #0f766e; margin-bottom: 8px; }
+    .campuses { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 24px 0; }
+    .campus { background: #fff; border: 2px solid #e2e8f0; padding: 18px; border-radius: 12px; text-align: center; }
+    .campus-emoji { font-size: 32px; }
+    .campus h4 { margin: 8px 0 4px; color: #0f766e; }
+    .campus p { font-size: 13px; color: #64748b; }
+    .testimonial { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; margin: 16px 0; border-radius: 8px; }
+    .testimonial p { font-style: italic; }
+    .testimonial small { color: #92400e; font-weight: 700; display: block; margin-top: 8px; }
+    .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+    .price-card { background: #f0fdfa; border: 2px solid #14b8a6; padding: 20px; border-radius: 12px; text-align: center; }
+    .price-card h4 { color: #0f766e; }
+    .price-card .amount { font-size: 28px; font-weight: 800; margin: 8px 0; color: #0f766e; }
+    footer { background: #0f172a; color: #e2e8f0; padding: 40px 20px; text-align: center; }
+    footer a { color: #fde047; text-decoration: none; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 700px; margin: 30px auto; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 36px; font-weight: 800; color: #fde047; }
+    @media (max-width: 600px) { .hero h1 { font-size: 32px; } .hero p { font-size: 16px; } }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>🎓 Nyumba za Wanafunzi Tanzania</h1>
+    <p>Pata chumba au self contained karibu na chuo chako. Hakuna dalali, hakuna ada za uongo, bei wazi.</p>
+    <a href="/?tab=students" class="cta">Anza Kutafuta →</a>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">8+</div><div>Vyuo</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div>Vyumba Sasa</div></div>
+      <div class="stat"><div class="stat-num">0%</div><div>Commission</div></div>
+    </div>
+  </section>
+
+  <div class="container">
+    <h2>Vyuo Tunavyofunika</h2>
+    <div class="campuses">
+      <div class="campus"><div class="campus-emoji">🏛️</div><h4>UDSM</h4><p>Mlimani, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">🏗️</div><h4>Ardhi University</h4><p>Ubungo, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">💼</div><h4>IFM</h4><p>Shaaban Robert, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">⚕️</div><h4>MUHAS</h4><p>Upanga, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">🏛️</div><h4>UDOM</h4><p>Chimwaga, Dodoma</p></div>
+      <div class="campus"><div class="campus-emoji">🌾</div><h4>SUA</h4><p>Mazimbu, Morogoro</p></div>
+      <div class="campus"><div class="campus-emoji">📚</div><h4>Mzumbe</h4><p>Mzumbe, Morogoro</p></div>
+      <div class="campus"><div class="campus-emoji">💼</div><h4>CBE</h4><p>Dodoma</p></div>
+    </div>
+  </div>
+
+  <div class="container" style="background:#f8fafc">
+    <h2>Kwa nini Nodalali?</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🚫</div>
+        <h3>Hakuna Dalali</h3>
+        <p>Wasiliana na mwenye nyumba moja kwa moja. Usilipe commission kwa mtu wa kati.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📍</div>
+        <h3>Karibu na Chuo Chako</h3>
+        <p>Chagua chuo chako, tunakuonyesha nyumba ndani ya 8km.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <h3>Salama</h3>
+        <p>Tuna scam filter, ripoti za watumiaji, na verification ya wenye nyumba.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💰</div>
+        <h3>Bei za Wanafunzi</h3>
+        <p>Vyumba kuanzia TZS 80,000/mwezi. Self contained kuanzia TZS 150,000.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <h3>WhatsApp Moja kwa Moja</h3>
+        <p>Bonyeza WhatsApp button — anza mazungumzo na mwenye nyumba sasa hivi.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🗺️</div>
+        <h3>Ramani Hai</h3>
+        <p>Ona nyumba zilipo, umbali kutoka chuo, na njia za daladala.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Sauti za Wanafunzi</h2>
+    <div class="testimonial">
+      <p>"Nilipata chumba karibu na Mlimani kwa wiki moja tu. Hakuna dalali aliyenitoza pesa, na bei ilikuwa ni ile ile kwenye app."</p>
+      <small>— Asha, Mwaka wa 2 UDSM</small>
+    </div>
+    <div class="testimonial">
+      <p>"App nzuri sana. Niliweza kuona umbali wa kila nyumba kutoka Ardhi University. Nilichagua nzuri kabisa."</p>
+      <small>— John, Ardhi University</small>
+    </div>
+    <div class="testimonial">
+      <p>"Bei zilizoandikwa ndizo nilipolipa. Hakuna mchezo wa dalali. Nashauri kila mwanafunzi atumie."</p>
+      <small>— Fatuma, MUHAS</small>
+    </div>
+  </div>
+
+  <div class="container" style="background:#f0fdfa">
+    <h2>Bei kwa Wenye Nyumba</h2>
+    <p style="text-align:center;color:#64748b">Kama una chumba cha kupangisha, tangaza hapa:</p>
+    <div class="pricing">
+      <div class="price-card">
+        <h4>Tangazo</h4>
+        <div class="amount">TZS 5,000</div>
+        <p>Kaa siku 30</p>
+      </div>
+      <div class="price-card" style="background:#fef3c7;border-color:#f59e0b">
+        <h4>Verified Badge</h4>
+        <div class="amount">TZS 10,000</div>
+        <p>Watu wanakuamini zaidi</p>
+      </div>
+      <div class="price-card" style="background:#fee2e2;border-color:#dc2626">
+        <h4>Featured</h4>
+        <div class="amount">TZS 15,000</div>
+        <p>Kuwa juu kabisa</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <a href="/?tab=post" class="cta">Tangaza Sasa</a>
+    </div>
+  </div>
+
+  <div class="container" style="text-align:center">
+    <h2>Tayari Kuanza?</h2>
+    <p style="font-size:18px;margin:20px 0">Bonyeza chini kuanza kutafuta nyumba</p>
+    <a href="/" class="cta">📲 Fungua Nodalali</a>
+  </div>
+
+  <footer>
+    <p>📞 Customer Service: +255 747 200 123</p>
+    <p style="margin-top:12px">
+      <a href="/">Homepage</a> ·
+      <a href="/privacy">Privacy</a> ·
+      <a href="/terms">Terms</a>
+    </p>
+    <p style="margin-top:20px;opacity:.6">© 2026 Nodalali — Pangisha bila Dalali</p>
+  </footer>
+</body>
+</html>
