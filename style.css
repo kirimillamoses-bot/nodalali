@@ -293,6 +293,18 @@ main { padding: 16px; }
 
 .empty { text-align: center; padding: 40px 20px; color: var(--muted); }
 
+.app-footer {
+  text-align: center;
+  padding: 24px 16px 80px;
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+  background: #fff;
+}
+.app-footer a { color: var(--primary); text-decoration: none; margin: 0 4px; }
+.app-footer a:hover { text-decoration: underline; }
+
 .warn-banner {
   background: #fef2f2;
   border: 2px solid #dc2626;

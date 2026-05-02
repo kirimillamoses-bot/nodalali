@@ -10,3 +10,4 @@ android/capacitor-cordova-android-plugins/
 .DS_Store
 .idea/
 *.log
+*.keystore

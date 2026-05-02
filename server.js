@@ -1,14 +1,18 @@
 const express = require('express');
 const path = require('path');
+const crypto = require('crypto');
 const fetch = require('node-fetch');
 const rateLimit = require('express-rate-limit');
 const security = require('./security');
+const sms = require('./sms');
+const email = require('./email');
+const moderation = require('./moderation');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.set('trust proxy', 1);
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '5mb' }));
 
 // ── Security headers ──
 app.use((req, res, next) => {
@@ -16,105 +20,123 @@ app.use((req, res, next) => {
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(self)');
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.setHeader('Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' https://www.gstatic.com https://unpkg.com; " +
+    "style-src 'self' 'unsafe-inline' https://unpkg.com; " +
+    "img-src 'self' data: https:; " +
+    "connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com; " +
+    "font-src 'self' data:; " +
+    "frame-ancestors 'none'; " +
+    "base-uri 'self'"
+  );
   next();
 });
 
-// ── Rate limits (per IP) ──
-const apiLimit = rateLimit({
-  windowMs: 60 * 1000,        // 1 min
-  max: 30,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: 'Maombi mengi sana. Subiri kidogo.' }
-});
-const writeLimit = rateLimit({
-  windowMs: 60 * 60 * 1000,   // 1 hour
-  max: 10,
-  message: { error: 'Umejaribu mara nyingi. Jaribu tena baada ya saa moja.' }
-});
-const payLimit = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 5,
-  message: { error: 'Maombi mengi ya malipo. Jaribu tena baadaye.' }
-});
+// ── Rate limits ──
+const apiLimit = rateLimit({ windowMs: 60000, max: 30, message: { error: 'Maombi mengi. Subiri kidogo.' } });
+const writeLimit = rateLimit({ windowMs: 3600000, max: 10, message: { error: 'Umejaribu mara nyingi.' } });
+const payLimit = rateLimit({ windowMs: 3600000, max: 5, message: { error: 'Maombi mengi ya malipo.' } });
+const otpLimit = rateLimit({ windowMs: 600000, max: 3, message: { error: 'Subiri dakika 10.' } });
 
 app.use('/api/', apiLimit);
 
-// ── M-Pesa pricing ──
+// ── Config ──
 const ZENOPAY_API_KEY = process.env.ZENOPAY_API_KEY || '';
+const ZENOPAY_WEBHOOK_SECRET = process.env.ZENOPAY_WEBHOOK_SECRET || '';
 const ZENOPAY_BASE = 'https://zenoapi.com/api/payments';
 const PRICING = { listing: 5000, verified: 10000, featured: 15000 };
 
-// ── Listing pre-flight: scam + block check ──
-app.post('/api/listings/check', writeLimit, (req, res) => {
-  const { phone, userId, title, description } = req.body || {};
+// In-memory revenue tally (move to DB)
+let revenueTally = 0;
+
+// ── Admin auth middleware ──
+function requireAdmin(req, res, next) {
+  const token = req.headers['x-admin-token'] || req.body?.token;
+  if (token !== security.ADMIN_TOKEN) return res.status(403).json({ error: 'Unauthorized' });
+  next();
+}
+
+// ────────────────────────────────────────────────
+// LISTINGS — pre-flight security check
+// ────────────────────────────────────────────────
+app.post('/api/listings/check', writeLimit, async (req, res) => {
+  const { phone, userId, title, description, images } = req.body || {};
   const ip = req.ip;
 
-  // 1. Phone validation
   const phoneErr = security.validateTzPhone(phone || '');
   if (phoneErr) return res.status(400).json({ error: phoneErr });
 
-  // 2. Block check
-  const blockedReason = security.isBlocked({ phone, userId, ip });
-  if (blockedReason) return res.status(403).json({ error: 'Imekataliwa: namba/akaunti imezuiwa' });
+  if (security.isBlocked({ phone, userId, ip })) {
+    return res.status(403).json({ error: 'Akaunti imezuiwa. Wasiliana na customer service.' });
+  }
 
-  // 3. Sanitize + scam detection
   const cleanTitle = security.sanitizeText(title, 100);
   const cleanDesc = security.sanitizeText(description, 1000);
   const scam = security.containsScamContent(cleanTitle + ' ' + cleanDesc);
   if (scam) return res.status(400).json({ error: 'Maudhui yenye shaka: ' + scam });
 
+  // Image moderation (first 3 images only — speed)
+  if (Array.isArray(images) && images.length) {
+    for (const img of images.slice(0, 3)) {
+      try {
+        const m = await moderation.moderateImage(img);
+        if (!m.ok) return res.status(400).json({ error: `Picha haifai: ${m.issues.join(', ')}` });
+      } catch (e) { console.warn('Moderation error:', e.message); }
+    }
+  }
+
   res.json({ ok: true, sanitized: { title: cleanTitle, description: cleanDesc } });
 });
 
-// ── Report a listing ──
+// ────────────────────────────────────────────────
+// REPORTS
+// ────────────────────────────────────────────────
 app.post('/api/report', writeLimit, (req, res) => {
   const { listingId, reporterId, reason } = req.body || {};
   if (!listingId || !reason) return res.status(400).json({ error: 'Missing fields' });
-  if (reason.length > 200) return res.status(400).json({ error: 'Reason too long' });
   const result = security.reportListing(listingId, reporterId || 'anon', security.sanitizeText(reason, 200));
-  res.json({
-    ok: true,
-    reportCount: result.count,
-    flagged: security.shouldAutoFlag(listingId)
-  });
+  res.json({ ok: true, reportCount: result.count, flagged: security.shouldAutoFlag(listingId) });
 });
 
-// ── Get report counts (frontend uses this to hide flagged listings) ──
 app.get('/api/reports/:id', (req, res) => {
   res.json({ count: security.getReportCount(req.params.id) });
 });
 
-// ── Admin: block / unblock ──
-app.post('/api/admin/block', (req, res) => {
-  const { token, type, value } = req.body || {};
-  let ok = false;
-  if (type === 'phone') ok = security.blockPhone(value, token);
-  else if (type === 'user') ok = security.blockUser(value, token);
-  if (!ok) return res.status(403).json({ error: 'Unauthorized or invalid' });
+// ────────────────────────────────────────────────
+// SMS OTP — phone verification
+// ────────────────────────────────────────────────
+app.post('/api/otp/send', otpLimit, async (req, res) => {
+  const { phone } = req.body || {};
+  const phoneErr = security.validateTzPhone(phone || '');
+  if (phoneErr) return res.status(400).json({ error: phoneErr });
+  if (security.isBlocked({ phone, ip: req.ip })) return res.status(403).json({ error: 'Namba imezuiwa' });
+  try {
+    const r = await sms.sendOtp(phone);
+    res.json({ ok: true, simulated: r.simulated, demoCode: r.simulated ? r.code : undefined });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/otp/verify', writeLimit, (req, res) => {
+  const { phone, code } = req.body || {};
+  const result = sms.verifyOtp(phone, code);
+  if (!result.ok) return res.status(400).json(result);
   res.json({ ok: true });
 });
 
-app.post('/api/admin/unblock', (req, res) => {
-  const { token, type, value } = req.body || {};
-  const map = { phone: 'phones', user: 'userIds', ip: 'ips' };
-  if (!map[type]) return res.status(400).json({ error: 'Bad type' });
-  const ok = security.unblock(value, map[type], token);
-  if (!ok) return res.status(403).json({ error: 'Unauthorized or not found' });
-  res.json({ ok: true });
-});
-
-// ── M-Pesa pay (rate-limited harder) ──
+// ────────────────────────────────────────────────
+// M-PESA PAYMENTS
+// ────────────────────────────────────────────────
 app.post('/api/pay', payLimit, async (req, res) => {
   const { phone, listingId, plan, userId } = req.body || {};
   const phoneErr = security.validateTzPhone(phone || '');
   if (phoneErr) return res.status(400).json({ error: phoneErr });
   if (!PRICING[plan]) return res.status(400).json({ error: 'Plan haijulikani' });
-  if (security.isBlocked({ phone, userId, ip: req.ip })) {
-    return res.status(403).json({ error: 'Akaunti imezuiwa' });
-  }
+  if (security.isBlocked({ phone, userId, ip: req.ip })) return res.status(403).json({ error: 'Akaunti imezuiwa' });
+
   if (!ZENOPAY_API_KEY) {
+    revenueTally += PRICING[plan];
     return res.json({
       success: true, simulated: true,
       orderId: 'sim-' + Date.now(),
@@ -141,8 +163,27 @@ app.post('/api/pay', payLimit, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+// ── Webhook with signature verification ──
 app.post('/api/webhook', (req, res) => {
-  console.log('💰 Payment webhook:', req.body);
+  if (ZENOPAY_WEBHOOK_SECRET) {
+    const signature = req.headers['x-zenopay-signature'] || '';
+    const expected = crypto
+      .createHmac('sha256', ZENOPAY_WEBHOOK_SECRET)
+      .update(JSON.stringify(req.body))
+      .digest('hex');
+    if (signature !== expected) {
+      console.warn('⚠️ Invalid webhook signature');
+      return res.status(401).json({ error: 'Invalid signature' });
+    }
+  }
+
+  const { order_id, payment_status, amount } = req.body || {};
+  if (payment_status === 'COMPLETED') {
+    revenueTally += Number(amount) || 0;
+    console.log(`✅ Payment confirmed: ${order_id} = TZS ${amount}`);
+    // TODO: update Firestore listing.paid = true based on order_id
+    // TODO: send confirmation email via email.sendEmail({...email.templates.paymentConfirmed(...)})
+  }
   res.json({ received: true });
 });
 
@@ -158,13 +199,67 @@ app.get('/api/pay/status/:orderId', async (req, res) => {
 
 app.get('/api/pricing', (_, res) => res.json(PRICING));
 
-// ── Static files (after /api routes so they don't match) ──
+// ────────────────────────────────────────────────
+// ADMIN
+// ────────────────────────────────────────────────
+app.get('/api/admin/stats', requireAdmin, (req, res) => {
+  const reports = security.getAllReports ? security.getAllReports() : {};
+  const blocklist = security.getBlocklist ? security.getBlocklist() : { phones: [], userIds: [], ips: [] };
+  const reportArray = Object.entries(reports).map(([listingId, data]) => ({
+    listingId, count: data.count, reasons: data.reasons
+  })).sort((a, b) => b.count - a.count);
+  res.json({
+    listings: 0,
+    openReports: reportArray.length,
+    blockedPhones: blocklist.phones.length,
+    revenue: revenueTally,
+    reports: reportArray.slice(0, 50),
+    blocklist,
+    services: {
+      sms: !!process.env.BEEM_API_KEY,
+      email: !!process.env.BREVO_API_KEY,
+      moderation: !!process.env.GCP_VISION_API_KEY,
+      mpesa: !!ZENOPAY_API_KEY
+    }
+  });
+});
+
+app.post('/api/admin/block', requireAdmin, (req, res) => {
+  const { type, value } = req.body || {};
+  let ok = false;
+  if (type === 'phone') ok = security.blockPhone(value, security.ADMIN_TOKEN);
+  else if (type === 'user') ok = security.blockUser(value, security.ADMIN_TOKEN);
+  if (!ok) return res.status(400).json({ error: 'Bad input' });
+  res.json({ ok: true });
+});
+
+app.post('/api/admin/unblock', requireAdmin, (req, res) => {
+  const { type, value } = req.body || {};
+  const map = { phone: 'phones', user: 'userIds', ip: 'ips' };
+  if (!map[type]) return res.status(400).json({ error: 'Bad type' });
+  const ok = security.unblock(value, map[type], security.ADMIN_TOKEN);
+  res.json({ ok });
+});
+
+app.post('/api/admin/reports/dismiss', requireAdmin, (req, res) => {
+  const { listingId } = req.body || {};
+  if (security.dismissReports) security.dismissReports(listingId);
+  res.json({ ok: true });
+});
+
+// ────────────────────────────────────────────────
+// STATIC + LEGAL
+// ────────────────────────────────────────────────
+app.get('/admin', (_, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.get('/privacy', (_, res) => res.sendFile(path.join(__dirname, 'privacy.html')));
+app.get('/terms', (_, res) => res.sendFile(path.join(__dirname, 'terms.html')));
+
 app.use(express.static(__dirname));
 app.use((req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.listen(PORT, () => {
-  console.log(`🏠 Nodalali running on http://localhost:${PORT}`);
-  console.log(`   M-Pesa: ${ZENOPAY_API_KEY ? 'LIVE' : 'DEMO MODE'}`);
-  console.log(`   Security: rate-limit + scam-filter + blocklist active`);
-  console.log(`   Admin token: ${security.ADMIN_TOKEN === 'change-me-in-production' ? '⚠️  default (set ADMIN_TOKEN env var)' : '✓ custom'}`);
+  console.log(`🏠 Nodalali on http://localhost:${PORT}`);
+  console.log(`   M-Pesa: ${ZENOPAY_API_KEY ? 'LIVE' : 'demo'} | webhook: ${ZENOPAY_WEBHOOK_SECRET ? 'verified' : '⚠️ unsigned'}`);
+  console.log(`   SMS: ${process.env.BEEM_API_KEY ? 'live' : 'demo'} | Email: ${process.env.BREVO_API_KEY ? 'live' : 'demo'} | Moderation: ${process.env.GCP_VISION_API_KEY ? 'live' : 'demo'}`);
+  console.log(`   Admin: http://localhost:${PORT}/admin (token: ${security.ADMIN_TOKEN === 'change-me-in-production' ? '⚠️ DEFAULT' : '✓ custom'})`);
 });

@@ -122,6 +122,13 @@ function shouldAutoFlag(listingId) {
   return getReportCount(listingId) >= AUTO_BLOCK_THRESHOLD;
 }
 
+function getAllReports() { return reports; }
+function getBlocklist() { return blocklist; }
+function dismissReports(listingId) {
+  delete reports[listingId];
+  saveReports();
+}
+
 module.exports = {
   isBlocked,
   containsScamContent,
@@ -133,5 +140,8 @@ module.exports = {
   blockUser,
   unblock,
   validateTzPhone,
+  getAllReports,
+  getBlocklist,
+  dismissReports,
   ADMIN_TOKEN
 };

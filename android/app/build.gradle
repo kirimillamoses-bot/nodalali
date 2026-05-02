@@ -18,10 +18,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('../../nodalali-release.keystore')
-            storePassword 'Nodalali2024!'
-            keyAlias 'nodalali'
-            keyPassword 'Nodalali2024!'
+            storeFile file(System.getenv('NODALALI_KEYSTORE_PATH') ?: '../../nodalali-release.keystore')
+            storePassword System.getenv('NODALALI_KEYSTORE_PASSWORD') ?: 'Nodalali2024!'
+            keyAlias System.getenv('NODALALI_KEY_ALIAS') ?: 'nodalali'
+            keyPassword System.getenv('NODALALI_KEY_PASSWORD') ?: 'Nodalali2024!'
         }
     }
     buildTypes {
