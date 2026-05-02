@@ -65,7 +65,7 @@
     <p>Pata chumba au self contained karibu na chuo chako. Hakuna dalali, hakuna ada za uongo, bei wazi.</p>
     <a href="/?tab=students" class="cta">Anza Kutafuta →</a>
     <div class="stats">
-      <div class="stat"><div class="stat-num">8+</div><div>Vyuo</div></div>
+      <div class="stat"><div class="stat-num">40+</div><div>Vyuo</div></div>
       <div class="stat"><div class="stat-num">10+</div><div>Vyumba Sasa</div></div>
       <div class="stat"><div class="stat-num">0%</div><div>Commission</div></div>
     </div>
@@ -186,14 +186,58 @@
 
   <script>
     const CAMPUSES = [
+      // Dar es Salaam
       { name: 'UDSM (Mlimani)', area: 'Mlimani, Dar', lat: -6.7787, lng: 39.2106, icon: '🏛️', color: '#dc2626' },
       { name: 'Ardhi University', area: 'Ubungo, Dar', lat: -6.7720, lng: 39.2092, icon: '🏗️', color: '#0f766e' },
-      { name: 'IFM', area: 'Shaaban Robert, Dar', lat: -6.8120, lng: 39.2890, icon: '💼', color: '#1e40af' },
       { name: 'MUHAS', area: 'Upanga, Dar', lat: -6.8085, lng: 39.2814, icon: '⚕️', color: '#7c3aed' },
-      { name: 'SUA', area: 'Mazimbu, Morogoro', lat: -6.8489, lng: 37.6597, icon: '🌾', color: '#16a34a' },
+      { name: 'IFM', area: 'Shaaban Robert, Dar', lat: -6.8120, lng: 39.2890, icon: '💼', color: '#1e40af' },
+      { name: 'OUT', area: 'Kinondoni, Dar', lat: -6.7720, lng: 39.2390, icon: '📖', color: '#0891b2' },
+      { name: 'DUCE', area: "Chang'ombe, Dar", lat: -6.8400, lng: 39.2700, icon: '🎓', color: '#be185d' },
+      { name: 'KIU Dar', area: 'Mikocheni, Dar', lat: -6.7600, lng: 39.2540, icon: '🌍', color: '#ea580c' },
+      { name: 'HKMU', area: 'Mikocheni, Dar', lat: -6.7640, lng: 39.2560, icon: '⚕️', color: '#9333ea' },
+      { name: 'IMTU', area: 'Mbweni, Dar', lat: -6.6800, lng: 39.1800, icon: '⚕️', color: '#16a34a' },
+      { name: 'Aga Khan University', area: 'Upanga, Dar', lat: -6.8060, lng: 39.2810, icon: '⚕️', color: '#0d9488' },
+      { name: 'NIT Transport', area: 'Mabibo, Dar', lat: -6.8390, lng: 39.2280, icon: '🚌', color: '#1d4ed8' },
+      { name: 'St Joseph Univ', area: 'Boko, Dar', lat: -6.7250, lng: 39.1900, icon: '✝️', color: '#7c2d12' },
+      { name: 'TIA Dar', area: 'Bibi Titi, Dar', lat: -6.8120, lng: 39.2790, icon: '📊', color: '#a16207' },
+      { name: 'CBE Dar', area: 'Bibi Titi, Dar', lat: -6.8170, lng: 39.2810, icon: '💼', color: '#be185d' },
+      { name: 'IAA Dar Centre', area: 'Posta, Dar', lat: -6.8150, lng: 39.2895, icon: '📊', color: '#9a3412' },
+      // Dodoma
       { name: 'UDOM', area: 'Chimwaga, Dodoma', lat: -6.1881, lng: 35.7900, icon: '🏛️', color: '#f59e0b' },
-      { name: 'Mzumbe University', area: 'Mzumbe, Morogoro', lat: -6.9128, lng: 37.4769, icon: '📚', color: '#0891b2' },
-      { name: 'CBE Dodoma', area: 'CBE, Dodoma', lat: -6.1714, lng: 35.7401, icon: '💼', color: '#be185d' }
+      { name: 'CBE Dodoma', area: 'CBE, Dodoma', lat: -6.1714, lng: 35.7401, icon: '💼', color: '#be185d' },
+      { name: 'IRDP', area: 'Nala, Dodoma', lat: -6.1530, lng: 35.7510, icon: '🌱', color: '#16a34a' },
+      { name: 'SJUT', area: 'Mlimwa, Dodoma', lat: -6.1640, lng: 35.7270, icon: '✝️', color: '#7c2d12' },
+      // Morogoro
+      { name: 'SUA', area: 'Mazimbu, Morogoro', lat: -6.8489, lng: 37.6597, icon: '🌾', color: '#16a34a' },
+      { name: 'Mzumbe Univ', area: 'Mzumbe, Morogoro', lat: -6.9128, lng: 37.4769, icon: '📚', color: '#0891b2' },
+      { name: 'Jordan University College', area: 'Morogoro', lat: -6.8240, lng: 37.6610, icon: '🎓', color: '#a855f7' },
+      // Arusha
+      { name: 'NM-AIST', area: 'Tengeru, Arusha', lat: -3.3914, lng: 36.7965, icon: '🔬', color: '#dc2626' },
+      { name: 'Tumaini Makumira', area: 'Makumira, Arusha', lat: -3.3650, lng: 36.8030, icon: '⛪', color: '#0f766e' },
+      { name: 'IAA Arusha', area: 'Njiro, Arusha', lat: -3.4050, lng: 36.7050, icon: '📊', color: '#9a3412' },
+      { name: 'University of Arusha', area: 'Usa River', lat: -3.3700, lng: 36.8550, icon: '🎓', color: '#0e7490' },
+      // Moshi
+      { name: 'KCMC', area: 'Moshi', lat: -3.3520, lng: 37.3360, icon: '⚕️', color: '#7c3aed' },
+      { name: 'MoCU', area: 'Sokoine Rd, Moshi', lat: -3.3475, lng: 37.3380, icon: '💰', color: '#16a34a' },
+      { name: 'Stefano Moshi Memorial', area: 'Mawenzi, Moshi', lat: -3.3650, lng: 37.3250, icon: '⛪', color: '#a16207' },
+      { name: 'Mwenge Catholic Univ', area: 'Mwenge, Moshi', lat: -3.3540, lng: 37.3420, icon: '✝️', color: '#7c2d12' },
+      // Mwanza
+      { name: 'SAUT', area: 'Malimbe, Mwanza', lat: -2.5350, lng: 32.9180, icon: '✝️', color: '#7c2d12' },
+      { name: 'CUHAS Bugando', area: 'Bugando, Mwanza', lat: -2.5160, lng: 32.9050, icon: '⚕️', color: '#7c3aed' },
+      { name: 'KIU Mwanza', area: 'Mwanza', lat: -2.5180, lng: 32.9220, icon: '🌍', color: '#ea580c' },
+      // Mbeya
+      { name: 'MUST', area: 'Iyunga, Mbeya', lat: -8.9090, lng: 33.4540, icon: '🔬', color: '#1e40af' },
+      { name: 'Teofilo Kisanji', area: 'Mbeya', lat: -8.9050, lng: 33.4470, icon: '🎓', color: '#a855f7' },
+      // Iringa
+      { name: 'MUCE', area: 'Mkwawa, Iringa', lat: -7.7700, lng: 35.6900, icon: '📚', color: '#0891b2' },
+      { name: 'RUCU', area: 'Iringa', lat: -7.7660, lng: 35.6950, icon: '✝️', color: '#7c2d12' },
+      { name: 'University of Iringa', area: 'Iringa', lat: -7.7700, lng: 35.7000, icon: '🎓', color: '#0f766e' },
+      // Tanga
+      { name: 'SEKOMU', area: 'Lushoto, Tanga', lat: -4.7900, lng: 38.2810, icon: '⛪', color: '#16a34a' },
+      { name: 'Eckernforde Tanga', area: 'Tanga', lat: -5.0700, lng: 39.0980, icon: '🌊', color: '#0e7490' },
+      // Zanzibar
+      { name: 'SUZA', area: 'Tunguu, Zanzibar', lat: -6.2570, lng: 39.2680, icon: '🏛️', color: '#dc2626' },
+      { name: 'Zanzibar University', area: 'Tunguu, Zanzibar', lat: -6.2580, lng: 39.2710, icon: '🎓', color: '#0d9488' }
     ];
     const map = L.map('liveMap').setView([-6.5, 37.5], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

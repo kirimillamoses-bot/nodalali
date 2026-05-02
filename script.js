@@ -209,32 +209,115 @@ document.querySelectorAll('.tab').forEach(tab => {
 
 // ============== STUDENT HOUSING ==============
 const CAMPUSES = [
-  { id: 'udsm', name: 'UDSM (Mlimani)', city: 'Dar es Salaam', area: 'Mlimani', lat: -6.7787, lng: 39.2106, color: '#dc2626', icon: '🏛️' },
-  { id: 'ardhi', name: 'Ardhi University', city: 'Dar es Salaam', area: 'Ubungo', lat: -6.7720, lng: 39.2092, color: '#0f766e', icon: '🏗️' },
-  { id: 'ifm', name: 'IFM', city: 'Dar es Salaam', area: 'Shaaban Robert', lat: -6.8120, lng: 39.2890, color: '#1e40af', icon: '💼' },
-  { id: 'muhas', name: 'MUHAS', city: 'Dar es Salaam', area: 'Upanga', lat: -6.8085, lng: 39.2814, color: '#7c3aed', icon: '⚕️' },
-  { id: 'sua', name: 'SUA', city: 'Morogoro', area: 'Mazimbu', lat: -6.8489, lng: 37.6597, color: '#16a34a', icon: '🌾' },
-  { id: 'udom', name: 'UDOM', city: 'Dodoma', area: 'Chimwaga', lat: -6.1881, lng: 35.7900, color: '#f59e0b', icon: '🏛️' },
-  { id: 'mzumbe', name: 'Mzumbe University', city: 'Morogoro', area: 'Mzumbe', lat: -6.9128, lng: 37.4769, color: '#0891b2', icon: '📚' },
-  { id: 'cbe', name: 'CBE Dodoma', city: 'Dodoma', area: 'CBE', lat: -6.1714, lng: 35.7401, color: '#be185d', icon: '💼' }
+  // ── DAR ES SALAAM (15) ──
+  { id: 'udsm',     name: 'UDSM (Mlimani)',                 city: 'Dar es Salaam', area: 'Mlimani',          lat: -6.7787, lng: 39.2106, color: '#dc2626', icon: '🏛️' },
+  { id: 'ardhi',    name: 'Ardhi University (ARU)',          city: 'Dar es Salaam', area: 'Ubungo',           lat: -6.7720, lng: 39.2092, color: '#0f766e', icon: '🏗️' },
+  { id: 'muhas',    name: 'MUHAS',                          city: 'Dar es Salaam', area: 'Upanga',           lat: -6.8085, lng: 39.2814, color: '#7c3aed', icon: '⚕️' },
+  { id: 'ifm',      name: 'IFM',                            city: 'Dar es Salaam', area: 'Shaaban Robert',   lat: -6.8120, lng: 39.2890, color: '#1e40af', icon: '💼' },
+  { id: 'out',      name: 'Open University (OUT)',           city: 'Dar es Salaam', area: 'Kinondoni',        lat: -6.7720, lng: 39.2390, color: '#0891b2', icon: '📖' },
+  { id: 'duce',     name: 'DUCE',                           city: 'Dar es Salaam', area: 'Chang\'ombe',       lat: -6.8400, lng: 39.2700, color: '#be185d', icon: '🎓' },
+  { id: 'kiu-dar',  name: 'KIU Dar es Salaam',              city: 'Dar es Salaam', area: 'Mikocheni',        lat: -6.7600, lng: 39.2540, color: '#ea580c', icon: '🌍' },
+  { id: 'hkmu',     name: 'Hubert Kairuki Memorial Univ',    city: 'Dar es Salaam', area: 'Mikocheni',        lat: -6.7640, lng: 39.2560, color: '#9333ea', icon: '⚕️' },
+  { id: 'imtu',     name: 'IMTU',                           city: 'Dar es Salaam', area: 'Mbweni',           lat: -6.6800, lng: 39.1800, color: '#16a34a', icon: '⚕️' },
+  { id: 'aku-dar',  name: 'Aga Khan University',            city: 'Dar es Salaam', area: 'Upanga',           lat: -6.8060, lng: 39.2810, color: '#0d9488', icon: '⚕️' },
+  { id: 'nit',      name: 'NIT (Transport)',                 city: 'Dar es Salaam', area: 'Mabibo',           lat: -6.8390, lng: 39.2280, color: '#1d4ed8', icon: '🚌' },
+  { id: 'st-joseph',name: 'St Joseph University',           city: 'Dar es Salaam', area: 'Boko',             lat: -6.7250, lng: 39.1900, color: '#7c2d12', icon: '✝️' },
+  { id: 'tia-dar',  name: 'Tanzania Institute of Acc (TIA)', city: 'Dar es Salaam', area: 'Bibi Titi',        lat: -6.8120, lng: 39.2790, color: '#a16207', icon: '📊' },
+  { id: 'cbe-dar',  name: 'CBE Dar es Salaam',              city: 'Dar es Salaam', area: 'Bibi Titi',        lat: -6.8170, lng: 39.2810, color: '#be185d', icon: '💼' },
+  { id: 'iaa-dar',  name: 'IAA Dar Centre',                 city: 'Dar es Salaam', area: 'Posta',            lat: -6.8150, lng: 39.2895, color: '#9a3412', icon: '📊' },
+
+  // ── DODOMA (4) ──
+  { id: 'udom',     name: 'UDOM (University of Dodoma)',     city: 'Dodoma',        area: 'Chimwaga',         lat: -6.1881, lng: 35.7900, color: '#f59e0b', icon: '🏛️' },
+  { id: 'cbe-dod',  name: 'CBE Dodoma',                     city: 'Dodoma',        area: 'CBE',              lat: -6.1714, lng: 35.7401, color: '#be185d', icon: '💼' },
+  { id: 'irdp',     name: 'IRDP (Rural Development)',        city: 'Dodoma',        area: 'Nala',             lat: -6.1530, lng: 35.7510, color: '#16a34a', icon: '🌱' },
+  { id: 'sjut',     name: "St John's University (SJUT)",     city: 'Dodoma',        area: 'Mlimwa',           lat: -6.1640, lng: 35.7270, color: '#7c2d12', icon: '✝️' },
+
+  // ── MOROGORO (3) ──
+  { id: 'sua',      name: 'SUA (Sokoine Agriculture)',       city: 'Morogoro',      area: 'Mazimbu',          lat: -6.8489, lng: 37.6597, color: '#16a34a', icon: '🌾' },
+  { id: 'mzumbe',   name: 'Mzumbe University',              city: 'Morogoro',      area: 'Mzumbe',           lat: -6.9128, lng: 37.4769, color: '#0891b2', icon: '📚' },
+  { id: 'jordan',   name: 'Jordan University College',       city: 'Morogoro',      area: 'Morogoro',         lat: -6.8240, lng: 37.6610, color: '#a855f7', icon: '🎓' },
+
+  // ── ARUSHA (4) ──
+  { id: 'nm-aist',  name: 'NM-AIST (Mandela Institute)',     city: 'Arusha',        area: 'Tengeru',          lat: -3.3914, lng: 36.7965, color: '#dc2626', icon: '🔬' },
+  { id: 'makumira', name: 'Tumaini Univ Makumira',          city: 'Arusha',        area: 'Makumira',         lat: -3.3650, lng: 36.8030, color: '#0f766e', icon: '⛪' },
+  { id: 'iaa',      name: 'IAA (Inst of Accountancy)',       city: 'Arusha',        area: 'Njiro',            lat: -3.4050, lng: 36.7050, color: '#9a3412', icon: '📊' },
+  { id: 'ua',       name: 'University of Arusha',            city: 'Arusha',        area: 'Usa River',        lat: -3.3700, lng: 36.8550, color: '#0e7490', icon: '🎓' },
+
+  // ── MOSHI / KILIMANJARO (4) ──
+  { id: 'kcmc',     name: 'KCMC (Christian Medical)',        city: 'Moshi',         area: 'Moshi',            lat: -3.3520, lng: 37.3360, color: '#7c3aed', icon: '⚕️' },
+  { id: 'mocu',     name: 'MoCU (Co-operative)',            city: 'Moshi',         area: 'Sokoine Rd',       lat: -3.3475, lng: 37.3380, color: '#16a34a', icon: '💰' },
+  { id: 'stefano',  name: 'Stefano Moshi Memorial',         city: 'Moshi',         area: 'Mawenzi',          lat: -3.3650, lng: 37.3250, color: '#a16207', icon: '⛪' },
+  { id: 'mwecau',   name: 'Mwenge Catholic University',     city: 'Moshi',         area: 'Mwenge',           lat: -3.3540, lng: 37.3420, color: '#7c2d12', icon: '✝️' },
+
+  // ── MWANZA (3) ──
+  { id: 'saut',     name: 'SAUT (St Augustine)',            city: 'Mwanza',        area: 'Malimbe',          lat: -2.5350, lng: 32.9180, color: '#7c2d12', icon: '✝️' },
+  { id: 'bugando',  name: 'CUHAS Bugando',                  city: 'Mwanza',        area: 'Bugando',          lat: -2.5160, lng: 32.9050, color: '#7c3aed', icon: '⚕️' },
+  { id: 'kiu-mw',   name: 'KIU Mwanza',                     city: 'Mwanza',        area: 'Mwanza',           lat: -2.5180, lng: 32.9220, color: '#ea580c', icon: '🌍' },
+
+  // ── MBEYA (2) ──
+  { id: 'must',     name: 'MUST (Science & Tech)',          city: 'Mbeya',         area: 'Iyunga',           lat: -8.9090, lng: 33.4540, color: '#1e40af', icon: '🔬' },
+  { id: 'teku',     name: 'Teofilo Kisanji University',     city: 'Mbeya',         area: 'Mbeya',            lat: -8.9050, lng: 33.4470, color: '#a855f7', icon: '🎓' },
+
+  // ── IRINGA (3) ──
+  { id: 'muce',     name: 'MUCE (Mkwawa Education)',        city: 'Iringa',        area: 'Mkwawa',           lat: -7.7700, lng: 35.6900, color: '#0891b2', icon: '📚' },
+  { id: 'rucu',     name: 'RUCU (Ruaha Catholic)',          city: 'Iringa',        area: 'Iringa',           lat: -7.7660, lng: 35.6950, color: '#7c2d12', icon: '✝️' },
+  { id: 'uoi',      name: 'University of Iringa',            city: 'Iringa',        area: 'Iringa',           lat: -7.7700, lng: 35.7000, color: '#0f766e', icon: '🎓' },
+
+  // ── TANGA / LUSHOTO (2) ──
+  { id: 'sekomu',   name: 'SEKOMU (Sebastian Kolowa)',      city: 'Tanga',         area: 'Lushoto',          lat: -4.7900, lng: 38.2810, color: '#16a34a', icon: '⛪' },
+  { id: 'eckernfor',name: 'Eckernforde Tanga University',   city: 'Tanga',         area: 'Tanga',            lat: -5.0700, lng: 39.0980, color: '#0e7490', icon: '🌊' },
+
+  // ── ZANZIBAR (2) ──
+  { id: 'suza',     name: 'SUZA (State Univ Zanzibar)',     city: 'Zanzibar',      area: 'Tunguu',           lat: -6.2570, lng: 39.2680, color: '#dc2626', icon: '🏛️' },
+  { id: 'zu',       name: 'Zanzibar University',            city: 'Zanzibar',      area: 'Tunguu',           lat: -6.2580, lng: 39.2710, color: '#0d9488', icon: '🎓' }
 ];
+
+let activeCity = 'all';
 
 let activeCampus = null;
 
 function renderCampuses() {
   const grid = document.getElementById('campusGrid');
-  grid.innerHTML = CAMPUSES.map(c => `
-    <button class="campus-card ${activeCampus?.id === c.id ? 'active' : ''}"
-            style="border-color:${c.color}"
-            onclick="selectCampus('${c.id}')">
-      <div class="campus-icon" style="background:${c.color}">${c.icon}</div>
-      <div class="campus-name">${c.name}</div>
-      <div class="campus-city">${c.area}, ${c.city}</div>
-    </button>
-  `).join('');
+  const cities = ['all', ...new Set(CAMPUSES.map(c => c.city))];
+
+  // City filter chips
+  const filterHtml = `
+    <div class="city-filter">
+      ${cities.map(city => `
+        <button class="city-chip ${activeCity === city ? 'active' : ''}"
+                onclick="filterByCity('${city}')">
+          ${city === 'all' ? `🇹🇿 Vyote (${CAMPUSES.length})` : `${city} (${CAMPUSES.filter(c => c.city === city).length})`}
+        </button>
+      `).join('')}
+    </div>
+  `;
+
+  // Filter campuses
+  const filtered = activeCity === 'all' ? CAMPUSES : CAMPUSES.filter(c => c.city === activeCity);
+
+  grid.innerHTML = filterHtml + `
+    <div class="campus-cards-grid">
+      ${filtered.map(c => `
+        <button class="campus-card ${activeCampus?.id === c.id ? 'active' : ''}"
+                style="border-color:${c.color}"
+                onclick="selectCampus('${c.id}')">
+          <div class="campus-icon" style="background:${c.color}">${c.icon}</div>
+          <div class="campus-name">${c.name}</div>
+          <div class="campus-city">${c.area}, ${c.city}</div>
+        </button>
+      `).join('')}
+    </div>
+  `;
+
   if (activeCampus) renderCampusListings();
   else document.getElementById('campusListings').innerHTML = '<p class="hint" style="text-align:center;padding:30px">👆 Chagua chuo chako kuona nyumba za karibu</p>';
 }
+
+function filterByCity(city) {
+  activeCity = city;
+  renderCampuses();
+}
+window.filterByCity = filterByCity;
 
 function selectCampus(id) {
   activeCampus = CAMPUSES.find(c => c.id === id);
