@@ -1,6 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
-  <rect width="192" height="192" rx="32" fill="#0f766e"/>
-  <path d="M96 36 L36 86 L52 86 L52 152 L80 152 L80 110 L112 110 L112 152 L140 152 L140 86 L156 86 Z" fill="#fff"/>
-  <circle cx="140" cy="56" r="18" fill="#dc2626"/>
-  <line x1="128" y1="44" x2="152" y2="68" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#065f5b"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity=".25"/>
+    </filter>
+  </defs>
+
+  <!-- background tile (rounded square) -->
+  <rect width="200" height="200" rx="44" fill="url(#bg)"/>
+
+  <!-- TZ flag accent stripe (subtle, diagonal) -->
+  <path d="M0,160 L40,200 L200,200 L200,180 Z" fill="#1eb53a" opacity=".25"/>
+  <path d="M0,180 L20,200 L200,200 L200,190 Z" fill="#fcd34d" opacity=".35"/>
+
+  <!-- sun behind house -->
+  <circle cx="148" cy="58" r="22" fill="#fbbf24" opacity=".9"/>
+  <g stroke="#fbbf24" stroke-width="3" stroke-linecap="round" opacity=".7">
+    <line x1="148" y1="22" x2="148" y2="32"/>
+    <line x1="180" y1="58" x2="190" y2="58"/>
+    <line x1="170" y1="38" x2="178" y2="30"/>
+    <line x1="170" y1="78" x2="178" y2="86"/>
+  </g>
+
+  <!-- palm tree (left, distinctive Tanzanian touch) -->
+  <g filter="url(#shadow)">
+    <path d="M40,170 Q42,140 38,110" stroke="#78350f" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <g fill="#16a34a">
+      <path d="M38,108 Q20,95 8,102 Q22,108 38,114 Z"/>
+      <path d="M38,108 Q56,95 68,102 Q54,108 38,114 Z"/>
+      <path d="M38,108 Q28,90 22,76 Q34,90 40,110 Z"/>
+      <path d="M38,108 Q48,90 54,76 Q42,90 36,110 Z"/>
+    </g>
+    <circle cx="32" cy="108" r="3" fill="#fcd34d"/>
+    <circle cx="44" cy="106" r="3" fill="#fcd34d"/>
+    <circle cx="38" cy="113" r="3" fill="#fcd34d"/>
+  </g>
+
+  <!-- house body -->
+  <g filter="url(#shadow)">
+    <!-- roof (yellow/gold like TZ flag) -->
+    <path d="M100,52 L52,98 L148,98 Z" fill="url(#roof)"/>
+    <!-- wall -->
+    <rect x="62" y="98" width="76" height="64" fill="url(#wall)"/>
+    <!-- door -->
+    <rect x="90" y="120" width="20" height="42" rx="2" fill="#0f766e"/>
+    <circle cx="105" cy="142" r="1.5" fill="#fcd34d"/>
+    <!-- windows -->
+    <rect x="70" y="108" width="14" height="12" rx="1" fill="#7dd3fc"/>
+    <line x1="77" y1="108" x2="77" y2="120" stroke="#0369a1" stroke-width="1"/>
+    <line x1="70" y1="114" x2="84" y2="114" stroke="#0369a1" stroke-width="1"/>
+    <rect x="116" y="108" width="14" height="12" rx="1" fill="#7dd3fc"/>
+    <line x1="123" y1="108" x2="123" y2="120" stroke="#0369a1" stroke-width="1"/>
+    <line x1="116" y1="114" x2="130" y2="114" stroke="#0369a1" stroke-width="1"/>
+    <!-- chimney -->
+    <rect x="120" y="64" width="10" height="18" fill="#dc2626"/>
+  </g>
+
+  <!-- "No Broker" badge (red circle with line through suit-person) -->
+  <g filter="url(#shadow)">
+    <circle cx="156" cy="148" r="26" fill="#dc2626"/>
+    <circle cx="156" cy="148" r="22" fill="none" stroke="#fff" stroke-width="3"/>
+    <!-- mini person silhouette -->
+    <circle cx="156" cy="142" r="4" fill="#fff"/>
+    <path d="M148,160 Q148,150 156,150 Q164,150 164,160 Z" fill="#fff"/>
+    <!-- diagonal slash -->
+    <line x1="140" y1="132" x2="172" y2="164" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  </g>
 </svg>
