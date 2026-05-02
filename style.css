@@ -28,19 +28,23 @@ body {
   overflow: hidden;
   background: var(--primary);
 }
+.app-header { min-height: 140px; }
 .hero-bg {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center;
-  opacity: .55;
+  background-position: center 40%;
   z-index: 0;
+  filter: saturate(1.1) contrast(1.05);
 }
 .app-header::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15,118,110,.35) 0%, rgba(15,118,110,.85) 100%);
+  background: linear-gradient(180deg,
+    rgba(15,23,42,.15) 0%,
+    rgba(15,118,110,.55) 60%,
+    rgba(15,118,110,.95) 100%);
   z-index: 1;
 }
 .header-row {
