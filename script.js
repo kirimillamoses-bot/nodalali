@@ -237,30 +237,99 @@ function renderMyListings() {
 }
 
 // ============== DETAIL MODAL ==============
-function openDetail(id) {
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function openDetail(id) {
   const l = allListings.find(x => x.id === id);
   if (!l) return;
-  const wa = l.whatsapp.replace(/\D/g, '');
+  const wa = String(l.whatsapp || '').replace(/\D/g, '');
   const msg = encodeURIComponent(`Habari, nimevutiwa na nyumba yako "${l.title}" kwenye Nodalali.`);
+  const trustBadge = getTrustBadge(l);
+
+  // Check report count
+  let reportCount = 0;
+  try {
+    const r = await fetch(`/api/reports/${id}`);
+    reportCount = (await r.json()).count || 0;
+  } catch {}
+  const flagged = reportCount >= 3;
+
   document.getElementById('detailBody').innerHTML = `
-    <img src="${(l.images && l.images[0]) || 'icon.svg'}" class="detail-img" />
+    ${flagged ? `<div class="warn-banner">⚠️ Tangazo hili limeripotiwa na watumiaji ${reportCount}. Kuwa makini sana!</div>` : ''}
+    <img src="${escapeHtml((l.images && l.images[0]) || 'icon-192.png')}" class="detail-img" />
+    <div class="trust-row">${trustBadge}</div>
     <div class="card-price">${formatPrice(l.price)}</div>
-    <h2 style="margin:8px 0">${l.title}</h2>
-    <p class="hint">📍 ${l.area}, ${l.city}</p>
+    <h2 style="margin:8px 0">${escapeHtml(l.title)}</h2>
+    <p class="hint">📍 ${escapeHtml(l.area)}, ${escapeHtml(l.city)}</p>
     <div class="card-meta">
       <span>🛏 Vyumba ${l.bedrooms}</span>
       <span>🚿 Bafu ${l.bathrooms}</span>
-      <span>🏷 ${l.type}</span>
+      <span>🏷 ${escapeHtml(l.type)}</span>
     </div>
-    <p style="margin:16px 0;line-height:1.5">${l.description || ''}</p>
+    <p style="margin:16px 0;line-height:1.5">${escapeHtml(l.description || '')}</p>
+
+    <div class="safety-box">
+      <strong>🛡️ KANUNI ZA USALAMA</strong>
+      <ul>
+        <li>✅ Tembelea nyumba kabla ya kulipa</li>
+        <li>✅ Kutana na mwenye nyumba ana kwa ana</li>
+        <li>❌ USIWAHI kulipa amana kabla ya kuona nyumba</li>
+        <li>❌ USIWAHI kutuma OTP au password yako</li>
+        <li>❌ USIWAHI kulipa kwa Bitcoin, gift cards, au Western Union</li>
+      </ul>
+    </div>
+
     <div class="contact-row">
       <a href="https://wa.me/${wa}?text=${msg}" target="_blank" class="btn-wa">💬 WhatsApp</a>
       <a href="tel:+${wa}" class="btn-call">📞 Piga simu</a>
     </div>
-    <p class="hint" style="margin-top:12px">⚠️ Hakikisha unaona nyumba kwanza kabla ya kulipa chochote.</p>
+    <button class="btn-report" onclick="openReport('${id}')">🚩 Ripoti tangazo hili</button>
   `;
   document.getElementById('detailModal').classList.add('open');
 }
+
+function getTrustBadge(l) {
+  const badges = [];
+  if (l.verified) badges.push('<span class="badge-trust verified">✓ Verified</span>');
+  if (l.featured) badges.push('<span class="badge-trust featured">⭐ Featured</span>');
+  const ageMs = Date.now() - (l.createdAt || Date.now());
+  const ageDays = ageMs / (1000 * 60 * 60 * 24);
+  if (ageDays < 1) badges.push('<span class="badge-trust new">🆕 Mpya</span>');
+  if (!l.verified && ageDays < 0.1) badges.push('<span class="badge-trust unverified">⚠ Haijathibitishwa</span>');
+  return badges.join(' ');
+}
+
+async function openReport(listingId) {
+  const reasons = [
+    'Ni utapeli (scam)',
+    'Picha za uongo',
+    'Bei sio sahihi',
+    'Mwenye nyumba haisemi ukweli',
+    'Tangazo limechelewa (lipo tayari kupanga)',
+    'Maudhui yasiyofaa',
+    'Mengineyo'
+  ];
+  const choice = prompt(`🚩 Sababu ya kuripoti tangazo hili?\n\n${reasons.map((r,i)=>`${i+1}. ${r}`).join('\n')}\n\nIngiza nambari (1-${reasons.length}):`);
+  if (!choice) return;
+  const reason = reasons[parseInt(choice)-1];
+  if (!reason) return toast('Chaguo si sahihi');
+
+  try {
+    const r = await fetch('/api/report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listingId, reporterId: currentUser?.uid || 'anon', reason })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      toast(`✓ Asante! Tangazo limeripotiwa (${data.reportCount} ripoti)`);
+      if (data.flagged) toast('⚠️ Tangazo sasa limeashiriwa kwa ukaguzi wa msimamizi');
+    } else toast('❌ ' + (data.error || 'Hitilafu'));
+  } catch (e) { toast('❌ Mtandao tatizo'); }
+}
+window.openReport = openReport;
 function closeDetail() { document.getElementById('detailModal').classList.remove('open'); }
 
 // ============== MAP ==============
@@ -343,6 +412,23 @@ document.getElementById('listingForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!currentUser) { toast('Ingia kwanza ili kutangaza'); openAuth(); return; }
   const fd = new FormData(e.target);
+
+  // ── SECURITY: server-side scam + block check before publishing ──
+  try {
+    const check = await fetch('/api/listings/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phone: fd.get('whatsapp'),
+        userId: currentUser.uid,
+        title: fd.get('title'),
+        description: fd.get('description')
+      })
+    });
+    const checkData = await check.json();
+    if (!check.ok) { toast('🛡️ ' + (checkData.error || 'Imekataliwa')); return; }
+  } catch (err) { console.warn('Security check skipped:', err); }
+
   const listing = {
     title: fd.get('title'),
     city: fd.get('city'),

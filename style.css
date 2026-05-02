@@ -293,6 +293,54 @@ main { padding: 16px; }
 
 .empty { text-align: center; padding: 40px 20px; color: var(--muted); }
 
+.warn-banner {
+  background: #fef2f2;
+  border: 2px solid #dc2626;
+  color: #7f1d1d;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.safety-box {
+  background: #fffbeb;
+  border: 2px solid #fbbf24;
+  border-radius: 10px;
+  padding: 14px;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.safety-box strong { display: block; color: #92400e; margin-bottom: 8px; font-size: 14px; }
+.safety-box ul { list-style: none; padding: 0; }
+.safety-box li { padding: 3px 0; color: #78350f; }
+
+.btn-report {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-report:hover { background: #fef2f2; }
+
+.trust-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge-trust {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+.badge-trust.verified { background: #dcfce7; color: #166534; }
+.badge-trust.featured { background: #fef3c7; color: #92400e; }
+.badge-trust.new { background: #dbeafe; color: #1e40af; }
+.badge-trust.unverified { background: #fee2e2; color: #991b1b; }
+
 .support-fab {
   position: fixed;
   bottom: 20px;
