@@ -38,7 +38,7 @@
   </nav>
 
   <main>
-    <!-- BROWSE -->
+    <!-- BROWSE (split view: listings + live map) -->
     <section id="browse" class="view active">
       <div class="filters">
         <input id="searchCity" placeholder="Mji au eneo (mfano: Mikocheni)" />
@@ -56,11 +56,17 @@
           <option value="1000000">Hadi 1,000,000</option>
           <option value="3000000">Hadi 3,000,000</option>
         </select>
+        <button id="toggleMapBtn" class="btn-ghost-dark" onclick="toggleMapView()">🗺️ Onyesha Ramani</button>
       </div>
-      <div id="listingsGrid" class="grid"></div>
+      <div class="split-view" id="splitView">
+        <div id="listingsGrid" class="grid"></div>
+        <div class="map-pane" id="mapPane">
+          <div id="leafletMapBrowse"></div>
+        </div>
+      </div>
     </section>
 
-    <!-- MAP -->
+    <!-- MAP (full screen) -->
     <section id="map" class="view">
       <div id="leafletMap"></div>
     </section>

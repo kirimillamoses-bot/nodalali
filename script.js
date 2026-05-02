@@ -270,6 +270,8 @@ async function openDetail(id) {
     </div>
     <p style="margin:16px 0;line-height:1.5">${escapeHtml(l.description || '')}</p>
 
+    ${(l.lat && l.lng) ? `<div id="detailMiniMap" class="detail-mini-map"></div>` : ''}
+
     <div class="safety-box">
       <strong>🛡️ KANUNI ZA USALAMA</strong>
       <ul>
@@ -288,6 +290,19 @@ async function openDetail(id) {
     <button class="btn-report" onclick="openReport('${id}')">🚩 Ripoti tangazo hili</button>
   `;
   document.getElementById('detailModal').classList.add('open');
+
+  // Render mini-map for this listing if coordinates exist
+  if (l.lat && l.lng) {
+    setTimeout(() => {
+      const el = document.getElementById('detailMiniMap');
+      if (!el || el._leaflet_id) return;
+      const miniMap = L.map('detailMiniMap', { zoomControl: false, scrollWheelZoom: false })
+        .setView([l.lat, l.lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(miniMap);
+      L.marker([l.lat, l.lng]).addTo(miniMap)
+        .bindPopup(`<strong>${escapeHtml(l.title)}</strong>`).openPopup();
+    }, 200);
+  }
 }
 
 function getTrustBadge(l) {
@@ -333,29 +348,71 @@ window.openReport = openReport;
 function closeDetail() { document.getElementById('detailModal').classList.remove('open'); }
 
 // ============== MAP ==============
+let browseMapInstance = null;
+let browseMapMarkers = [];
+
 function initMap() {
   if (mapInstance) { mapInstance.invalidateSize(); return; }
   mapInstance = L.map('leafletMap').setView([-6.7924, 39.2083], 11);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
+    maxZoom: 19, attribution: '© OpenStreetMap'
   }).addTo(mapInstance);
-  refreshMapMarkers();
+  refreshMapMarkers(mapInstance, mapMarkers);
 }
 
-function refreshMapMarkers() {
-  if (!mapInstance) return;
-  mapMarkers.forEach(m => mapInstance.removeLayer(m));
-  mapMarkers = [];
-  allListings.filter(l => l.lat && l.lng).forEach(l => {
-    const marker = L.marker([l.lat, l.lng]).addTo(mapInstance);
-    marker.bindPopup(`
-      <strong>${l.title}</strong><br>
-      ${formatPrice(l.price)}<br>
-      <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;">Ona zaidi →</a>
-    `);
-    mapMarkers.push(marker);
-  });
+function initBrowseMap() {
+  if (browseMapInstance) { browseMapInstance.invalidateSize(); return; }
+  browseMapInstance = L.map('leafletMapBrowse').setView([-6.7924, 39.2083], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19, attribution: '© OpenStreetMap'
+  }).addTo(browseMapInstance);
+  refreshMapMarkers(browseMapInstance, browseMapMarkers);
 }
+
+function refreshMapMarkers(map, markers) {
+  if (!map) return;
+  markers.forEach(m => map.removeLayer(m));
+  markers.length = 0;
+  const valid = allListings.filter(l => l.lat && l.lng);
+  valid.forEach(l => {
+    const priceShort = l.price >= 1000000
+      ? (l.price / 1000000).toFixed(1) + 'M'
+      : Math.round(l.price / 1000) + 'k';
+    const icon = L.divIcon({
+      className: 'price-marker',
+      html: `TZS ${priceShort}`,
+      iconSize: null
+    });
+    const marker = L.marker([l.lat, l.lng], { icon }).addTo(map);
+    marker.bindPopup(`
+      <div style="min-width:180px">
+        <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
+        <strong>${l.title}</strong><br>
+        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price)}</span><br>
+        <small>📍 ${l.area}, ${l.city}</small><br>
+        <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
+      </div>
+    `);
+    markers.push(marker);
+  });
+  if (valid.length) {
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.1));
+  }
+}
+
+function toggleMapView() {
+  const split = document.getElementById('splitView');
+  const btn = document.getElementById('toggleMapBtn');
+  split.classList.toggle('with-map');
+  if (split.classList.contains('with-map')) {
+    btn.textContent = '✕ Ficha Ramani';
+    setTimeout(initBrowseMap, 100);
+  } else {
+    btn.textContent = '🗺️ Onyesha Ramani';
+  }
+}
+window.toggleMapView = toggleMapView;
 
 // ============== IMAGE UPLOAD ==============
 let uploadedImages = [];
