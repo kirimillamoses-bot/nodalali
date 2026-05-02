@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="40%" stop-color="#fb923c"/>
+      <stop offset="80%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+    <linearGradient id="houseG2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+    <filter id="ds2"><feDropShadow dx="0" dy="8" stdDeviation="14" flood-opacity=".4"/></filter>
+    <filter id="ts2"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity=".5"/></filter>
+  </defs>
+
+  <rect width="1080" height="1920" fill="url(#bg2)"/>
+
+  <!-- Stars / sun -->
+  <circle cx="850" cy="200" r="80" fill="#fef3c7" opacity=".9"/>
+
+  <!-- TOP HEADLINE -->
+  <text x="540" y="240" text-anchor="middle" fill="#fff" font-family="Helvetica, Arial, sans-serif" font-weight="900" font-size="90" filter="url(#ts2)" letter-spacing="-2">
+    UMECHOKA NA
+  </text>
+  <text x="540" y="370" text-anchor="middle" fill="#fde047" font-family="Helvetica, Arial, sans-serif" font-weight="900" font-size="160" filter="url(#ts2)" letter-spacing="-4">
+    DALALI?
+  </text>
+
+  <!-- Cross-out person -->
+  <g filter="url(#ds2)">
+    <circle cx="540" cy="640" r="180" fill="#dc2626"/>
+    <circle cx="540" cy="640" r="160" fill="none" stroke="#fff" stroke-width="14"/>
+    <circle cx="540" cy="600" r="32" fill="#fff"/>
+    <path d="M480,720 Q480,660 540,660 Q600,660 600,720 Z" fill="#fff"/>
+    <line x1="420" y1="520" x2="660" y2="760" stroke="#fff" stroke-width="22" stroke-linecap="round"/>
+  </g>
+
+  <!-- House illustration -->
+  <g filter="url(#ds2)">
+    <path d="M540,920 L340,1100 L740,1100 Z" fill="#dc2626"/>
+    <rect x="370" y="1100" width="340" height="220" fill="url(#houseG2)"/>
+    <rect x="490" y="1180" width="80" height="140" rx="4" fill="#0f766e"/>
+    <rect x="498" y="1188" width="64" height="124" rx="3" fill="none" stroke="#fcd34d" stroke-width="2"/>
+    <circle cx="510" cy="1196" r="5" fill="#fcd34d"/>
+    <circle cx="550" cy="1196" r="5" fill="#fcd34d"/>
+    <circle cx="510" cy="1212" r="5" fill="#fcd34d"/>
+    <circle cx="550" cy="1212" r="5" fill="#fcd34d"/>
+    <rect x="400" y="1140" width="60" height="50" fill="#7dd3fc"/>
+    <line x1="430" y1="1140" x2="430" y2="1190" stroke="#0369a1" stroke-width="2"/>
+    <rect x="620" y="1140" width="60" height="50" fill="#7dd3fc"/>
+    <line x1="650" y1="1140" x2="650" y2="1190" stroke="#0369a1" stroke-width="2"/>
+    <line x1="540" y1="850" x2="540" y2="922" stroke="#374151" stroke-width="4"/>
+    <rect x="540" y="850" width="60" height="38" fill="#1eb53a"/>
+    <path d="M540,850 L600,888 L600,870 L562,850 Z" fill="#000"/>
+    <path d="M600,888 L575,888 L600,870 Z" fill="#fcd34d"/>
+  </g>
+
+  <!-- BIG CTA CARD -->
+  <rect x="60" y="1400" width="960" height="440" rx="32" fill="#fff" filter="url(#ds2)"/>
+
+  <text x="540" y="1490" text-anchor="middle" fill="#0f766e" font-family="Helvetica, Arial, sans-serif" font-weight="900" font-size="100" letter-spacing="-3">
+    NODALALI
+  </text>
+  <text x="540" y="1545" text-anchor="middle" fill="#dc2626" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="36">
+    Pangisha bila dalali 🇹🇿
+  </text>
+
+  <line x1="200" y1="1580" x2="880" y2="1580" stroke="#e2e8f0" stroke-width="2"/>
+
+  <text x="540" y="1640" text-anchor="middle" fill="#0f172a" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="42">
+    ✅ Wasiliana NA MWENYE NYUMBA
+  </text>
+  <text x="540" y="1700" text-anchor="middle" fill="#0f172a" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="42">
+    ✅ Hakuna commission
+  </text>
+  <text x="540" y="1760" text-anchor="middle" fill="#0f172a" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="42">
+    ✅ Lipa kwa M-Pesa
+  </text>
+  <text x="540" y="1820" text-anchor="middle" fill="#dc2626" font-family="Helvetica, Arial, sans-serif" font-weight="900" font-size="38">
+    📥 Pakua sasa!
+  </text>
+</svg>

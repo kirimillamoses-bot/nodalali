@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="35%" stop-color="#fb923c"/>
+      <stop offset="75%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </linearGradient>
+    <linearGradient id="houseG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+    <filter id="ds"><feDropShadow dx="0" dy="6" stdDeviation="10" flood-opacity=".35"/></filter>
+    <filter id="ts"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-opacity=".5"/></filter>
+  </defs>
+
+  <rect width="1080" height="1080" fill="url(#bg)"/>
+
+  <!-- Sun -->
+  <circle cx="850" cy="280" r="120" fill="#fef3c7" opacity=".95"/>
+  <circle cx="850" cy="280" r="90" fill="#fde047"/>
+
+  <!-- Kilimanjaro -->
+  <path d="M0,560 L150,440 L280,500 L420,360 L560,460 L700,400 L820,500 L960,440 L1080,560 L1080,620 L0,620 Z" fill="#7f1d1d" opacity=".5"/>
+  <path d="M380,358 L440,340 L500,358" stroke="#fff" stroke-width="6" fill="none" opacity=".8"/>
+
+  <!-- Ocean -->
+  <rect y="620" width="1080" height="40" fill="#0e7490"/>
+
+  <!-- Ground -->
+  <rect y="660" width="1080" height="200" fill="#16a34a"/>
+  <rect y="660" width="1080" height="20" fill="#15803d"/>
+
+  <!-- Palm left -->
+  <g filter="url(#ds)">
+    <path d="M120,860 Q124,720 110,600" stroke="#78350f" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <g fill="#15803d">
+      <path d="M110,596 Q60,560 20,575 Q60,595 110,610 Z"/>
+      <path d="M110,596 Q160,560 200,575 Q160,595 110,610 Z"/>
+      <path d="M110,596 Q80,540 60,490 Q100,540 116,604 Z"/>
+      <path d="M110,596 Q140,540 160,490 Q120,540 104,604 Z"/>
+    </g>
+    <circle cx="95" cy="595" r="6" fill="#fcd34d"/>
+    <circle cx="125" cy="600" r="6" fill="#fcd34d"/>
+  </g>
+
+  <!-- Palm right -->
+  <g filter="url(#ds)">
+    <path d="M970,860 Q974,720 960,620" stroke="#78350f" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <g fill="#16a34a">
+      <path d="M960,616 Q920,580 890,592 Q920,612 960,628 Z"/>
+      <path d="M960,616 Q1000,580 1030,592 Q1000,612 960,628 Z"/>
+      <path d="M960,616 Q940,560 925,520 Q955,560 966,624 Z"/>
+    </g>
+  </g>
+
+  <!-- Main house with TZ flag -->
+  <g filter="url(#ds)">
+    <path d="M540,420 L380,580 L700,580 Z" fill="#dc2626"/>
+    <rect x="400" y="580" width="280" height="180" fill="url(#houseG)"/>
+    <!-- Zanzibar door -->
+    <rect x="510" y="640" width="60" height="120" rx="4" fill="#0f766e"/>
+    <rect x="516" y="646" width="48" height="108" rx="3" fill="none" stroke="#fcd34d" stroke-width="2"/>
+    <circle cx="528" cy="652" r="4" fill="#fcd34d"/>
+    <circle cx="552" cy="652" r="4" fill="#fcd34d"/>
+    <circle cx="528" cy="664" r="4" fill="#fcd34d"/>
+    <circle cx="552" cy="664" r="4" fill="#fcd34d"/>
+    <circle cx="528" cy="676" r="4" fill="#fcd34d"/>
+    <circle cx="552" cy="676" r="4" fill="#fcd34d"/>
+    <!-- windows -->
+    <rect x="430" y="610" width="50" height="44" rx="3" fill="#7dd3fc"/>
+    <line x1="455" y1="610" x2="455" y2="654" stroke="#0369a1" stroke-width="2"/>
+    <line x1="430" y1="632" x2="480" y2="632" stroke="#0369a1" stroke-width="2"/>
+    <rect x="600" y="610" width="50" height="44" rx="3" fill="#7dd3fc"/>
+    <line x1="625" y1="610" x2="625" y2="654" stroke="#0369a1" stroke-width="2"/>
+    <line x1="600" y1="632" x2="650" y2="632" stroke="#0369a1" stroke-width="2"/>
+    <!-- Flag -->
+    <line x1="540" y1="360" x2="540" y2="425" stroke="#374151" stroke-width="4"/>
+    <rect x="540" y="360" width="50" height="32" fill="#1eb53a"/>
+    <path d="M540,360 L590,392 L590,376 L560,360 Z" fill="#000"/>
+    <path d="M590,392 L568,392 L590,376 Z" fill="#fcd34d"/>
+  </g>
+
+  <!-- TOP TEXT -->
+  <text x="540" y="120" text-anchor="middle" fill="#fff" font-family="Helvetica, Arial, sans-serif" font-weight="900" font-size="78" filter="url(#ts)" letter-spacing="-2">
+    PANGISHA NYUMBA
+  </text>
+  <text x="540" y="220" text-anchor="middle" fill="#fde047" font-family="Helvetica, Arial, sans-serif" font-weight="900" font-size="120" filter="url(#ts)" letter-spacing="-3">
+    BILA DALALI!
+  </text>
+
+  <!-- BOTTOM CARD -->
+  <rect x="60" y="880" width="960" height="160" rx="24" fill="#fff" filter="url(#ds)"/>
+
+  <!-- App name -->
+  <text x="540" y="940" text-anchor="middle" fill="#0f766e" font-family="Helvetica, Arial, sans-serif" font-weight="900" font-size="64" letter-spacing="-2">
+    🏠 NODALALI
+  </text>
+
+  <!-- Sub -->
+  <text x="540" y="985" text-anchor="middle" fill="#0f172a" font-family="Helvetica, Arial, sans-serif" font-weight="600" font-size="28">
+    Wasiliana na mwenye nyumba moja kwa moja
+  </text>
+
+  <!-- Bullets -->
+  <text x="540" y="1020" text-anchor="middle" fill="#dc2626" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="24">
+    ✓ Hakuna commission   ✓ M-Pesa   ✓ TZ nzima
+  </text>
+</svg>

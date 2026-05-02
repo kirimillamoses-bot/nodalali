@@ -1,5 +1,5 @@
-const CACHE = 'nodalali-v1';
-const ASSETS = ['/', '/index.html', '/style.css', '/script.js', '/manifest.json', '/icon.svg'];
+const CACHE = 'nodalali-v2';
+const ASSETS = ['/', '/index.html', '/style.css', '/script.js', '/manifest.json', '/icon.svg', '/hero.svg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
