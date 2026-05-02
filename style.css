@@ -257,3 +257,32 @@ main { padding: 16px; }
 .toast.show { opacity: 1; }
 
 .empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+
+.image-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.image-preview .thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background: #e2e8f0 center/cover no-repeat;
+}
+.image-preview .thumb button {
+  position: absolute;
+  top: 2px; right: 2px;
+  background: rgba(0,0,0,.6);
+  color: #fff;
+  border: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+}
+.upload-progress {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}

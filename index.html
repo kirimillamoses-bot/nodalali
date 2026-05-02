@@ -117,8 +117,9 @@
         <label>Maelezo
           <textarea name="description" rows="4" placeholder="Eleza nyumba: maji, umeme, parking, security..."></textarea>
         </label>
-        <label>Picha (URLs, tenganisha kwa koma)
-          <textarea name="images" rows="2" placeholder="https://... , https://..."></textarea>
+        <label>Picha za nyumba (chagua hadi 5)
+          <input type="file" id="imageUpload" accept="image/*" multiple />
+          <div id="imagePreview" class="image-preview"></div>
         </label>
         <div class="row">
           <label>Latitude (hiari)

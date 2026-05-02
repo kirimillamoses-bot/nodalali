@@ -288,6 +288,56 @@ function refreshMapMarkers() {
   });
 }
 
+// ============== IMAGE UPLOAD ==============
+let uploadedImages = [];
+
+const imageUploadInput = document.getElementById('imageUpload');
+const imagePreviewEl = document.getElementById('imagePreview');
+
+if (imageUploadInput) {
+  imageUploadInput.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files).slice(0, 5 - uploadedImages.length);
+    for (const file of files) {
+      if (file.size > 5 * 1024 * 1024) { toast('Picha kubwa sana (max 5MB): ' + file.name); continue; }
+      const compressed = await compressImage(file);
+      uploadedImages.push(compressed);
+    }
+    renderImagePreviews();
+    e.target.value = '';
+  });
+}
+
+function renderImagePreviews() {
+  if (!imagePreviewEl) return;
+  imagePreviewEl.innerHTML = uploadedImages.map((src, i) => `
+    <div class="thumb" style="background-image:url('${src}')">
+      <button type="button" onclick="removeImage(${i})">✕</button>
+    </div>
+  `).join('');
+}
+window.removeImage = (i) => { uploadedImages.splice(i, 1); renderImagePreviews(); };
+
+function compressImage(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 1200;
+        let w = img.width, h = img.height;
+        if (w > h && w > max) { h = h * max / w; w = max; }
+        else if (h > max) { w = w * max / h; h = max; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.7));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 // ============== POST LISTING ==============
 document.getElementById('listingForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -302,7 +352,7 @@ document.getElementById('listingForm').addEventListener('submit', async (e) => {
     price: Number(fd.get('price')),
     type: fd.get('type'),
     description: fd.get('description'),
-    images: fd.get('images').split(',').map(s => s.trim()).filter(Boolean),
+    images: [...uploadedImages],
     lat: fd.get('lat') ? Number(fd.get('lat')) : null,
     lng: fd.get('lng') ? Number(fd.get('lng')) : null,
     whatsapp: fd.get('whatsapp'),
@@ -323,6 +373,8 @@ document.getElementById('listingForm').addEventListener('submit', async (e) => {
 
   allListings.unshift(listing);
   e.target.reset();
+  uploadedImages = [];
+  renderImagePreviews();
   document.querySelector('[data-tab="browse"]').click();
   renderListings();
   refreshMapMarkers();
