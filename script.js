@@ -418,6 +418,10 @@ let isSignup = false;
 
 function openAuth() { authModal.classList.add('open'); }
 function closeAuth() { authModal.classList.remove('open'); }
+function openSupport() { document.getElementById('supportModal').classList.add('open'); }
+function closeSupport() { document.getElementById('supportModal').classList.remove('open'); }
+window.openSupport = openSupport;
+window.closeSupport = closeSupport;
 window.closeAuth = closeAuth;
 window.closeDetail = closeDetail;
 window.openDetail = openDetail;
