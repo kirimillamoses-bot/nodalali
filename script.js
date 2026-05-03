@@ -500,6 +500,8 @@ document.querySelectorAll('.tab').forEach(tab => {
     if (tab.dataset.tab === 'my-listings') renderMyListings();
     if (tab.dataset.tab === 'students') renderCampuses();
     if (tab.dataset.tab === 'nearme') initNearMe();
+    if (tab.dataset.tab === 'browse-gh') renderCategory('stay');
+    if (tab.dataset.tab === 'browse-lounge') renderCategory('lounge');
   });
 });
 
@@ -1055,12 +1057,16 @@ function listingCard(l) {
   `;
 }
 
+// Long-term rent only (excludes guesthouse, bnb, lounge)
+const RENT_TYPES = ['house', 'apartment', 'room', 'self', 'commercial'];
+
 function renderListings() {
   const city = document.getElementById('searchCity').value.toLowerCase();
   const beds = document.getElementById('filterBedrooms').value;
   const maxPrice = document.getElementById('filterPrice').value;
 
   const filtered = allListings.filter(l => {
+    if (!RENT_TYPES.includes(l.type)) return false;
     if (city && !(`${l.city} ${l.area}`.toLowerCase().includes(city))) return false;
     if (beds && (beds === '4' ? l.bedrooms < 4 : l.bedrooms != beds)) return false;
     if (maxPrice && l.price > Number(maxPrice)) return false;
@@ -1072,6 +1078,39 @@ function renderListings() {
     ? filtered.map(listingCard).join('')
     : '<div class="empty">Hakuna nyumba zilizopatikana. Jaribu vichujio vingine.</div>';
 }
+
+function renderCategory(category) {
+  if (category === 'stay') {
+    const city = document.getElementById('ghSearchCity').value.toLowerCase();
+    const type = document.getElementById('ghFilterType').value;
+    const maxPrice = document.getElementById('ghFilterPrice').value;
+    const filtered = allListings.filter(l => {
+      if (!['guesthouse', 'bnb'].includes(l.type)) return false;
+      if (type && l.type !== type) return false;
+      if (city && !(`${l.city} ${l.area}`.toLowerCase().includes(city))) return false;
+      if (maxPrice && l.price > Number(maxPrice)) return false;
+      return true;
+    });
+    const grid = document.getElementById('ghGrid');
+    grid.innerHTML = filtered.length
+      ? filtered.map(listingCard).join('')
+      : '<div class="empty">Hakuna guest house/B&B kilichopatikana.</div>';
+  } else if (category === 'lounge') {
+    const city = document.getElementById('loSearchCity').value.toLowerCase();
+    const maxPrice = document.getElementById('loFilterPrice').value;
+    const filtered = allListings.filter(l => {
+      if (l.type !== 'lounge') return false;
+      if (city && !(`${l.city} ${l.area}`.toLowerCase().includes(city))) return false;
+      if (maxPrice && l.price > Number(maxPrice)) return false;
+      return true;
+    });
+    const grid = document.getElementById('loGrid');
+    grid.innerHTML = filtered.length
+      ? filtered.map(listingCard).join('')
+      : '<div class="empty">Hakuna lounge iliyopatikana.</div>';
+  }
+}
+window.renderCategory = renderCategory;
 
 ['searchCity', 'filterBedrooms', 'filterPrice'].forEach(id => {
   document.getElementById(id).addEventListener('input', renderListings);

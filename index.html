@@ -34,18 +34,22 @@
   </header>
 
   <nav class="tabs">
-    <button class="tab active" data-tab="browse">🔍 Tafuta</button>
-    <button class="tab" data-tab="map">🗺️ Ramani</button>
-    <button class="tab" data-tab="favorites">❤️ Pendwa</button>
+    <button class="tab active" data-tab="browse" data-category="rent">🏠 Nyumba</button>
+    <button class="tab" data-tab="browse-gh" data-category="stay">🏨 Guest House</button>
+    <button class="tab" data-tab="browse-lounge" data-category="lounge">🎉 Lounge</button>
     <button class="tab" data-tab="nearme">📍 Karibu Nami</button>
     <button class="tab" data-tab="students">🎓 Wanafunzi</button>
+    <button class="tab" data-tab="favorites">❤️ Pendwa</button>
     <button class="tab" data-tab="my-listings">🏠 Zangu</button>
     <button class="tab" data-tab="post">➕ Tangaza</button>
   </nav>
 
   <main>
-    <!-- BROWSE (split view: listings + live map) -->
+    <!-- BROWSE: Nyumba (long-term rent) -->
     <section id="browse" class="view active">
+      <div class="cat-banner cat-rent">
+        🏠 <strong>Nyumba za Kupanga</strong> — Pangisha kwa mwezi/mwaka. Hakuna dalali.
+      </div>
       <div class="filters">
         <input id="searchCity" placeholder="Mji au eneo (mfano: Mikocheni)" />
         <select id="filterBedrooms">
@@ -72,9 +76,44 @@
       </div>
     </section>
 
-    <!-- MAP (full screen) -->
-    <section id="map" class="view">
-      <div id="leafletMap"></div>
+    <!-- BROWSE: Guest House / B&B (short stay) -->
+    <section id="browse-gh" class="view">
+      <div class="cat-banner cat-stay">
+        🏨 <strong>Guest House & B&B</strong> — Lala usiku mmoja au zaidi. Book sasa!
+      </div>
+      <div class="filters">
+        <input id="ghSearchCity" placeholder="Mji au eneo (mfano: Mjohoroni Moshi)" oninput="renderCategory('stay')" />
+        <select id="ghFilterType" onchange="renderCategory('stay')">
+          <option value="">Vyote (Guest House + B&B)</option>
+          <option value="guesthouse">Guest House tu</option>
+          <option value="bnb">B&B tu</option>
+        </select>
+        <select id="ghFilterPrice" onchange="renderCategory('stay')">
+          <option value="">Bei zote/usiku</option>
+          <option value="30000">Hadi 30,000</option>
+          <option value="60000">Hadi 60,000</option>
+          <option value="100000">Hadi 100,000</option>
+          <option value="200000">Hadi 200,000</option>
+        </select>
+      </div>
+      <div id="ghGrid" class="grid"></div>
+    </section>
+
+    <!-- BROWSE: Lounge -->
+    <section id="browse-lounge" class="view">
+      <div class="cat-banner cat-lounge">
+        🎉 <strong>Lounge & Event Venues</strong> — Kodisha kwa harusi, parties, conferences.
+      </div>
+      <div class="filters">
+        <input id="loSearchCity" placeholder="Mji au eneo" oninput="renderCategory('lounge')" />
+        <select id="loFilterPrice" onchange="renderCategory('lounge')">
+          <option value="">Bei zote</option>
+          <option value="500000">Hadi 500,000</option>
+          <option value="1500000">Hadi 1,500,000</option>
+          <option value="3000000">Hadi 3,000,000</option>
+        </select>
+      </div>
+      <div id="loGrid" class="grid"></div>
     </section>
 
     <!-- NEAR ME -->
