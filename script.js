@@ -391,6 +391,16 @@ function initNearMe() {
   }
 }
 
+function setManualLocation(value) {
+  if (!value) return;
+  const [lat, lng] = value.split(',').map(Number);
+  userLocation = { lat, lng };
+  const label = document.querySelector(`#nearmeCityPicker option[value="${value}"]`)?.textContent || 'eneo';
+  document.getElementById('nearmeStatus').innerHTML = `📍 Eneo: <b>${label}</b>`;
+  renderNearMe();
+}
+window.setManualLocation = setManualLocation;
+
 function findNearMe() {
   const status = document.getElementById('nearmeStatus');
   if (!navigator.geolocation) {

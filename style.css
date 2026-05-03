@@ -423,7 +423,7 @@ main { padding: 16px; }
   gap: 8px;
   margin-bottom: 14px;
 }
-@media (min-width: 600px) { .nearme-controls { grid-template-columns: 1.5fr 1fr 1fr; } }
+@media (min-width: 600px) { .nearme-controls { grid-template-columns: 1fr 2fr 1fr 1fr; } }
 
 @keyframes mePulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,.4); }

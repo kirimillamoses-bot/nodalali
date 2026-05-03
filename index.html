@@ -80,7 +80,43 @@
         <p>Pata nyumba, guest house, lounge & B&B karibu na ulipo sasa.</p>
       </div>
       <div class="nearme-controls">
-        <button class="btn-primary" onclick="findNearMe()">📡 Pata Eneo Langu</button>
+        <button class="btn-primary" onclick="findNearMe()">📡 GPS Yangu</button>
+        <select id="nearmeCityPicker" onchange="setManualLocation(this.value)">
+          <option value="">— Au chagua mahali —</option>
+          <optgroup label="Moshi">
+            <option value="-3.3475,37.3380">Mjohoroni, Moshi</option>
+            <option value="-3.3520,37.3360">KCMC, Moshi</option>
+            <option value="-3.3490,37.3320">Moshi Town</option>
+          </optgroup>
+          <optgroup label="Dar es Salaam">
+            <option value="-6.7610,39.2553">Mikocheni</option>
+            <option value="-6.7457,39.2807">Masaki</option>
+            <option value="-6.8161,39.2724">Kariakoo</option>
+            <option value="-6.7787,39.2106">Mlimani (UDSM)</option>
+            <option value="-6.7707,39.2156">Sinza</option>
+            <option value="-6.7180,39.2310">Mbezi Beach</option>
+          </optgroup>
+          <optgroup label="Arusha">
+            <option value="-3.4039,36.7059">Njiro, Arusha</option>
+            <option value="-3.3680,36.6820">Sakina, Arusha</option>
+          </optgroup>
+          <optgroup label="Mwanza">
+            <option value="-2.5160,32.9170">Capripoint, Mwanza</option>
+            <option value="-2.5170,32.9070">Bugando, Mwanza</option>
+          </optgroup>
+          <optgroup label="Other Cities">
+            <option value="-6.1729,35.7516">Dodoma (Area C)</option>
+            <option value="-8.9090,33.4540">Mbeya (Iyunga)</option>
+            <option value="-5.0700,39.0980">Tanga</option>
+            <option value="-1.3320,31.8120">Bukoba</option>
+            <option value="-7.7700,35.6900">Iringa</option>
+            <option value="-6.8240,37.6610">Morogoro</option>
+            <option value="-6.1631,39.1898">Stone Town, Zanzibar</option>
+            <option value="-10.2680,40.1080">Mtwara</option>
+            <option value="-10.6850,35.6520">Songea</option>
+            <option value="-4.8770,29.6260">Kigoma</option>
+          </optgroup>
+        </select>
         <select id="nearmeType" onchange="renderNearMe()">
           <option value="all">Vyote</option>
           <option value="house">Nyumba</option>
@@ -96,6 +132,7 @@
           <option value="5" selected>Hadi 5 km</option>
           <option value="10">Hadi 10 km</option>
           <option value="20">Hadi 20 km</option>
+          <option value="50">Hadi 50 km</option>
         </select>
       </div>
       <div id="nearmeStatus" class="hint" style="text-align:center;padding:20px"></div>
