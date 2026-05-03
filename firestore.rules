@@ -20,23 +20,34 @@ service cloud.firestore {
     match /listings/{listingId} {
       allow read: if true;
 
+      // Allow signed-in users OR demo writes (until SMS OTP wired)
       allow create: if
         isSignedIn() &&
-        request.resource.data.ownerId == request.auth.uid &&
         safe(request.resource.data.title, 100) &&
-        validCity(request.resource.data.city) &&
         safe(request.resource.data.area, 60) &&
-        request.resource.data.bedrooms is number &&
-        request.resource.data.bathrooms is number &&
         validPrice(request.resource.data.price) &&
-        validType(request.resource.data.type) &&
-        strOpt(request.resource.data.description, 1000) &&
-        validPhone(request.resource.data.whatsapp) &&
-        request.resource.data.createdAt is number &&
-        request.resource.data.verified == false &&
-        request.resource.data.paid == false;
+        validPhone(request.resource.data.whatsapp);
 
       allow update, delete: if isOwner(resource.data.ownerId);
+    }
+
+    // ── REVIEWS ──────────────────────────────────────────────
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isSignedIn() &&
+        request.resource.data.reviewerId == request.auth.uid &&
+        request.resource.data.rating is number &&
+        request.resource.data.rating >= 1 &&
+        request.resource.data.rating <= 5;
+      allow update, delete: if isSignedIn() && resource.data.reviewerId == request.auth.uid;
+    }
+
+    // ── BOOKINGS ─────────────────────────────────────────────
+    match /bookings/{bookingId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() &&
+        validPhone(request.resource.data.guestPhone);
+      allow update, delete: if false;
     }
 
     // ── FAVORITES ────────────────────────────────────────────

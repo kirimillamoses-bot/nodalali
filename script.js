@@ -1611,13 +1611,15 @@ document.getElementById('listingForm').addEventListener('submit', async (e) => {
     paid: false
   };
 
-  if (useFirebase) {
+  if (useFirebase && db && currentUser) {
     try {
       const ref = await db.collection('listings').add(listing);
       listing.id = ref.id;
-    } catch (err) { toast('Hitilafu: ' + err.message); return; }
+      toast('✅ Tangazo limehifadhiwa kwenye Firestore');
+    } catch (err) { toast('Firestore: ' + err.message); return; }
   } else {
     listing.id = 'l' + Date.now();
+    if (!currentUser) toast('⚠️ Tangazo halijahifadhiwa — ingia kwanza');
   }
 
   allListings.unshift(listing);
@@ -1718,13 +1720,40 @@ if (useFirebase) {
 }
 
 async function loadFirebaseListings() {
+  if (!db) return;
   try {
     const snap = await db.collection('listings').orderBy('createdAt', 'desc').get();
-    const fbListings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    allListings = [...fbListings, ...DEMO_LISTINGS];
+    const fbListings = snap.docs.map(d => {
+      const data = d.data();
+      return {
+        ...data,
+        id: d.id,
+        // Coerce types stored as strings
+        price: Number(data.price) || 0,
+        bedrooms: Number(data.bedrooms) || 0,
+        bathrooms: Number(data.bathrooms) || 0,
+        lat: data.lat ? Number(data.lat) : null,
+        lng: data.lng ? Number(data.lng) : null,
+        createdAt: Number(data.createdAt) || Date.now(),
+        images: Array.isArray(data.images) ? data.images : []
+      };
+    });
+    if (fbListings.length > 0) {
+      allListings = fbListings;  // Use Firestore as truth
+      console.log(`✅ Loaded ${fbListings.length} listings from Firestore`);
+      toast(`📡 Loaded ${fbListings.length} live listings`);
+    }
     renderListings();
     refreshMapMarkers();
-  } catch (e) { console.warn(e); }
+    if (browseMapInstance) refreshMapMarkers(browseMapInstance, browseMapMarkers);
+  } catch (e) {
+    console.warn('Firestore load failed, using demo data:', e);
+  }
+}
+
+// Auto-load Firestore on startup if configured
+if (useFirebase && db) {
+  loadFirebaseListings();
 }
 
 // ============== TOAST ==============

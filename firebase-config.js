@@ -1,11 +1,10 @@
-// TODO: Replace with your own Firebase project credentials
-// Create at: https://console.firebase.google.com → New project "nodalali"
-// Enable: Authentication (Email/Password), Firestore, Storage
+// Firebase config — Nodalali production
 window.firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "nodalali-xxxxx.firebaseapp.com",
-  projectId: "nodalali-xxxxx",
-  storageBucket: "nodalali-xxxxx.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCh7GPAhmmiiOwpveuJ5Wo9koUsfdV03UA",
+  authDomain: "no-dalali-2d927.firebaseapp.com",
+  projectId: "no-dalali-2d927",
+  storageBucket: "no-dalali-2d927.firebasestorage.app",
+  messagingSenderId: "656071873673",
+  appId: "1:656071873673:web:77e0b51e3de638efa7a258",
+  measurementId: "G-2MLY8WX75R"
 };
