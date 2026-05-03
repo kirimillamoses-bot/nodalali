@@ -1,59 +1,48 @@
-// ============== I18N (Swahili + English) ==============
+// ============== I18N (20 languages) ==============
+const LANGUAGES = [
+  { code: 'sw', name: 'Kiswahili',  flag: '🇹🇿' },
+  { code: 'en', name: 'English',    flag: '🇬🇧' },
+  { code: 'fr', name: 'Français',   flag: '🇫🇷' },
+  { code: 'es', name: 'Español',    flag: '🇪🇸' },
+  { code: 'pt', name: 'Português',  flag: '🇵🇹' },
+  { code: 'de', name: 'Deutsch',    flag: '🇩🇪' },
+  { code: 'it', name: 'Italiano',   flag: '🇮🇹' },
+  { code: 'ar', name: 'العربية',     flag: '🇸🇦' },
+  { code: 'zh', name: '中文',         flag: '🇨🇳' },
+  { code: 'hi', name: 'हिन्दी',         flag: '🇮🇳' },
+  { code: 'ja', name: '日本語',        flag: '🇯🇵' },
+  { code: 'ko', name: '한국어',         flag: '🇰🇷' },
+  { code: 'ru', name: 'Русский',     flag: '🇷🇺' },
+  { code: 'tr', name: 'Türkçe',      flag: '🇹🇷' },
+  { code: 'nl', name: 'Nederlands',  flag: '🇳🇱' },
+  { code: 'pl', name: 'Polski',      flag: '🇵🇱' },
+  { code: 'fa', name: 'فارسی',        flag: '🇮🇷' },
+  { code: 'id', name: 'Indonesia',   flag: '🇮🇩' },
+  { code: 'vi', name: 'Tiếng Việt',  flag: '🇻🇳' },
+  { code: 'th', name: 'ไทย',          flag: '🇹🇭' }
+];
+
 const I18N = {
-  sw: {
-    tagline: 'Pangisha bila dalali 🇹🇿',
-    login: 'Ingia',
-    logout: 'Toka',
-    search: '🔍 Tafuta',
-    map: '🗺️ Ramani',
-    favorites: '❤️ Pendwa',
-    nearme: '📍 Karibu Nami',
-    students: '🎓 Wanafunzi',
-    mine: '🏠 Zangu',
-    post: '➕ Tangaza',
-    showMap: '🗺️ Onyesha Ramani',
-    hideMap: '✕ Ficha Ramani',
-    perMonth: '/mwezi',
-    perNight: '/usiku',
-    book: '📅 Book Sasa',
-    leaveReview: 'Toa Review',
-    rateThis: 'Toa kura yako',
-    submit: 'Wasilisha',
-    bookNow: 'Book Sasa',
-    checkIn: 'Tarehe ya kuingia',
-    checkOut: 'Tarehe ya kutoka',
-    nights: 'usiku',
-    total: 'Jumla',
-    yourName: 'Jina lako',
-    phone: 'Simu (255...)'
-  },
-  en: {
-    tagline: 'Rent without brokers 🇹🇿',
-    login: 'Sign in',
-    logout: 'Sign out',
-    search: '🔍 Search',
-    map: '🗺️ Map',
-    favorites: '❤️ Saved',
-    nearme: '📍 Near Me',
-    students: '🎓 Students',
-    mine: '🏠 Mine',
-    post: '➕ Post',
-    showMap: '🗺️ Show Map',
-    hideMap: '✕ Hide Map',
-    perMonth: '/month',
-    perNight: '/night',
-    book: '📅 Book Now',
-    leaveReview: 'Leave Review',
-    rateThis: 'Rate this',
-    submit: 'Submit',
-    bookNow: 'Book Now',
-    checkIn: 'Check-in',
-    checkOut: 'Check-out',
-    nights: 'nights',
-    total: 'Total',
-    yourName: 'Your name',
-    phone: 'Phone (255...)'
-  }
+  sw: { tagline:'Pangisha bila dalali 🇹🇿', login:'Ingia', logout:'Toka', search:'🔍 Tafuta', map:'🗺️ Ramani', favorites:'❤️ Pendwa', nearme:'📍 Karibu Nami', students:'🎓 Wanafunzi', mine:'🏠 Zangu', post:'➕ Tangaza', showMap:'🗺️ Onyesha Ramani', hideMap:'✕ Ficha Ramani', perMonth:'/mwezi', perNight:'/usiku', book:'📅 Book Sasa', leaveReview:'Toa Review', rateThis:'Toa kura yako', submit:'Wasilisha', bookNow:'Book Sasa', checkIn:'Tarehe ya kuingia', checkOut:'Tarehe ya kutoka', nights:'usiku', total:'Jumla', yourName:'Jina lako', phone:'Simu (255...)', translate:'🌐 Tafsiri', original:'Onyesha asili' },
+  en: { tagline:'Rent without brokers 🇹🇿', login:'Sign in', logout:'Sign out', search:'🔍 Search', map:'🗺️ Map', favorites:'❤️ Saved', nearme:'📍 Near Me', students:'🎓 Students', mine:'🏠 Mine', post:'➕ Post', showMap:'🗺️ Show Map', hideMap:'✕ Hide Map', perMonth:'/month', perNight:'/night', book:'📅 Book Now', leaveReview:'Leave Review', rateThis:'Rate this', submit:'Submit', bookNow:'Book Now', checkIn:'Check-in', checkOut:'Check-out', nights:'nights', total:'Total', yourName:'Your name', phone:'Phone (255...)', translate:'🌐 Translate', original:'Show original' },
+  fr: { tagline:'Louer sans intermédiaires 🇹🇿', login:'Connexion', logout:'Déconnexion', search:'🔍 Rechercher', map:'🗺️ Carte', favorites:'❤️ Favoris', nearme:'📍 Près de moi', students:'🎓 Étudiants', mine:'🏠 Mes biens', post:'➕ Publier', showMap:'🗺️ Voir carte', hideMap:'✕ Masquer carte', perMonth:'/mois', perNight:'/nuit', book:'📅 Réserver', leaveReview:'Donner avis', rateThis:'Notez', submit:'Envoyer', bookNow:'Réserver', checkIn:'Arrivée', checkOut:'Départ', nights:'nuits', total:'Total', yourName:'Votre nom', phone:'Téléphone (255...)', translate:'🌐 Traduire', original:'Voir original' },
+  es: { tagline:'Alquila sin intermediarios 🇹🇿', login:'Entrar', logout:'Salir', search:'🔍 Buscar', map:'🗺️ Mapa', favorites:'❤️ Favoritos', nearme:'📍 Cerca de mí', students:'🎓 Estudiantes', mine:'🏠 Míos', post:'➕ Publicar', showMap:'🗺️ Ver mapa', hideMap:'✕ Ocultar mapa', perMonth:'/mes', perNight:'/noche', book:'📅 Reservar', leaveReview:'Dejar reseña', rateThis:'Calificar', submit:'Enviar', bookNow:'Reservar', checkIn:'Llegada', checkOut:'Salida', nights:'noches', total:'Total', yourName:'Tu nombre', phone:'Teléfono (255...)', translate:'🌐 Traducir', original:'Ver original' },
+  pt: { tagline:'Alugue sem intermediários 🇹🇿', login:'Entrar', logout:'Sair', search:'🔍 Pesquisar', map:'🗺️ Mapa', favorites:'❤️ Favoritos', nearme:'📍 Perto de mim', students:'🎓 Estudantes', mine:'🏠 Meus', post:'➕ Publicar', showMap:'🗺️ Ver mapa', hideMap:'✕ Ocultar', perMonth:'/mês', perNight:'/noite', book:'📅 Reservar', leaveReview:'Avaliar', rateThis:'Avalie', submit:'Enviar', bookNow:'Reservar', checkIn:'Check-in', checkOut:'Check-out', nights:'noites', total:'Total', yourName:'Seu nome', phone:'Telefone (255...)', translate:'🌐 Traduzir', original:'Ver original' },
+  de: { tagline:'Mieten ohne Makler 🇹🇿', login:'Anmelden', logout:'Abmelden', search:'🔍 Suchen', map:'🗺️ Karte', favorites:'❤️ Favoriten', nearme:'📍 In der Nähe', students:'🎓 Studenten', mine:'🏠 Meine', post:'➕ Inserieren', showMap:'🗺️ Karte zeigen', hideMap:'✕ Karte ausblenden', perMonth:'/Monat', perNight:'/Nacht', book:'📅 Buchen', leaveReview:'Bewerten', rateThis:'Bewerten', submit:'Senden', bookNow:'Buchen', checkIn:'Anreise', checkOut:'Abreise', nights:'Nächte', total:'Gesamt', yourName:'Ihr Name', phone:'Telefon (255...)', translate:'🌐 Übersetzen', original:'Original anzeigen' },
+  it: { tagline:'Affitta senza intermediari 🇹🇿', login:'Accedi', logout:'Esci', search:'🔍 Cerca', map:'🗺️ Mappa', favorites:'❤️ Preferiti', nearme:'📍 Vicino a me', students:'🎓 Studenti', mine:'🏠 I miei', post:'➕ Pubblica', showMap:'🗺️ Mostra mappa', hideMap:'✕ Nascondi mappa', perMonth:'/mese', perNight:'/notte', book:'📅 Prenota', leaveReview:'Recensione', rateThis:'Valuta', submit:'Invia', bookNow:'Prenota', checkIn:'Check-in', checkOut:'Check-out', nights:'notti', total:'Totale', yourName:'Il tuo nome', phone:'Telefono (255...)', translate:'🌐 Traduci', original:'Mostra originale' },
+  ar: { tagline:'إيجار بدون وسطاء 🇹🇿', login:'تسجيل دخول', logout:'خروج', search:'🔍 بحث', map:'🗺️ خريطة', favorites:'❤️ المفضلة', nearme:'📍 بالقرب مني', students:'🎓 طلاب', mine:'🏠 ملكي', post:'➕ نشر', showMap:'🗺️ إظهار الخريطة', hideMap:'✕ إخفاء الخريطة', perMonth:'/شهر', perNight:'/ليلة', book:'📅 احجز', leaveReview:'اترك تقييم', rateThis:'قيّم', submit:'إرسال', bookNow:'احجز الآن', checkIn:'تسجيل الوصول', checkOut:'تسجيل المغادرة', nights:'ليالي', total:'الإجمالي', yourName:'اسمك', phone:'هاتف (255...)', translate:'🌐 ترجم', original:'الأصل' },
+  zh: { tagline:'无中介租房 🇹🇿', login:'登录', logout:'退出', search:'🔍 搜索', map:'🗺️ 地图', favorites:'❤️ 收藏', nearme:'📍 附近', students:'🎓 学生', mine:'🏠 我的', post:'➕ 发布', showMap:'🗺️ 显示地图', hideMap:'✕ 隐藏地图', perMonth:'/月', perNight:'/晚', book:'📅 预订', leaveReview:'写评论', rateThis:'评分', submit:'提交', bookNow:'立即预订', checkIn:'入住', checkOut:'退房', nights:'晚', total:'总计', yourName:'您的姓名', phone:'电话 (255...)', translate:'🌐 翻译', original:'显示原文' },
+  hi: { tagline:'बिना दलाल किराए पर 🇹🇿', login:'साइन इन', logout:'साइन आउट', search:'🔍 खोजें', map:'🗺️ नक्शा', favorites:'❤️ पसंदीदा', nearme:'📍 मेरे पास', students:'🎓 छात्र', mine:'🏠 मेरे', post:'➕ पोस्ट', showMap:'🗺️ नक्शा दिखाएं', hideMap:'✕ नक्शा छिपाएं', perMonth:'/माह', perNight:'/रात', book:'📅 बुक करें', leaveReview:'समीक्षा दें', rateThis:'रेट करें', submit:'जमा करें', bookNow:'अभी बुक करें', checkIn:'चेक-इन', checkOut:'चेक-आउट', nights:'रात', total:'कुल', yourName:'आपका नाम', phone:'फोन (255...)', translate:'🌐 अनुवाद', original:'मूल दिखाएं' },
+  ja: { tagline:'仲介なしで賃貸 🇹🇿', login:'ログイン', logout:'ログアウト', search:'🔍 検索', map:'🗺️ 地図', favorites:'❤️ お気に入り', nearme:'📍 近くの', students:'🎓 学生', mine:'🏠 マイ', post:'➕ 投稿', showMap:'🗺️ 地図を表示', hideMap:'✕ 地図を隠す', perMonth:'/月', perNight:'/泊', book:'📅 予約', leaveReview:'レビュー', rateThis:'評価', submit:'送信', bookNow:'予約する', checkIn:'チェックイン', checkOut:'チェックアウト', nights:'泊', total:'合計', yourName:'お名前', phone:'電話 (255...)', translate:'🌐 翻訳', original:'原文を表示' },
+  ko: { tagline:'중개인 없이 임대 🇹🇿', login:'로그인', logout:'로그아웃', search:'🔍 검색', map:'🗺️ 지도', favorites:'❤️ 즐겨찾기', nearme:'📍 내 근처', students:'🎓 학생', mine:'🏠 내 것', post:'➕ 게시', showMap:'🗺️ 지도 보기', hideMap:'✕ 지도 숨기기', perMonth:'/월', perNight:'/박', book:'📅 예약', leaveReview:'리뷰 작성', rateThis:'평가', submit:'제출', bookNow:'지금 예약', checkIn:'체크인', checkOut:'체크아웃', nights:'박', total:'총계', yourName:'이름', phone:'전화 (255...)', translate:'🌐 번역', original:'원본 보기' },
+  ru: { tagline:'Аренда без посредников 🇹🇿', login:'Войти', logout:'Выйти', search:'🔍 Поиск', map:'🗺️ Карта', favorites:'❤️ Избранное', nearme:'📍 Рядом', students:'🎓 Студенты', mine:'🏠 Мои', post:'➕ Разместить', showMap:'🗺️ Карта', hideMap:'✕ Скрыть', perMonth:'/мес', perNight:'/ночь', book:'📅 Забронировать', leaveReview:'Оставить отзыв', rateThis:'Оценить', submit:'Отправить', bookNow:'Забронировать', checkIn:'Заезд', checkOut:'Выезд', nights:'ночей', total:'Итого', yourName:'Ваше имя', phone:'Телефон (255...)', translate:'🌐 Перевести', original:'Оригинал' },
+  tr: { tagline:'Aracısız kiralayın 🇹🇿', login:'Giriş', logout:'Çıkış', search:'🔍 Ara', map:'🗺️ Harita', favorites:'❤️ Favoriler', nearme:'📍 Yakınımda', students:'🎓 Öğrenciler', mine:'🏠 Benim', post:'➕ İlan ver', showMap:'🗺️ Harita göster', hideMap:'✕ Haritayı gizle', perMonth:'/ay', perNight:'/gece', book:'📅 Rezervasyon', leaveReview:'Yorum yap', rateThis:'Puanla', submit:'Gönder', bookNow:'Rezerve et', checkIn:'Giriş', checkOut:'Çıkış', nights:'gece', total:'Toplam', yourName:'Adınız', phone:'Telefon (255...)', translate:'🌐 Çevir', original:'Orijinali göster' },
+  nl: { tagline:'Huren zonder makelaars 🇹🇿', login:'Inloggen', logout:'Uitloggen', search:'🔍 Zoeken', map:'🗺️ Kaart', favorites:'❤️ Favorieten', nearme:'📍 Dichtbij', students:'🎓 Studenten', mine:'🏠 Mijn', post:'➕ Plaatsen', showMap:'🗺️ Kaart tonen', hideMap:'✕ Kaart verbergen', perMonth:'/maand', perNight:'/nacht', book:'📅 Boek', leaveReview:'Beoordeel', rateThis:'Beoordeel', submit:'Verstuur', bookNow:'Nu boeken', checkIn:'Check-in', checkOut:'Check-out', nights:'nachten', total:'Totaal', yourName:'Uw naam', phone:'Telefoon (255...)', translate:'🌐 Vertaal', original:'Origineel' },
+  pl: { tagline:'Wynajem bez pośredników 🇹🇿', login:'Zaloguj', logout:'Wyloguj', search:'🔍 Szukaj', map:'🗺️ Mapa', favorites:'❤️ Ulubione', nearme:'📍 Blisko mnie', students:'🎓 Studenci', mine:'🏠 Moje', post:'➕ Dodaj', showMap:'🗺️ Pokaż mapę', hideMap:'✕ Ukryj mapę', perMonth:'/miesiąc', perNight:'/noc', book:'📅 Rezerwuj', leaveReview:'Dodaj opinię', rateThis:'Oceń', submit:'Wyślij', bookNow:'Zarezerwuj', checkIn:'Zameldowanie', checkOut:'Wymeldowanie', nights:'nocy', total:'Razem', yourName:'Twoje imię', phone:'Telefon (255...)', translate:'🌐 Tłumacz', original:'Oryginał' },
+  fa: { tagline:'اجاره بدون واسطه 🇹🇿', login:'ورود', logout:'خروج', search:'🔍 جستجو', map:'🗺️ نقشه', favorites:'❤️ علاقه‌مندی‌ها', nearme:'📍 نزدیک من', students:'🎓 دانشجویان', mine:'🏠 موارد من', post:'➕ ثبت آگهی', showMap:'🗺️ نمایش نقشه', hideMap:'✕ پنهان کردن', perMonth:'/ماه', perNight:'/شب', book:'📅 رزرو', leaveReview:'نظر دادن', rateThis:'امتیاز دهید', submit:'ارسال', bookNow:'هم اکنون رزرو کنید', checkIn:'ورود', checkOut:'خروج', nights:'شب', total:'مجموع', yourName:'نام شما', phone:'تلفن (255...)', translate:'🌐 ترجمه', original:'متن اصلی' },
+  id: { tagline:'Sewa tanpa perantara 🇹🇿', login:'Masuk', logout:'Keluar', search:'🔍 Cari', map:'🗺️ Peta', favorites:'❤️ Favorit', nearme:'📍 Dekat saya', students:'🎓 Pelajar', mine:'🏠 Milik saya', post:'➕ Pasang', showMap:'🗺️ Tampilkan peta', hideMap:'✕ Sembunyikan', perMonth:'/bulan', perNight:'/malam', book:'📅 Pesan', leaveReview:'Beri ulasan', rateThis:'Nilai', submit:'Kirim', bookNow:'Pesan sekarang', checkIn:'Masuk', checkOut:'Keluar', nights:'malam', total:'Total', yourName:'Nama Anda', phone:'Telepon (255...)', translate:'🌐 Terjemah', original:'Asli' },
+  vi: { tagline:'Thuê không qua môi giới 🇹🇿', login:'Đăng nhập', logout:'Đăng xuất', search:'🔍 Tìm kiếm', map:'🗺️ Bản đồ', favorites:'❤️ Yêu thích', nearme:'📍 Gần tôi', students:'🎓 Sinh viên', mine:'🏠 Của tôi', post:'➕ Đăng', showMap:'🗺️ Hiện bản đồ', hideMap:'✕ Ẩn bản đồ', perMonth:'/tháng', perNight:'/đêm', book:'📅 Đặt', leaveReview:'Đánh giá', rateThis:'Đánh giá', submit:'Gửi', bookNow:'Đặt ngay', checkIn:'Nhận phòng', checkOut:'Trả phòng', nights:'đêm', total:'Tổng', yourName:'Tên của bạn', phone:'Điện thoại (255...)', translate:'🌐 Dịch', original:'Bản gốc' },
+  th: { tagline:'เช่าโดยไม่ผ่านนายหน้า 🇹🇿', login:'เข้าสู่ระบบ', logout:'ออก', search:'🔍 ค้นหา', map:'🗺️ แผนที่', favorites:'❤️ รายการโปรด', nearme:'📍 ใกล้ฉัน', students:'🎓 นักศึกษา', mine:'🏠 ของฉัน', post:'➕ ลงประกาศ', showMap:'🗺️ แสดงแผนที่', hideMap:'✕ ซ่อนแผนที่', perMonth:'/เดือน', perNight:'/คืน', book:'📅 จอง', leaveReview:'เขียนรีวิว', rateThis:'ให้คะแนน', submit:'ส่ง', bookNow:'จองเลย', checkIn:'เช็คอิน', checkOut:'เช็คเอาท์', nights:'คืน', total:'รวม', yourName:'ชื่อของคุณ', phone:'โทรศัพท์ (255...)', translate:'🌐 แปล', original:'ต้นฉบับ' }
 };
 
 let currentLang = localStorage.getItem('nodalali_lang') || 'sw';
@@ -63,7 +52,7 @@ function t(key) { return I18N[currentLang][key] || key; }
 function applyI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
-    if (I18N[currentLang][key]) el.textContent = I18N[currentLang][key];
+    if (I18N[currentLang]?.[key]) el.textContent = I18N[currentLang][key];
   });
   // Tab labels
   const tabMap = {
@@ -76,19 +65,48 @@ function applyI18n() {
   });
   const authBtn = document.getElementById('authBtn');
   if (authBtn && !currentUser) authBtn.textContent = t('login');
-  document.getElementById('langBtn').textContent = currentLang === 'sw' ? '🇹🇿' : '🇬🇧';
+  const lang = LANGUAGES.find(l => l.code === currentLang);
+  document.getElementById('langBtn').textContent = lang?.flag || '🌐';
 }
 
 function toggleLang() {
-  currentLang = currentLang === 'sw' ? 'en' : 'sw';
+  // Build a popup language picker
+  const existing = document.getElementById('langModal');
+  if (existing) { existing.remove(); return; }
+  const modal = document.createElement('div');
+  modal.id = 'langModal';
+  modal.className = 'modal open';
+  modal.innerHTML = `
+    <div class="modal-content" style="max-width:420px">
+      <button class="modal-close" onclick="document.getElementById('langModal').remove()">✕</button>
+      <h2>🌐 Chagua Lugha / Choose Language</h2>
+      <div class="lang-grid">
+        ${LANGUAGES.map(l => `
+          <button class="lang-card ${l.code === currentLang ? 'active' : ''}" onclick="setLang('${l.code}')">
+            <div class="lang-flag">${l.flag}</div>
+            <div class="lang-name">${l.name}</div>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+window.toggleLang = toggleLang;
+
+function setLang(code) {
+  currentLang = code;
   localStorage.setItem('nodalali_lang', currentLang);
   applyI18n();
-  toast(currentLang === 'sw' ? 'Imebadilishwa kwenda Kiswahili' : 'Switched to English');
-  // Re-render current view
+  document.getElementById('langModal')?.remove();
+  const lang = LANGUAGES.find(l => l.code === code);
+  toast(`${lang.flag} ${lang.name}`);
+  // Apply RTL for Arabic & Persian
+  document.documentElement.dir = (code === 'ar' || code === 'fa') ? 'rtl' : 'ltr';
   renderListings();
   if (activeCampus) renderCampusListings();
 }
-window.toggleLang = toggleLang;
+window.setLang = setLang;
 
 // ============== THEME (light + dark) ==============
 let currentTheme = localStorage.getItem('nodalali_theme') || 'light';
@@ -1115,14 +1133,15 @@ async function openDetail(id) {
     <img src="${escapeHtml((l.images && l.images[0]) || 'icon-192.png')}" class="detail-img" />
     <div class="trust-row">${trustBadge}</div>
     <div class="card-price">${formatPrice(l.price, l.type)}</div>
-    <h2 style="margin:8px 0">${escapeHtml(l.title)}</h2>
+    <h2 id="detailTitle_${id}" style="margin:8px 0">${escapeHtml(l.title)}</h2>
     <p class="hint">📍 ${escapeHtml(l.area)}, ${escapeHtml(l.city)}</p>
     <div class="card-meta">
       <span>🛏 Vyumba ${l.bedrooms}</span>
       <span>🚿 Bafu ${l.bathrooms}</span>
       <span>🏷 ${escapeHtml(l.type)}</span>
     </div>
-    <p style="margin:16px 0;line-height:1.5">${escapeHtml(l.description || '')}</p>
+    ${currentLang !== 'sw' ? `<button id="translateBtn_${id}" class="btn-translate" onclick="translateListingDetail('${id}')">${t('translate')}</button>` : ''}
+    <p id="detailDesc_${id}" style="margin:16px 0;line-height:1.5">${escapeHtml(l.description || '')}</p>
 
     ${(l.lat && l.lng) ? `<div id="detailMiniMap" class="detail-mini-map"></div>` : ''}
 
@@ -1187,6 +1206,57 @@ function getTrustBadge(l) {
 }
 
 // ============== REVIEWS ==============
+// ============== LIVE TRANSLATOR (MyMemory free API, no key) ==============
+const translationCache = new Map();
+async function translateText(text, targetLang, sourceLang = 'sw') {
+  if (!text || sourceLang === targetLang) return text;
+  const cacheKey = `${sourceLang}|${targetLang}|${text.slice(0, 100)}`;
+  if (translationCache.has(cacheKey)) return translationCache.get(cacheKey);
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0, 500))}&langpair=${sourceLang}|${targetLang}`;
+    const r = await fetch(url);
+    const data = await r.json();
+    const translated = data.responseData?.translatedText || text;
+    translationCache.set(cacheKey, translated);
+    return translated;
+  } catch (e) {
+    console.warn('Translation failed:', e);
+    return text;
+  }
+}
+
+async function translateListingDetail(listingId) {
+  if (currentLang === 'sw') return toast('Tayari iko kwenye Kiswahili');
+  const l = allListings.find(x => x.id === listingId);
+  if (!l) return;
+  const titleEl = document.getElementById('detailTitle_' + listingId);
+  const descEl = document.getElementById('detailDesc_' + listingId);
+  const btn = document.getElementById('translateBtn_' + listingId);
+  if (!titleEl || !descEl) return;
+
+  // Toggle: if already translated, restore original
+  if (titleEl.dataset.translated === 'true') {
+    titleEl.textContent = titleEl.dataset.original;
+    descEl.textContent = descEl.dataset.original;
+    titleEl.dataset.translated = 'false';
+    btn.textContent = t('translate');
+    return;
+  }
+
+  btn.textContent = '⏳ ...';
+  const [tt, td] = await Promise.all([
+    translateText(l.title, currentLang),
+    translateText(l.description || '', currentLang)
+  ]);
+  titleEl.dataset.original = l.title;
+  descEl.dataset.original = l.description || '';
+  titleEl.textContent = tt;
+  descEl.textContent = td;
+  titleEl.dataset.translated = 'true';
+  btn.textContent = t('original');
+}
+window.translateListingDetail = translateListingDetail;
+
 async function loadReviews(listingId) {
   try {
     const r = await fetch('/api/reviews/' + listingId);
