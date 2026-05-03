@@ -1,0 +1,21 @@
+{
+  "gh1": [
+    {
+      "id": "b1777791905379itvv",
+      "listingId": "gh1",
+      "guestName": "Asha",
+      "guestPhone": "255712345678",
+      "checkIn": "2026-06-01",
+      "checkOut": "2026-06-04",
+      "nights": 3,
+      "total": 105000,
+      "dates": [
+        "2026-06-01",
+        "2026-06-02",
+        "2026-06-03"
+      ],
+      "createdAt": 1777791905379,
+      "status": "pending"
+    }
+  ]
+}

@@ -1,3 +1,111 @@
+// ============== I18N (Swahili + English) ==============
+const I18N = {
+  sw: {
+    tagline: 'Pangisha bila dalali 🇹🇿',
+    login: 'Ingia',
+    logout: 'Toka',
+    search: '🔍 Tafuta',
+    map: '🗺️ Ramani',
+    favorites: '❤️ Pendwa',
+    nearme: '📍 Karibu Nami',
+    students: '🎓 Wanafunzi',
+    mine: '🏠 Zangu',
+    post: '➕ Tangaza',
+    showMap: '🗺️ Onyesha Ramani',
+    hideMap: '✕ Ficha Ramani',
+    perMonth: '/mwezi',
+    perNight: '/usiku',
+    book: '📅 Book Sasa',
+    leaveReview: 'Toa Review',
+    rateThis: 'Toa kura yako',
+    submit: 'Wasilisha',
+    bookNow: 'Book Sasa',
+    checkIn: 'Tarehe ya kuingia',
+    checkOut: 'Tarehe ya kutoka',
+    nights: 'usiku',
+    total: 'Jumla',
+    yourName: 'Jina lako',
+    phone: 'Simu (255...)'
+  },
+  en: {
+    tagline: 'Rent without brokers 🇹🇿',
+    login: 'Sign in',
+    logout: 'Sign out',
+    search: '🔍 Search',
+    map: '🗺️ Map',
+    favorites: '❤️ Saved',
+    nearme: '📍 Near Me',
+    students: '🎓 Students',
+    mine: '🏠 Mine',
+    post: '➕ Post',
+    showMap: '🗺️ Show Map',
+    hideMap: '✕ Hide Map',
+    perMonth: '/month',
+    perNight: '/night',
+    book: '📅 Book Now',
+    leaveReview: 'Leave Review',
+    rateThis: 'Rate this',
+    submit: 'Submit',
+    bookNow: 'Book Now',
+    checkIn: 'Check-in',
+    checkOut: 'Check-out',
+    nights: 'nights',
+    total: 'Total',
+    yourName: 'Your name',
+    phone: 'Phone (255...)'
+  }
+};
+
+let currentLang = localStorage.getItem('nodalali_lang') || 'sw';
+
+function t(key) { return I18N[currentLang][key] || key; }
+
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (I18N[currentLang][key]) el.textContent = I18N[currentLang][key];
+  });
+  // Tab labels
+  const tabMap = {
+    browse: 'search', map: 'map', favorites: 'favorites',
+    nearme: 'nearme', students: 'students', 'my-listings': 'mine', post: 'post'
+  };
+  document.querySelectorAll('.tab').forEach(tab => {
+    const k = tabMap[tab.dataset.tab];
+    if (k) tab.textContent = t(k);
+  });
+  const authBtn = document.getElementById('authBtn');
+  if (authBtn && !currentUser) authBtn.textContent = t('login');
+  document.getElementById('langBtn').textContent = currentLang === 'sw' ? '🇹🇿' : '🇬🇧';
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'sw' ? 'en' : 'sw';
+  localStorage.setItem('nodalali_lang', currentLang);
+  applyI18n();
+  toast(currentLang === 'sw' ? 'Imebadilishwa kwenda Kiswahili' : 'Switched to English');
+  // Re-render current view
+  renderListings();
+  if (activeCampus) renderCampusListings();
+}
+window.toggleLang = toggleLang;
+
+// ============== THEME (light + dark) ==============
+let currentTheme = localStorage.getItem('nodalali_theme') || 'light';
+
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+}
+
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('nodalali_theme', currentTheme);
+  applyTheme();
+  toast(currentTheme === 'dark' ? '🌙 Dark mode' : '☀️ Light mode');
+}
+window.toggleTheme = toggleTheme;
+
 // ============== FIREBASE INIT (with offline demo fallback) ==============
 let db = null, auth = null, useFirebase = false;
 try {
@@ -569,7 +677,7 @@ function renderNearMe() {
       <div style="min-width:180px">
         <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
         <strong>${l.title}</strong><br>
-        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price)}</span><br>
+        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price, l.type)}</span><br>
         <span class="dist-badge">${l._distance.toFixed(1)} km</span><br>
         <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
       </div>
@@ -598,7 +706,7 @@ function renderNearMe() {
             <span class="dist-badge" style="position:absolute;bottom:8px;left:8px">${l._distance.toFixed(1)} km</span>
           </div>
           <div class="card-body">
-            <div class="card-price">${formatPrice(l.price)}</div>
+            <div class="card-price">${formatPrice(l.price, l.type)}</div>
             <div class="card-title">${l.title}</div>
             <div class="card-meta"><span>📍 ${l.area}, ${l.city}</span></div>
           </div>
@@ -850,7 +958,7 @@ function renderCampusMap() {
       <div style="min-width:180px">
         <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
         <strong>${l.title}</strong><br>
-        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price)}</span><br>
+        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price, l.type)}</span><br>
         <span class="dist-badge">${l._distance.toFixed(1)} km</span><br>
         <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
       </div>
@@ -895,8 +1003,14 @@ function renderCampusListings() {
 }
 
 // ============== RENDER LISTINGS ==============
-function formatPrice(p) {
-  return 'TZS ' + Number(p).toLocaleString('en-US') + '/mwezi';
+function formatPrice(p, type) {
+  const isShort = ['guesthouse', 'bnb'].includes(type);
+  const suffix = isShort ? t('perNight') : t('perMonth');
+  return 'TZS ' + Number(p).toLocaleString('en-US') + suffix;
+}
+
+function isBookable(type) {
+  return ['guesthouse', 'bnb'].includes(type);
 }
 
 function listingCard(l) {
@@ -909,7 +1023,7 @@ function listingCard(l) {
         <button class="card-fav" onclick="event.stopPropagation();toggleFav('${l.id}')">${isFav ? '❤️' : '🤍'}</button>
       </div>
       <div class="card-body">
-        <div class="card-price">${formatPrice(l.price)}</div>
+        <div class="card-price">${formatPrice(l.price, l.type)}</div>
         <div class="card-title">${l.title}</div>
         <div class="card-meta">
           <span>📍 ${l.area}, ${l.city}</span>
@@ -1000,7 +1114,7 @@ async function openDetail(id) {
     ${flagged ? `<div class="warn-banner">⚠️ Tangazo hili limeripotiwa na watumiaji ${reportCount}. Kuwa makini sana!</div>` : ''}
     <img src="${escapeHtml((l.images && l.images[0]) || 'icon-192.png')}" class="detail-img" />
     <div class="trust-row">${trustBadge}</div>
-    <div class="card-price">${formatPrice(l.price)}</div>
+    <div class="card-price">${formatPrice(l.price, l.type)}</div>
     <h2 style="margin:8px 0">${escapeHtml(l.title)}</h2>
     <p class="hint">📍 ${escapeHtml(l.area)}, ${escapeHtml(l.city)}</p>
     <div class="card-meta">
@@ -1023,12 +1137,28 @@ async function openDetail(id) {
       </ul>
     </div>
 
+    ${isBookable(l.type) ? renderBookingBox(l, wa) : ''}
+
     <div class="contact-row">
       <a href="https://wa.me/${wa}?text=${msg}" target="_blank" class="btn-wa">💬 WhatsApp</a>
       <a href="tel:+${wa}" class="btn-call">📞 Piga simu</a>
     </div>
     <button class="btn-report" onclick="openReport('${id}')">🚩 Ripoti tangazo hili</button>
+
+    <div id="reviewsSection_${id}" class="review-list">
+      <h3 style="margin:18px 0 8px">⭐ ${currentLang === 'sw' ? 'Maoni ya Wateja' : 'Reviews'}</h3>
+      <div id="reviewsContent_${id}">${currentLang === 'sw' ? 'Inapakia...' : 'Loading...'}</div>
+      <div class="review-form">
+        <strong>${t('leaveReview')}</strong>
+        <div class="star-picker" id="starPicker_${id}" data-rating="0">
+          ${[1,2,3,4,5].map(i => `<span class="star" onclick="setStarRating('${id}', ${i})">★</span>`).join('')}
+        </div>
+        <textarea id="reviewComment_${id}" placeholder="${currentLang === 'sw' ? 'Andika maoni yako (hiari)' : 'Write your comment (optional)'}" rows="2" style="width:100%;margin-top:8px"></textarea>
+        <button class="btn-primary" style="margin-top:8px" onclick="submitReview('${id}')">${t('submit')}</button>
+      </div>
+    </div>
   `;
+  setTimeout(() => loadReviews(id), 100);
   document.getElementById('detailModal').classList.add('open');
 
   // Render mini-map for this listing if coordinates exist
@@ -1055,6 +1185,133 @@ function getTrustBadge(l) {
   if (!l.verified && ageDays < 0.1) badges.push('<span class="badge-trust unverified">⚠ Haijathibitishwa</span>');
   return badges.join(' ');
 }
+
+// ============== REVIEWS ==============
+async function loadReviews(listingId) {
+  try {
+    const r = await fetch('/api/reviews/' + listingId);
+    const data = await r.json();
+    const el = document.getElementById('reviewsContent_' + listingId);
+    if (!el) return;
+    if (!data.count) {
+      el.innerHTML = `<p class="hint">${currentLang === 'sw' ? 'Bado hakuna maoni. Kuwa wa kwanza!' : 'No reviews yet. Be the first!'}</p>`;
+      return;
+    }
+    const stars = '★'.repeat(Math.round(data.avg)) + '☆'.repeat(5 - Math.round(data.avg));
+    el.innerHTML = `
+      <div class="rating-row">
+        <span class="rating-stars">${stars}</span>
+        <strong>${data.avg.toFixed(1)}</strong>
+        <small class="hint">(${data.count} ${currentLang === 'sw' ? 'maoni' : 'reviews'})</small>
+      </div>
+      ${data.reviews.slice(0, 5).map(r => `
+        <div class="review-item">
+          <div class="review-meta">
+            <span class="rating-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+            <span>${new Date(r.createdAt).toLocaleDateString()}</span>
+          </div>
+          ${r.comment ? `<div class="review-comment">${escapeHtml(r.comment)}</div>` : ''}
+        </div>
+      `).join('')}
+    `;
+  } catch (e) { console.warn('reviews', e); }
+}
+
+function setStarRating(listingId, rating) {
+  const picker = document.getElementById('starPicker_' + listingId);
+  picker.dataset.rating = rating;
+  picker.querySelectorAll('.star').forEach((s, i) => {
+    s.classList.toggle('active', i < rating);
+  });
+}
+window.setStarRating = setStarRating;
+
+async function submitReview(listingId) {
+  if (!currentUser) { toast(currentLang === 'sw' ? 'Ingia kwanza' : 'Sign in first'); openAuth(); return; }
+  const picker = document.getElementById('starPicker_' + listingId);
+  const rating = Number(picker.dataset.rating);
+  const comment = document.getElementById('reviewComment_' + listingId).value;
+  if (!rating) { toast(currentLang === 'sw' ? 'Chagua nyota' : 'Pick stars'); return; }
+  try {
+    const r = await fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listingId, reviewerId: currentUser.uid, rating, comment })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      toast(currentLang === 'sw' ? '✓ Asante kwa maoni yako!' : '✓ Thanks for your review!');
+      document.getElementById('reviewComment_' + listingId).value = '';
+      loadReviews(listingId);
+    } else toast('❌ ' + (data.error || 'Hitilafu'));
+  } catch (e) { toast('❌ ' + e.message); }
+}
+window.submitReview = submitReview;
+
+// ============== BOOKING ==============
+function renderBookingBox(l, wa) {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="booking-box">
+      <h3>📅 ${currentLang === 'sw' ? 'Book hii nyumba' : 'Book this place'}</h3>
+      <div class="booking-row">
+        <label>
+          <small>${t('checkIn')}</small>
+          <input type="date" id="bookCheckIn_${l.id}" min="${today}" onchange="updateBookingTotal('${l.id}', ${l.price})" />
+        </label>
+        <label>
+          <small>${t('checkOut')}</small>
+          <input type="date" id="bookCheckOut_${l.id}" min="${today}" onchange="updateBookingTotal('${l.id}', ${l.price})" />
+        </label>
+      </div>
+      <div class="booking-summary" id="bookSummary_${l.id}">
+        ${currentLang === 'sw' ? 'Chagua tarehe' : 'Pick dates'}
+      </div>
+      <input type="text" id="bookGuestName_${l.id}" placeholder="${t('yourName')}" style="width:100%;padding:8px;margin:4px 0;border:1px solid #f59e0b;border-radius:6px" />
+      <input type="tel" id="bookGuestPhone_${l.id}" placeholder="${t('phone')}" pattern="255[0-9]{9}" style="width:100%;padding:8px;margin:4px 0;border:1px solid #f59e0b;border-radius:6px" />
+      <button class="btn-primary" style="width:100%" onclick="submitBooking('${l.id}', ${l.price}, '${wa}', '${l.title.replace(/'/g, '')}')">${t('bookNow')}</button>
+    </div>
+  `;
+}
+
+function updateBookingTotal(listingId, price) {
+  const ci = document.getElementById('bookCheckIn_' + listingId).value;
+  const co = document.getElementById('bookCheckOut_' + listingId).value;
+  const summary = document.getElementById('bookSummary_' + listingId);
+  if (!ci || !co) { summary.textContent = currentLang === 'sw' ? 'Chagua tarehe' : 'Pick dates'; return; }
+  const nights = Math.round((new Date(co) - new Date(ci)) / (1000 * 60 * 60 * 24));
+  if (nights < 1) { summary.textContent = currentLang === 'sw' ? '⚠️ Tarehe zisizo sahihi' : '⚠️ Invalid dates'; return; }
+  const total = nights * price;
+  summary.textContent = `${nights} ${t('nights')} × TZS ${price.toLocaleString()} = ${t('total')}: TZS ${total.toLocaleString()}`;
+}
+window.updateBookingTotal = updateBookingTotal;
+
+async function submitBooking(listingId, price, wa, title) {
+  const ci = document.getElementById('bookCheckIn_' + listingId).value;
+  const co = document.getElementById('bookCheckOut_' + listingId).value;
+  const guestName = document.getElementById('bookGuestName_' + listingId).value.trim();
+  const guestPhone = document.getElementById('bookGuestPhone_' + listingId).value.trim();
+  if (!ci || !co) return toast(currentLang === 'sw' ? 'Chagua tarehe' : 'Pick dates');
+  if (!guestName || !guestPhone) return toast(currentLang === 'sw' ? 'Jaza taarifa zako' : 'Fill your info');
+  if (!/^255[67][0-9]{8}$/.test(guestPhone)) return toast('Phone: 255...');
+  const nights = Math.round((new Date(co) - new Date(ci)) / (1000 * 60 * 60 * 24));
+  if (nights < 1) return toast(currentLang === 'sw' ? 'Tarehe zisizo sahihi' : 'Invalid dates');
+  const total = nights * price;
+
+  try {
+    const r = await fetch('/api/bookings', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listingId, guestName, guestPhone, checkIn: ci, checkOut: co, nights, total })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      toast(currentLang === 'sw' ? '✓ Booking imefanywa! Wasiliana na mwenye nyumba.' : '✓ Booking made! Contact host.');
+      const msg = encodeURIComponent(`Habari, nimeBOOK "${title}" kwenye Nodalali.\nCheck-in: ${ci}\nCheck-out: ${co}\nUsiku: ${nights}\nJumla: TZS ${total.toLocaleString()}\nJina: ${guestName}\nSimu: ${guestPhone}`);
+      window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
+    } else toast('❌ ' + (data.error || 'Hitilafu'));
+  } catch (e) { toast('❌ ' + e.message); }
+}
+window.submitBooking = submitBooking;
 
 async function openReport(listingId) {
   const reasons = [
@@ -1128,7 +1385,7 @@ function refreshMapMarkers(map, markers) {
       <div style="min-width:180px">
         <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
         <strong>${l.title}</strong><br>
-        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price)}</span><br>
+        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price, l.type)}</span><br>
         <small>📍 ${l.area}, ${l.city}</small><br>
         <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
       </div>
@@ -1377,4 +1634,6 @@ if ('serviceWorker' in navigator) {
 }
 
 // ============== INITIAL RENDER ==============
+applyTheme();
+applyI18n();
 renderListings();

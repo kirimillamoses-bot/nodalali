@@ -129,6 +129,46 @@ function dismissReports(listingId) {
   saveReports();
 }
 
+// ── REVIEWS ──
+const REVIEWS_FILE = path.join(__dirname, 'reviews.json');
+let reviewsStore = {};
+try { reviewsStore = JSON.parse(fs.readFileSync(REVIEWS_FILE, 'utf8')); } catch {}
+function saveReviews() { fs.writeFileSync(REVIEWS_FILE, JSON.stringify(reviewsStore, null, 2)); }
+
+function addReview(listingId, reviewerId, rating, comment) {
+  if (!reviewsStore[listingId]) reviewsStore[listingId] = [];
+  // One review per user per listing
+  const existing = reviewsStore[listingId].find(r => r.reviewerId === reviewerId);
+  if (existing) {
+    existing.rating = rating;
+    existing.comment = comment;
+    existing.updatedAt = Date.now();
+  } else {
+    reviewsStore[listingId].push({
+      id: 'r' + Date.now() + Math.random().toString(36).slice(2, 6),
+      reviewerId, rating, comment,
+      createdAt: Date.now()
+    });
+  }
+  saveReviews();
+  return getReviews(listingId);
+}
+
+function getReviews(listingId) {
+  const list = reviewsStore[listingId] || [];
+  const avg = list.length ? list.reduce((s, r) => s + r.rating, 0) / list.length : 0;
+  return { reviews: list.slice().sort((a, b) => b.createdAt - a.createdAt), avg, count: list.length };
+}
+
+function deleteReview(listingId, reviewId, reviewerId) {
+  const list = reviewsStore[listingId] || [];
+  const idx = list.findIndex(r => r.id === reviewId && r.reviewerId === reviewerId);
+  if (idx === -1) return false;
+  list.splice(idx, 1);
+  saveReviews();
+  return true;
+}
+
 module.exports = {
   isBlocked,
   containsScamContent,
@@ -143,5 +183,8 @@ module.exports = {
   getAllReports,
   getBlocklist,
   dismissReports,
+  addReview,
+  getReviews,
+  deleteReview,
   ADMIN_TOKEN
 };

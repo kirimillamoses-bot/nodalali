@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const crypto = require('crypto');
 const fetch = require('node-fetch');
 const rateLimit = require('express-rate-limit');
@@ -102,6 +103,79 @@ app.post('/api/report', writeLimit, (req, res) => {
 
 app.get('/api/reports/:id', (req, res) => {
   res.json({ count: security.getReportCount(req.params.id) });
+});
+
+// ────────────────────────────────────────────────
+// REVIEWS
+// ────────────────────────────────────────────────
+app.get('/api/reviews/:listingId', (req, res) => {
+  res.json(security.getReviews(req.params.listingId));
+});
+
+app.post('/api/reviews', writeLimit, (req, res) => {
+  const { listingId, reviewerId, rating, comment } = req.body || {};
+  if (!listingId || !reviewerId) return res.status(400).json({ error: 'Missing fields' });
+  const r = Number(rating);
+  if (!(r >= 1 && r <= 5)) return res.status(400).json({ error: 'Rating must be 1-5' });
+  const cleanComment = security.sanitizeText(comment, 500);
+  const scam = security.containsScamContent(cleanComment);
+  if (scam) return res.status(400).json({ error: 'Maudhui yenye shaka: ' + scam });
+  const result = security.addReview(listingId, reviewerId, r, cleanComment);
+  res.json({ ok: true, ...result });
+});
+
+app.delete('/api/reviews/:listingId/:reviewId', writeLimit, (req, res) => {
+  const { reviewerId } = req.body || req.query || {};
+  const ok = security.deleteReview(req.params.listingId, req.params.reviewId, reviewerId);
+  if (!ok) return res.status(403).json({ error: 'Not allowed' });
+  res.json({ ok: true });
+});
+
+// ────────────────────────────────────────────────
+// BOOKINGS (guest houses, B&Bs)
+// ────────────────────────────────────────────────
+const BOOKINGS_FILE = path.join(__dirname, 'bookings.json');
+let bookingsStore = {};
+try { bookingsStore = JSON.parse(fs.readFileSync(BOOKINGS_FILE, 'utf8')); } catch {}
+const saveBookings = () => fs.writeFileSync(BOOKINGS_FILE, JSON.stringify(bookingsStore, null, 2));
+
+app.get('/api/bookings/:listingId', (req, res) => {
+  const list = bookingsStore[req.params.listingId] || [];
+  res.json({ bookings: list, blockedDates: list.flatMap(b => b.dates) });
+});
+
+app.post('/api/bookings', writeLimit, (req, res) => {
+  const { listingId, guestName, guestPhone, checkIn, checkOut, nights, total } = req.body || {};
+  if (!listingId || !guestPhone || !checkIn || !checkOut) return res.status(400).json({ error: 'Missing fields' });
+  const phoneErr = security.validateTzPhone(guestPhone);
+  if (phoneErr) return res.status(400).json({ error: phoneErr });
+  if (security.isBlocked({ phone: guestPhone, ip: req.ip })) return res.status(403).json({ error: 'Akaunti imezuiwa' });
+
+  // Build the array of dates between checkIn and checkOut
+  const dates = [];
+  const start = new Date(checkIn);
+  const end = new Date(checkOut);
+  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+    dates.push(d.toISOString().slice(0, 10));
+  }
+
+  // Check conflicts
+  const list = bookingsStore[listingId] || [];
+  const blocked = new Set(list.flatMap(b => b.dates));
+  const conflict = dates.find(d => blocked.has(d));
+  if (conflict) return res.status(409).json({ error: `Tarehe ${conflict} imeshachukuliwa` });
+
+  const booking = {
+    id: 'b' + Date.now() + Math.random().toString(36).slice(2, 6),
+    listingId,
+    guestName: security.sanitizeText(guestName, 60),
+    guestPhone, checkIn, checkOut, nights, total,
+    dates, createdAt: Date.now(), status: 'pending'
+  };
+  if (!bookingsStore[listingId]) bookingsStore[listingId] = [];
+  bookingsStore[listingId].push(booking);
+  saveBookings();
+  res.json({ ok: true, booking });
 });
 
 // ────────────────────────────────────────────────
@@ -254,6 +328,7 @@ app.get('/admin', (_, res) => res.sendFile(path.join(__dirname, 'admin.html')));
 app.get('/privacy', (_, res) => res.sendFile(path.join(__dirname, 'privacy.html')));
 app.get('/terms', (_, res) => res.sendFile(path.join(__dirname, 'terms.html')));
 app.get('/students', (_, res) => res.sendFile(path.join(__dirname, 'students.html')));
+app.get('/install', (_, res) => res.sendFile(path.join(__dirname, 'install.html')));
 app.get(['/wanafunzi', '/student'], (_, res) => res.redirect('/students'));
 
 app.use(express.static(__dirname));

@@ -22,10 +22,14 @@
         <img src="icon-192.png?v=NOW" alt="Nodalali" class="logo" />
         <div>
           <h1>Nodalali</h1>
-          <small>Pangisha bila dalali 🇹🇿</small>
+          <small data-i18n="tagline">Pangisha bila dalali 🇹🇿</small>
         </div>
       </div>
-      <button id="authBtn" class="btn-ghost">Ingia</button>
+      <div class="header-actions">
+        <button id="langBtn" class="btn-ghost icon-btn" onclick="toggleLang()" title="Language">🌐</button>
+        <button id="themeBtn" class="btn-ghost icon-btn" onclick="toggleTheme()" title="Theme">🌙</button>
+        <button id="authBtn" class="btn-ghost">Ingia</button>
+      </div>
     </div>
   </header>
 

@@ -1,5 +1,5 @@
 // v4 — network-first to prevent stale cache
-const CACHE = 'nodalali-v19-' + Date.now();
+const CACHE = 'nodalali-v20-' + Date.now();
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
