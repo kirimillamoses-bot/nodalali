@@ -33,6 +33,7 @@
     <button class="tab active" data-tab="browse">🔍 Tafuta</button>
     <button class="tab" data-tab="map">🗺️ Ramani</button>
     <button class="tab" data-tab="favorites">❤️ Pendwa</button>
+    <button class="tab" data-tab="nearme">📍 Karibu Nami</button>
     <button class="tab" data-tab="students">🎓 Wanafunzi</button>
     <button class="tab" data-tab="my-listings">🏠 Zangu</button>
     <button class="tab" data-tab="post">➕ Tangaza</button>
@@ -70,6 +71,36 @@
     <!-- MAP (full screen) -->
     <section id="map" class="view">
       <div id="leafletMap"></div>
+    </section>
+
+    <!-- NEAR ME -->
+    <section id="nearme" class="view">
+      <div class="campus-hero">
+        <h2>📍 Karibu Nami</h2>
+        <p>Pata nyumba, guest house, lounge & B&B karibu na ulipo sasa.</p>
+      </div>
+      <div class="nearme-controls">
+        <button class="btn-primary" onclick="findNearMe()">📡 Pata Eneo Langu</button>
+        <select id="nearmeType" onchange="renderNearMe()">
+          <option value="all">Vyote</option>
+          <option value="house">Nyumba</option>
+          <option value="apartment">Apartment</option>
+          <option value="room">Chumba</option>
+          <option value="self">Self contained</option>
+          <option value="guesthouse">Guest House</option>
+          <option value="bnb">B&B</option>
+          <option value="lounge">Lounge / Bar</option>
+        </select>
+        <select id="nearmeRadius" onchange="renderNearMe()">
+          <option value="2">Hadi 2 km</option>
+          <option value="5" selected>Hadi 5 km</option>
+          <option value="10">Hadi 10 km</option>
+          <option value="20">Hadi 20 km</option>
+        </select>
+      </div>
+      <div id="nearmeStatus" class="hint" style="text-align:center;padding:20px"></div>
+      <div id="nearmeMap" class="campus-map"></div>
+      <div id="nearmeListings"></div>
     </section>
 
     <!-- STUDENTS -->
@@ -136,6 +167,9 @@
             <option value="apartment">Apartment</option>
             <option value="room">Chumba kimoja</option>
             <option value="self">Self contained</option>
+            <option value="guesthouse">Guest House</option>
+            <option value="bnb">B&B (Bed & Breakfast)</option>
+            <option value="lounge">Lounge / Bar</option>
             <option value="commercial">Biashara/Ofisi</option>
           </select>
         </label>

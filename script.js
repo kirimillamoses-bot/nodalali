@@ -183,7 +183,176 @@ const DEMO_LISTINGS = [
     bedrooms: 2, bathrooms: 1, price: 400000, type: 'apartment',
     description: 'Apartment mpya, vyumba 2 vya kushiriki, WiFi, security, karibu sana na UDSM.',
     images: ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800'],
-    lat: -6.7790, lng: 39.2120, whatsapp: '255713200010', ownerId: 'demo' }
+    lat: -6.7790, lng: 39.2120, whatsapp: '255713200010', ownerId: 'demo' },
+
+  // ── GUEST HOUSES, B&Bs & LOUNGES ──
+  // Moshi - Mjohoroni & nearby
+  { id: 'gh1', title: 'Mjohoroni Guest House', city: 'Moshi', area: 'Mjohoroni',
+    bedrooms: 1, bathrooms: 1, price: 35000, type: 'guesthouse',
+    description: 'Guest house safi Mjohoroni Moshi. Kitanda, shuka, breakfast, parking.',
+    images: ['https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800'],
+    lat: -3.3520, lng: 37.3320, whatsapp: '255744300001', ownerId: 'demo' },
+  { id: 'gh2', title: 'Kilimanjaro View B&B Mjohoroni', city: 'Moshi', area: 'Mjohoroni',
+    bedrooms: 1, bathrooms: 1, price: 65000, type: 'bnb',
+    description: 'View ya Mlima Kilimanjaro, breakfast asubuhi, AC, WiFi, hot shower.',
+    images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'],
+    lat: -3.3500, lng: 37.3340, whatsapp: '255744300002', ownerId: 'demo' },
+  { id: 'lo1', title: 'Mjohoroni Lounge & Bar', city: 'Moshi', area: 'Mjohoroni',
+    bedrooms: 0, bathrooms: 2, price: 1500000, type: 'lounge',
+    description: 'Lounge inakodishwa kwa harusi, parties, conferences. Sound system, kitchen.',
+    images: ['https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800'],
+    lat: -3.3510, lng: 37.3350, whatsapp: '255744300003', ownerId: 'demo' },
+  { id: 'gh3', title: 'KCMC Guest House', city: 'Moshi', area: 'KCMC',
+    bedrooms: 1, bathrooms: 1, price: 40000, type: 'guesthouse',
+    description: 'Karibu na hospitali ya KCMC. Inafaa wagonjwa na ndugu zao.',
+    images: ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800'],
+    lat: -3.3530, lng: 37.3370, whatsapp: '255744300004', ownerId: 'demo' },
+  { id: 'gh4', title: 'Moshi Town Lodge', city: 'Moshi', area: 'Moshi Town',
+    bedrooms: 1, bathrooms: 1, price: 50000, type: 'guesthouse',
+    description: 'Karibu na sokoni na bus stand. Hot shower, breakfast, security.',
+    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'],
+    lat: -3.3490, lng: 37.3320, whatsapp: '255744300005', ownerId: 'demo' },
+  { id: 'lo2', title: 'Moshi Town Lounge', city: 'Moshi', area: 'Moshi Town',
+    bedrooms: 0, bathrooms: 2, price: 1200000, type: 'lounge',
+    description: 'Lounge ya CBD Moshi, capacity 200, parking, sound, lighting.',
+    images: ['https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'],
+    lat: -3.3485, lng: 37.3315, whatsapp: '255744300006', ownerId: 'demo' },
+
+  // Dar es Salaam
+  { id: 'gh5', title: 'Mikocheni Guest House', city: 'Dar es Salaam', area: 'Mikocheni',
+    bedrooms: 1, bathrooms: 1, price: 60000, type: 'guesthouse',
+    description: 'Guest house safi, AC, WiFi, breakfast, parking, security.',
+    images: ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800'],
+    lat: -6.7610, lng: 39.2553, whatsapp: '255744300007', ownerId: 'demo' },
+  { id: 'gh6', title: 'Masaki Beach B&B', city: 'Dar es Salaam', area: 'Masaki',
+    bedrooms: 1, bathrooms: 1, price: 120000, type: 'bnb',
+    description: 'Karibu na bahari, breakfast, AC, swimming pool, fully furnished.',
+    images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'],
+    lat: -6.7457, lng: 39.2807, whatsapp: '255744300008', ownerId: 'demo' },
+  { id: 'lo3', title: 'Mikocheni Wedding Lounge', city: 'Dar es Salaam', area: 'Mikocheni',
+    bedrooms: 0, bathrooms: 4, price: 3000000, type: 'lounge',
+    description: 'Wedding & event lounge, capacity 500, AC, generator, parking.',
+    images: ['https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800'],
+    lat: -6.7620, lng: 39.2540, whatsapp: '255744300009', ownerId: 'demo' },
+  { id: 'gh7', title: 'Kariakoo Backpackers', city: 'Dar es Salaam', area: 'Kariakoo',
+    bedrooms: 1, bathrooms: 1, price: 25000, type: 'guesthouse',
+    description: 'Bei nafuu, karibu na soko la Kariakoo, breakfast.',
+    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'],
+    lat: -6.8161, lng: 39.2724, whatsapp: '255744300010', ownerId: 'demo' },
+
+  // Arusha
+  { id: 'gh8', title: 'Njiro Guest House', city: 'Arusha', area: 'Njiro',
+    bedrooms: 1, bathrooms: 1, price: 45000, type: 'guesthouse',
+    description: 'Karibu na ofisi za UN, hot shower, WiFi, parking.',
+    images: ['https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800'],
+    lat: -3.4039, lng: 36.7059, whatsapp: '255744300011', ownerId: 'demo' },
+  { id: 'gh9', title: 'Arusha Safari B&B', city: 'Arusha', area: 'Sakina',
+    bedrooms: 1, bathrooms: 1, price: 80000, type: 'bnb',
+    description: 'Safari briefing room, breakfast, transport to parks, WiFi.',
+    images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'],
+    lat: -3.3680, lng: 36.6820, whatsapp: '255744300012', ownerId: 'demo' },
+  { id: 'lo4', title: 'Arusha Event Lounge', city: 'Arusha', area: 'Themi',
+    bedrooms: 0, bathrooms: 3, price: 1800000, type: 'lounge',
+    description: 'Event lounge, harusi, conferences, capacity 300.',
+    images: ['https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'],
+    lat: -3.3760, lng: 36.6920, whatsapp: '255744300013', ownerId: 'demo' },
+
+  // Mwanza
+  { id: 'gh10', title: 'Mwanza Lake View Guest House', city: 'Mwanza', area: 'Capripoint',
+    bedrooms: 1, bathrooms: 1, price: 50000, type: 'guesthouse',
+    description: 'View ya Ziwa Victoria, breakfast, AC, WiFi.',
+    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'],
+    lat: -2.5160, lng: 32.9170, whatsapp: '255744300014', ownerId: 'demo' },
+  { id: 'gh11', title: 'Bugando B&B', city: 'Mwanza', area: 'Bugando',
+    bedrooms: 1, bathrooms: 1, price: 70000, type: 'bnb',
+    description: 'Karibu na hospitali ya Bugando, breakfast, hot shower.',
+    images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'],
+    lat: -2.5170, lng: 32.9070, whatsapp: '255744300015', ownerId: 'demo' },
+  { id: 'lo5', title: 'Mwanza Lounge', city: 'Mwanza', area: 'Nyamagana',
+    bedrooms: 0, bathrooms: 2, price: 1000000, type: 'lounge',
+    description: 'Wedding & party lounge, capacity 250, parking.',
+    images: ['https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800'],
+    lat: -2.5290, lng: 32.9000, whatsapp: '255744300016', ownerId: 'demo' },
+
+  // Dodoma
+  { id: 'gh12', title: 'Dodoma Capital Guest House', city: 'Dodoma', area: 'Area C',
+    bedrooms: 1, bathrooms: 1, price: 45000, type: 'guesthouse',
+    description: 'Karibu na Bunge na ofisi za serikali, AC, WiFi.',
+    images: ['https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800'],
+    lat: -6.1729, lng: 35.7516, whatsapp: '255744300017', ownerId: 'demo' },
+  { id: 'lo6', title: 'Dodoma Event Lounge', city: 'Dodoma', area: 'Area D',
+    bedrooms: 0, bathrooms: 2, price: 1500000, type: 'lounge',
+    description: 'Event lounge, capacity 400, sound system, generator.',
+    images: ['https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'],
+    lat: -6.1820, lng: 35.7460, whatsapp: '255744300018', ownerId: 'demo' },
+
+  // Mbeya
+  { id: 'gh13', title: 'Mbeya Highland Guest House', city: 'Mbeya', area: 'Iyunga',
+    bedrooms: 1, bathrooms: 1, price: 40000, type: 'guesthouse',
+    description: 'Hewa baridi, breakfast, parking, WiFi.',
+    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'],
+    lat: -8.9090, lng: 33.4540, whatsapp: '255744300019', ownerId: 'demo' },
+
+  // Tanga
+  { id: 'gh14', title: 'Tanga Beach Guest House', city: 'Tanga', area: 'Tanga',
+    bedrooms: 1, bathrooms: 1, price: 55000, type: 'guesthouse',
+    description: 'Karibu na bahari ya Tanga, AC, breakfast, parking.',
+    images: ['https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800'],
+    lat: -5.0700, lng: 39.0980, whatsapp: '255744300020', ownerId: 'demo' },
+
+  // Bukoba
+  { id: 'gh15', title: 'Bukoba Lake View B&B', city: 'Bukoba', area: 'Bukoba',
+    bedrooms: 1, bathrooms: 1, price: 50000, type: 'bnb',
+    description: 'View ya Ziwa Victoria, breakfast, WiFi, fishing tour.',
+    images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'],
+    lat: -1.3320, lng: 31.8120, whatsapp: '255744300021', ownerId: 'demo' },
+
+  // Iringa
+  { id: 'gh16', title: 'Iringa Highland Guest House', city: 'Iringa', area: 'Iringa',
+    bedrooms: 1, bathrooms: 1, price: 35000, type: 'guesthouse',
+    description: 'Bei nafuu, hewa baridi, breakfast, hot water.',
+    images: ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800'],
+    lat: -7.7700, lng: 35.6900, whatsapp: '255744300022', ownerId: 'demo' },
+
+  // Morogoro
+  { id: 'gh17', title: 'Morogoro Mountain Guest House', city: 'Morogoro', area: 'Morogoro',
+    bedrooms: 1, bathrooms: 1, price: 40000, type: 'guesthouse',
+    description: 'View ya Mlima Uluguru, breakfast, parking, WiFi.',
+    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'],
+    lat: -6.8240, lng: 37.6610, whatsapp: '255744300023', ownerId: 'demo' },
+
+  // Zanzibar
+  { id: 'gh18', title: 'Stone Town Backpackers', city: 'Zanzibar', area: 'Stone Town',
+    bedrooms: 1, bathrooms: 1, price: 60000, type: 'guesthouse',
+    description: 'Stone Town historic, breakfast, AC, walking distance to beach.',
+    images: ['https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800'],
+    lat: -6.1631, lng: 39.1898, whatsapp: '255744300024', ownerId: 'demo' },
+  { id: 'gh19', title: 'Nungwi Beach B&B', city: 'Zanzibar', area: 'Nungwi',
+    bedrooms: 1, bathrooms: 1, price: 150000, type: 'bnb',
+    description: 'Bahari mbele, breakfast, swimming, snorkeling tours.',
+    images: ['https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800'],
+    lat: -5.7270, lng: 39.2980, whatsapp: '255744300025', ownerId: 'demo' },
+
+  // Mtwara
+  { id: 'gh20', title: 'Mtwara Guest House', city: 'Mtwara', area: 'Mtwara',
+    bedrooms: 1, bathrooms: 1, price: 35000, type: 'guesthouse',
+    description: 'Karibu na bahari, breakfast, AC, WiFi.',
+    images: ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800'],
+    lat: -10.2680, lng: 40.1080, whatsapp: '255744300026', ownerId: 'demo' },
+
+  // Songea
+  { id: 'gh21', title: 'Songea Town Guest House', city: 'Songea', area: 'Songea',
+    bedrooms: 1, bathrooms: 1, price: 30000, type: 'guesthouse',
+    description: 'Bei nafuu, breakfast, hot water, parking.',
+    images: ['https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800'],
+    lat: -10.6850, lng: 35.6520, whatsapp: '255744300027', ownerId: 'demo' },
+
+  // Kigoma
+  { id: 'gh22', title: 'Kigoma Lake Tanganyika B&B', city: 'Kigoma', area: 'Kigoma',
+    bedrooms: 1, bathrooms: 1, price: 55000, type: 'bnb',
+    description: 'View ya Ziwa Tanganyika, breakfast, fishing, AC.',
+    images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'],
+    lat: -4.8770, lng: 29.6260, whatsapp: '255744300028', ownerId: 'demo' }
 ];
 
 let allListings = [...DEMO_LISTINGS];
@@ -204,8 +373,132 @@ document.querySelectorAll('.tab').forEach(tab => {
     if (tab.dataset.tab === 'favorites') renderFavorites();
     if (tab.dataset.tab === 'my-listings') renderMyListings();
     if (tab.dataset.tab === 'students') renderCampuses();
+    if (tab.dataset.tab === 'nearme') initNearMe();
   });
 });
+
+// ============== NEAR ME (geolocation) ==============
+let userLocation = null;
+let nearmeMapInstance = null;
+let nearmeMapMarkers = [];
+
+function initNearMe() {
+  const status = document.getElementById('nearmeStatus');
+  if (!userLocation) {
+    status.innerHTML = '👆 Bonyeza "Pata Eneo Langu" kuanza';
+  } else {
+    renderNearMe();
+  }
+}
+
+function findNearMe() {
+  const status = document.getElementById('nearmeStatus');
+  if (!navigator.geolocation) {
+    status.innerHTML = '❌ Browser yako haitumii geolocation';
+    return;
+  }
+  status.innerHTML = '📡 Inatafuta eneo lako...';
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      status.innerHTML = `✅ Eneo limepatikana: ${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}`;
+      renderNearMe();
+    },
+    (err) => {
+      status.innerHTML = `❌ Hitilafu: ${err.message}. Hakikisha umetoa ruhusa.`;
+      // Fallback to Moshi center for testing
+      userLocation = { lat: -3.3475, lng: 37.3380 };
+      status.innerHTML += '<br><small>Tunatumia Moshi (Mjohoroni) kama default</small>';
+      renderNearMe();
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+  );
+}
+window.findNearMe = findNearMe;
+window.renderNearMe = renderNearMe;
+
+function renderNearMe() {
+  if (!userLocation) return;
+  const type = document.getElementById('nearmeType').value;
+  const radius = Number(document.getElementById('nearmeRadius').value);
+
+  let nearby = allListings
+    .filter(l => l.lat && l.lng)
+    .map(l => ({ ...l, _distance: distanceKm(userLocation.lat, userLocation.lng, l.lat, l.lng) }))
+    .filter(l => l._distance <= radius)
+    .filter(l => type === 'all' || l.type === type)
+    .sort((a, b) => a._distance - b._distance);
+
+  // Render map
+  const mapEl = document.getElementById('nearmeMap');
+  mapEl.classList.add('active');
+  if (!nearmeMapInstance) {
+    nearmeMapInstance = L.map('nearmeMap').setView([userLocation.lat, userLocation.lng], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OSM' }).addTo(nearmeMapInstance);
+  } else {
+    nearmeMapInstance.invalidateSize();
+    nearmeMapInstance.setView([userLocation.lat, userLocation.lng], 14);
+  }
+  nearmeMapMarkers.forEach(m => nearmeMapInstance.removeLayer(m));
+  nearmeMapMarkers = [];
+
+  // User pin
+  const meIcon = L.divIcon({
+    className: '',
+    html: '<div style="background:#2563eb;border:3px solid #fff;border-radius:50%;width:22px;height:22px;box-shadow:0 0 0 6px rgba(37,99,235,.3);animation:mePulse 1.5s infinite"></div>',
+    iconSize: [22, 22]
+  });
+  const meMarker = L.marker([userLocation.lat, userLocation.lng], { icon: meIcon }).addTo(nearmeMapInstance).bindPopup('📍 Wewe uko hapa');
+  nearmeMapMarkers.push(meMarker);
+
+  // Radius circle
+  const circle = L.circle([userLocation.lat, userLocation.lng], {
+    radius: radius * 1000, color: '#2563eb', fillColor: '#3b82f6', fillOpacity: 0.08, weight: 1
+  }).addTo(nearmeMapInstance);
+  nearmeMapMarkers.push(circle);
+
+  // Listings
+  nearby.forEach(l => {
+    const priceShort = l.price >= 1000000 ? (l.price/1000000).toFixed(1)+'M' : Math.round(l.price/1000)+'k';
+    const icon = L.divIcon({ className: 'price-marker', html: `TZS ${priceShort}`, iconSize: null });
+    const marker = L.marker([l.lat, l.lng], { icon }).addTo(nearmeMapInstance);
+    marker.bindPopup(`
+      <div style="min-width:180px">
+        <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
+        <strong>${l.title}</strong><br>
+        <span style="color:#0f766e;font-weight:700">${formatPrice(l.price)}</span><br>
+        <span class="dist-badge">${l._distance.toFixed(1)} km</span><br>
+        <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
+      </div>
+    `);
+    nearmeMapMarkers.push(marker);
+  });
+
+  // List
+  const out = document.getElementById('nearmeListings');
+  if (!nearby.length) {
+    out.innerHTML = `<div class="empty">Hakuna kitu kilichopatikana ndani ya ${radius} km. Jaribu eneo kubwa zaidi.</div>`;
+    return;
+  }
+  out.innerHTML = `
+    <p style="margin:14px 0;color:var(--muted);font-size:13px">📍 ${nearby.length} matokeo ndani ya ${radius} km</p>
+    <div class="grid">
+      ${nearby.map(l => `
+        <div class="card" onclick="openDetail('${l.id}')">
+          <div class="card-image" style="background-image:url('${(l.images && l.images[0]) || 'icon-192.png'}')">
+            <span class="card-badge">${l.type}</span>
+            <span class="dist-badge" style="position:absolute;bottom:8px;left:8px">${l._distance.toFixed(1)} km</span>
+          </div>
+          <div class="card-body">
+            <div class="card-price">${formatPrice(l.price)}</div>
+            <div class="card-title">${l.title}</div>
+            <div class="card-meta"><span>📍 ${l.area}, ${l.city}</span></div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
 
 // ============== STUDENT HOUSING ==============
 const CAMPUSES = [
