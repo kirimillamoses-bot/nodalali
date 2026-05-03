@@ -404,28 +404,121 @@ window.setManualLocation = setManualLocation;
 function findNearMe() {
   const status = document.getElementById('nearmeStatus');
   if (!navigator.geolocation) {
-    status.innerHTML = '❌ Browser yako haitumii geolocation';
+    status.innerHTML = '❌ Browser yako haitumii geolocation. Chagua eneo kutoka dropdown.';
     return;
   }
-  status.innerHTML = '📡 Inatafuta eneo lako...';
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-      status.innerHTML = `✅ Eneo limepatikana: ${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}`;
-      renderNearMe();
-    },
-    (err) => {
-      status.innerHTML = `❌ Hitilafu: ${err.message}. Hakikisha umetoa ruhusa.`;
-      // Fallback to Moshi center for testing
-      userLocation = { lat: -3.3475, lng: 37.3380 };
-      status.innerHTML += '<br><small>Tunatumia Moshi (Mjohoroni) kama default</small>';
-      renderNearMe();
-    },
-    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
-  );
+
+  // HTTP-only sites can't use GPS in modern browsers; warn user
+  if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+    status.innerHTML = '⚠️ GPS inahitaji HTTPS. Tumia dropdown chini kuchagua eneo.';
+    return;
+  }
+
+  status.innerHTML = `
+    <div style="text-align:center">
+      <div style="font-size:32px;animation:mePulse 1.5s infinite;display:inline-block">📡</div><br>
+      <b>Inatafuta eneo lako...</b><br>
+      <small>Toa ruhusa kwenye browser ikiomba</small>
+    </div>
+  `;
+
+  // Try high-accuracy first, fallback to network-based
+  const tryLocate = (highAccuracy = true) => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        const accuracy = Math.round(pos.coords.accuracy);
+        const accuracyText = accuracy < 100 ? '✅ GPS sahihi'
+          : accuracy < 1000 ? '⚠️ GPS takriban'
+          : '🌐 IP/WiFi tu';
+        status.innerHTML = `
+          ${accuracyText} (±${accuracy < 1000 ? accuracy + ' m' : (accuracy/1000).toFixed(1) + ' km'})<br>
+          📍 <b>${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}</b><br>
+          <small><a href="#" onclick="autoExpandToFindResults();return false">📈 Panua hadi nipate matokeo</a></small>
+        `;
+        renderNearMe();
+        autoExpandIfEmpty();
+      },
+      (err) => {
+        // If high-accuracy timed out, retry with low-accuracy
+        if (highAccuracy && err.code === err.TIMEOUT) {
+          status.innerHTML = '🌐 GPS imechelewa, tunajaribu IP/WiFi...';
+          tryLocate(false);
+          return;
+        }
+
+        let msg = '';
+        if (err.code === err.PERMISSION_DENIED) {
+          msg = `❌ <b>Umekataa ruhusa ya eneo.</b><br>
+            <small>Fungua tena: Chrome → Bonyeza 🔒 / 🔐 karibu na URL bar → Site settings → Location → Allow</small>`;
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+          msg = '❌ Eneo halipatikani. Hakikisha GPS au WiFi ipo wazi.';
+        } else if (err.code === err.TIMEOUT) {
+          msg = '❌ Subiri muda mrefu. Jaribu tena.';
+        } else {
+          msg = '❌ ' + err.message;
+        }
+
+        status.innerHTML = `
+          ${msg}<br><br>
+          <button class="btn-primary" onclick="findNearMe()" style="margin-right:8px">🔄 Jaribu tena</button>
+          <small>Au chagua eneo kutoka dropdown chini ↓</small>
+        `;
+      },
+      { enableHighAccuracy: highAccuracy, timeout: highAccuracy ? 8000 : 15000, maximumAge: 0 }
+    );
+  };
+  tryLocate(true);
 }
 window.findNearMe = findNearMe;
 window.renderNearMe = renderNearMe;
+
+// Auto-expand radius if no listings found nearby
+function autoExpandIfEmpty() {
+  if (!userLocation) return;
+  const radiusEl = document.getElementById('nearmeRadius');
+  const sizes = [5, 10, 20, 50, 200];
+  for (const r of sizes) {
+    const found = allListings.filter(l => l.lat && l.lng &&
+      distanceKm(userLocation.lat, userLocation.lng, l.lat, l.lng) <= r).length;
+    if (found > 0) {
+      if (Number(radiusEl.value) < r) {
+        radiusEl.value = String(Math.min(r, 50));
+        renderNearMe();
+      }
+      return;
+    }
+  }
+}
+
+function autoExpandToFindResults() {
+  if (!userLocation) return;
+  const sorted = allListings.filter(l => l.lat && l.lng)
+    .map(l => ({ ...l, _d: distanceKm(userLocation.lat, userLocation.lng, l.lat, l.lng) }))
+    .sort((a, b) => a._d - b._d);
+  if (sorted.length === 0) return;
+  const nearestKm = Math.ceil(sorted[0]._d);
+  const radiusEl = document.getElementById('nearmeRadius');
+  // Find smallest preset radius that includes nearest
+  const sizes = [2, 5, 10, 20, 50];
+  const fit = sizes.find(s => s >= nearestKm) || 50;
+  // If even 50 isn't enough, just override DOM with custom value
+  if (nearestKm > 50) {
+    // Add a custom option
+    if (!radiusEl.querySelector(`option[value="${nearestKm + 5}"]`)) {
+      const opt = document.createElement('option');
+      opt.value = nearestKm + 5;
+      opt.textContent = `Hadi ${nearestKm + 5} km (kufikia karibu zaidi)`;
+      radiusEl.appendChild(opt);
+    }
+    radiusEl.value = String(nearestKm + 5);
+  } else {
+    radiusEl.value = String(fit);
+  }
+  renderNearMe();
+  toast(`📍 Karibu zaidi ni ${nearestKm} km — radius imepanuliwa`);
+}
+window.autoExpandToFindResults = autoExpandToFindResults;
 
 function renderNearMe() {
   if (!userLocation) return;
@@ -487,7 +580,12 @@ function renderNearMe() {
   // List
   const out = document.getElementById('nearmeListings');
   if (!nearby.length) {
-    out.innerHTML = `<div class="empty">Hakuna kitu kilichopatikana ndani ya ${radius} km. Jaribu eneo kubwa zaidi.</div>`;
+    out.innerHTML = `
+      <div class="empty">
+        Hakuna kitu ndani ya ${radius} km.<br><br>
+        <button class="btn-primary" onclick="autoExpandToFindResults()">📈 Panua kufikia karibu zaidi</button>
+      </div>
+    `;
     return;
   }
   out.innerHTML = `
