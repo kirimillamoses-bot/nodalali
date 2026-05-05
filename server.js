@@ -330,6 +330,12 @@ app.get('/robots.txt', (_, res) => {
 app.get('/sitemap.xml', (_, res) => {
   res.type('application/xml').sendFile(path.join(__dirname, 'sitemap.xml'));
 });
+// IndexNow key file — Bing/Yandex fetch this to validate ownership
+app.get('/:key([a-f0-9]{32}).txt', (req, res) => {
+  res.type('text/plain').sendFile(path.join(__dirname, `${req.params.key}.txt`), (err) => {
+    if (err) res.status(404).end();
+  });
+});
 
 app.get('/admin', (_, res) => res.sendFile(path.join(__dirname, 'admin.html')));
 app.get('/privacy', (_, res) => res.sendFile(path.join(__dirname, 'privacy.html')));
