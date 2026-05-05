@@ -9,8 +9,7 @@ service cloud.firestore {
     function validPhone(p) { return p is string && p.matches('^255[67][0-9]{8}$'); }
     function validPrice(n) { return n is number && n > 0 && n <= 999999999; }
     function validCity(c) {
-      return c in ['Dar es Salaam','Arusha','Mwanza','Dodoma','Mbeya',
-                   'Zanzibar','Morogoro','Tanga','Iringa','Kigoma','Tabora','Moshi'];
+      return c is string && c.size() >= 2 && c.size() <= 60;
     }
     function validType(t) { return t in ['house','apartment','room','self','commercial']; }
     function noHtml(s) { return !(s.matches('.*<[^>]+>.*')); }

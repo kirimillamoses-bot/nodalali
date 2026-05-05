@@ -1,12 +1,35 @@
 services:
   - type: web
-    name: nodalali
+    name: nodalali-api
     env: node
     plan: free
     buildCommand: npm install
     startCommand: node server.js
+    healthCheckPath: /
     envVars:
       - key: NODE_VERSION
         value: 20
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
       - key: ZENOPAY_API_KEY
         sync: false
+      - key: ZENOPAY_WEBHOOK_SECRET
+        sync: false
+      - key: BEEM_API_KEY
+        sync: false
+      - key: BEEM_SECRET
+        sync: false
+      - key: BREVO_API_KEY
+        sync: false
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nyumba za Wanafunzi — Nodalali</title>
+  <meta name="description" content="Pata chumba au self contained karibu na UDSM, Ardhi, IFM, MUHAS, UDOM, SUA, Mzumbe. Bei nafuu, hakuna dalali." />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; color: #0f172a; }
+    .hero {
+      background: linear-gradient(135deg, #0f766e 0%, #065f5b 100%), url('hero.jpg') center/cover;
+      background-blend-mode: multiply;
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 48px; margin-bottom: 16px; line-height: 1.2; }
+    .hero p { font-size: 20px; opacity: .95; max-width: 600px; margin: 0 auto 30px; }
+    .cta {
+      display: inline-block;
+      background: #fde047;
+      color: #7f1d1d;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 18px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,.3);
+    }
+    .cta:hover { transform: scale(1.05); transition: .2s; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+    h2 { color: #0f766e; font-size: 32px; margin-bottom: 20px; text-align: center; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin: 30px 0; }
+    .feature { background: #f8fafc; padding: 24px; border-radius: 14px; }
+    .feature-icon { font-size: 36px; margin-bottom: 12px; }
+    .feature h3 { color: #0f766e; margin-bottom: 8px; }
+    .campuses { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 24px 0; }
+    .campus { background: #fff; border: 2px solid #e2e8f0; padding: 18px; border-radius: 12px; text-align: center; }
+    .campus-emoji { font-size: 32px; }
+    .campus h4 { margin: 8px 0 4px; color: #0f766e; }
+    .campus p { font-size: 13px; color: #64748b; }
+    .testimonial { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; margin: 16px 0; border-radius: 8px; }
+    .testimonial p { font-style: italic; }
+    .testimonial small { color: #92400e; font-weight: 700; display: block; margin-top: 8px; }
+    .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+    .price-card { background: #f0fdfa; border: 2px solid #14b8a6; padding: 20px; border-radius: 12px; text-align: center; }
+    .price-card h4 { color: #0f766e; }
+    .price-card .amount { font-size: 28px; font-weight: 800; margin: 8px 0; color: #0f766e; }
+    footer { background: #0f172a; color: #e2e8f0; padding: 40px 20px; text-align: center; }
+    footer a { color: #fde047; text-decoration: none; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 700px; margin: 30px auto; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 36px; font-weight: 800; color: #fde047; }
+    @media (max-width: 600px) { .hero h1 { font-size: 32px; } .hero p { font-size: 16px; } }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>🎓 Nyumba za Wanafunzi Tanzania</h1>
+    <p>Pata chumba au self contained karibu na chuo chako. Hakuna dalali, hakuna ada za uongo, bei wazi.</p>
+    <a href="/?tab=students" class="cta">Anza Kutafuta →</a>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">95+</div><div>Vyuo</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div>Vyumba Sasa</div></div>
+      <div class="stat"><div class="stat-num">0%</div><div>Commission</div></div>
+    </div>
+  </section>
+
+  <div class="container">
+    <h2>🗺️ Ramani Hai ya Vyuo TZ</h2>
+    <p style="text-align:center;color:#64748b;margin-bottom:20px">Bonyeza chuo kuona nyumba zilizopo karibu</p>
+    <div id="liveMap" style="height:500px;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:30px"></div>
+  </div>
+
+  <div class="container">
+    <h2>Vyuo Tunavyofunika</h2>
+    <div class="campuses">
+      <div class="campus"><div class="campus-emoji">🏛️</div><h4>UDSM</h4><p>Mlimani, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">🏗️</div><h4>Ardhi University</h4><p>Ubungo, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">💼</div><h4>IFM</h4><p>Shaaban Robert, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">⚕️</div><h4>MUHAS</h4><p>Upanga, Dar</p></div>
+      <div class="campus"><div class="campus-emoji">🏛️</div><h4>UDOM</h4><p>Chimwaga, Dodoma</p></div>
+      <div class="campus"><div class="campus-emoji">🌾</div><h4>SUA</h4><p>Mazimbu, Morogoro</p></div>
+      <div class="campus"><div class="campus-emoji">📚</div><h4>Mzumbe</h4><p>Mzumbe, Morogoro</p></div>
+      <div class="campus"><div class="campus-emoji">💼</div><h4>CBE</h4><p>Dodoma</p></div>
+    </div>
+  </div>
+
+  <div class="container" style="background:#f8fafc">
+    <h2>Kwa nini Nodalali?</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🚫</div>
+        <h3>Hakuna Dalali</h3>
+        <p>Wasiliana na mwenye nyumba moja kwa moja. Usilipe commission kwa mtu wa kati.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📍</div>
+        <h3>Karibu na Chuo Chako</h3>
+        <p>Chagua chuo chako, tunakuonyesha nyumba ndani ya 8km.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <h3>Salama</h3>
+        <p>Tuna scam filter, ripoti za watumiaji, na verification ya wenye nyumba.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💰</div>
+        <h3>Bei za Wanafunzi</h3>
+        <p>Vyumba kuanzia TZS 80,000/mwezi. Self contained kuanzia TZS 150,000.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <h3>WhatsApp Moja kwa Moja</h3>
+        <p>Bonyeza WhatsApp button — anza mazungumzo na mwenye nyumba sasa hivi.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🗺️</div>
+        <h3>Ramani Hai</h3>
+        <p>Ona nyumba zilipo, umbali kutoka chuo, na njia za daladala.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Sauti za Wanafunzi</h2>
+    <div class="testimonial">
+      <p>"Nilipata chumba karibu na Mlimani kwa wiki moja tu. Hakuna dalali aliyenitoza pesa, na bei ilikuwa ni ile ile kwenye app."</p>
+      <small>— Asha, Mwaka wa 2 UDSM</small>
+    </div>
+    <div class="testimonial">
+      <p>"App nzuri sana. Niliweza kuona umbali wa kila nyumba kutoka Ardhi University. Nilichagua nzuri kabisa."</p>
+      <small>— John, Ardhi University</small>
+    </div>
+    <div class="testimonial">
+      <p>"Bei zilizoandikwa ndizo nilipolipa. Hakuna mchezo wa dalali. Nashauri kila mwanafunzi atumie."</p>
+      <small>— Fatuma, MUHAS</small>
+    </div>
+  </div>
+
+  <div class="container" style="background:#f0fdfa">
+    <h2>Bei kwa Wenye Nyumba</h2>
+    <p style="text-align:center;color:#64748b">Kama una chumba cha kupangisha, tangaza hapa:</p>
+    <div class="pricing">
+      <div class="price-card">
+        <h4>Tangazo</h4>
+        <div class="amount">TZS 5,000</div>
+        <p>Kaa siku 30</p>
+      </div>
+      <div class="price-card" style="background:#fef3c7;border-color:#f59e0b">
+        <h4>Verified Badge</h4>
+        <div class="amount">TZS 10,000</div>
+        <p>Watu wanakuamini zaidi</p>
+      </div>
+      <div class="price-card" style="background:#fee2e2;border-color:#dc2626">
+        <h4>Featured</h4>
+        <div class="amount">TZS 15,000</div>
+        <p>Kuwa juu kabisa</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <a href="/?tab=post" class="cta">Tangaza Sasa</a>
+    </div>
+  </div>
+
+  <div class="container" style="text-align:center">
+    <h2>Tayari Kuanza?</h2>
+    <p style="font-size:18px;margin:20px 0">Bonyeza chini kuanza kutafuta nyumba</p>
+    <a href="/" class="cta">📲 Fungua Nodalali</a>
+  </div>
+
+  <footer>
+    <p>📞 Customer Service: +255 747 200 123</p>
+    <p style="margin-top:12px">
+      <a href="/">Homepage</a> ·
+      <a href="/privacy">Privacy</a> ·
+      <a href="/terms">Terms</a>
+    </p>
+    <p style="margin-top:20px;opacity:.6">© 2026 Nodalali — Pangisha bila Dalali</p>
+  </footer>
+
+  <script>
+    const CAMPUSES = [
+      // Dar es Salaam (22)
+      { name: 'UDSM (Mlimani)', area: 'Mlimani, Dar', lat: -6.7787, lng: 39.2106, icon: '🏛️', color: '#dc2626' },
+      { name: 'Ardhi University', area: 'Ubungo, Dar', lat: -6.7720, lng: 39.2092, icon: '🏗️', color: '#0f766e' },
+      { name: 'MUHAS', area: 'Upanga, Dar', lat: -6.8085, lng: 39.2814, icon: '⚕️', color: '#7c3aed' },
+      { name: 'IFM', area: 'Shaaban Robert, Dar', lat: -6.8120, lng: 39.2890, icon: '💼', color: '#1e40af' },
+      { name: 'OUT', area: 'Kinondoni, Dar', lat: -6.7720, lng: 39.2390, icon: '📖', color: '#0891b2' },
+      { name: 'DUCE', area: "Chang'ombe, Dar", lat: -6.8400, lng: 39.2700, icon: '🎓', color: '#be185d' },
+      { name: 'DIT', area: 'Bibi Titi, Dar', lat: -6.8170, lng: 39.2780, icon: '🔧', color: '#1d4ed8' },
+      { name: 'TUDARCo', area: 'Mikocheni, Dar', lat: -6.7700, lng: 39.2580, icon: '⛪', color: '#0f766e' },
+      { name: 'KIU Dar', area: 'Mikocheni, Dar', lat: -6.7600, lng: 39.2540, icon: '🌍', color: '#ea580c' },
+      { name: 'HKMU', area: 'Mikocheni, Dar', lat: -6.7640, lng: 39.2560, icon: '⚕️', color: '#9333ea' },
+      { name: 'IMTU', area: 'Mbweni, Dar', lat: -6.6800, lng: 39.1800, icon: '⚕️', color: '#16a34a' },
+      { name: 'Aga Khan University', area: 'Upanga, Dar', lat: -6.8060, lng: 39.2810, icon: '⚕️', color: '#0d9488' },
+      { name: 'NIT Transport', area: 'Mabibo, Dar', lat: -6.8390, lng: 39.2280, icon: '🚌', color: '#1d4ed8' },
+      { name: 'St Joseph Univ', area: 'Boko, Dar', lat: -6.7250, lng: 39.1900, icon: '✝️', color: '#7c2d12' },
+      { name: 'TIA Dar', area: 'Bibi Titi, Dar', lat: -6.8120, lng: 39.2790, icon: '📊', color: '#a16207' },
+      { name: 'CBE Dar', area: 'Bibi Titi, Dar', lat: -6.8170, lng: 39.2810, icon: '💼', color: '#be185d' },
+      { name: 'IAA Dar Centre', area: 'Posta, Dar', lat: -6.8150, lng: 39.2895, icon: '📊', color: '#9a3412' },
+      { name: 'TPSC', area: 'Magogoni, Dar', lat: -6.8200, lng: 39.2920, icon: '🏛️', color: '#dc2626' },
+      { name: 'Mzumbe Dar Campus', area: 'Mbezi, Dar', lat: -6.7100, lng: 39.1700, icon: '📚', color: '#0891b2' },
+      { name: 'TZ School of Journalism', area: 'Kinondoni, Dar', lat: -6.7780, lng: 39.2470, icon: '📰', color: '#dc2626' },
+      { name: 'ESAMI', area: 'Mwanjelwa, Dar', lat: -6.7900, lng: 39.2280, icon: '💼', color: '#16a34a' },
+      { name: 'CFR Foreign Relations', area: 'Kurasini, Dar', lat: -6.8550, lng: 39.2720, icon: '🌍', color: '#1e40af' },
+      { name: "VETA Chang'ombe", area: "Chang'ombe, Dar", lat: -6.8430, lng: 39.2680, icon: '🔨', color: '#a16207' },
+      // Dodoma (6)
+      { name: 'UDOM', area: 'Chimwaga, Dodoma', lat: -6.1881, lng: 35.7900, icon: '🏛️', color: '#f59e0b' },
+      { name: 'CBE Dodoma', area: 'CBE, Dodoma', lat: -6.1714, lng: 35.7401, icon: '💼', color: '#be185d' },
+      { name: 'IRDP', area: 'Nala, Dodoma', lat: -6.1530, lng: 35.7510, icon: '🌱', color: '#16a34a' },
+      { name: 'SJUT', area: 'Mlimwa, Dodoma', lat: -6.1640, lng: 35.7270, icon: '✝️', color: '#7c2d12' },
+      { name: 'LITA Dodoma', area: 'Mpwapwa Rd, Dodoma', lat: -6.1860, lng: 35.7600, icon: '🐄', color: '#16a34a' },
+      { name: 'VETA Dodoma', area: 'Veta, Dodoma', lat: -6.1620, lng: 35.7580, icon: '🔨', color: '#dc2626' },
+      // Morogoro (5)
+      { name: 'SUA', area: 'Mazimbu, Morogoro', lat: -6.8489, lng: 37.6597, icon: '🌾', color: '#16a34a' },
+      { name: 'Mzumbe Univ', area: 'Mzumbe, Morogoro', lat: -6.9128, lng: 37.4769, icon: '📚', color: '#0891b2' },
+      { name: 'Jordan University College', area: 'Morogoro', lat: -6.8240, lng: 37.6610, icon: '🎓', color: '#a855f7' },
+      { name: 'Morogoro Muslim University', area: 'Mji Mkuu, Morogoro', lat: -6.8200, lng: 37.6620, icon: '☪️', color: '#16a34a' },
+      { name: 'VETA Morogoro', area: 'Kihonda, Morogoro', lat: -6.8500, lng: 37.6850, icon: '🔨', color: '#dc2626' },
+      // Arusha (10)
+      { name: 'NM-AIST', area: 'Tengeru, Arusha', lat: -3.3914, lng: 36.7965, icon: '🔬', color: '#dc2626' },
+      { name: 'Tumaini Makumira', area: 'Makumira, Arusha', lat: -3.3650, lng: 36.8030, icon: '⛪', color: '#0f766e' },
+      { name: 'IAA Arusha', area: 'Njiro, Arusha', lat: -3.4050, lng: 36.7050, icon: '📊', color: '#9a3412' },
+      { name: 'University of Arusha', area: 'Usa River', lat: -3.3700, lng: 36.8550, icon: '🎓', color: '#0e7490' },
+      { name: 'ATC (Arusha Tech)', area: 'Themi, Arusha', lat: -3.3760, lng: 36.6920, icon: '🔧', color: '#1d4ed8' },
+      { name: "Patandi Teachers' College", area: 'Patandi, Arusha', lat: -3.3850, lng: 36.7800, icon: '🎓', color: '#7c3aed' },
+      { name: 'CUEA Arusha', area: 'Sakina, Arusha', lat: -3.3680, lng: 36.6820, icon: '✝️', color: '#7c2d12' },
+      { name: 'VETA Arusha', area: 'Oljoro, Arusha', lat: -3.3950, lng: 36.7220, icon: '🔨', color: '#a16207' },
+      { name: 'Mt Kilimanjaro Univ', area: 'Tengeru, Arusha', lat: -3.3900, lng: 36.8000, icon: '⛰️', color: '#0891b2' },
+      { name: 'ICCS Arusha', area: 'Arusha CBD', lat: -3.3680, lng: 36.6900, icon: '💻', color: '#9333ea' },
+      // Moshi / Kilimanjaro
+      { name: 'KCMUCo', area: 'KCMC, Moshi', lat: -3.3520, lng: 37.3360, icon: '⚕️', color: '#7c3aed' },
+      { name: 'MoCU', area: 'Sokoine Rd, Moshi', lat: -3.3475, lng: 37.3380, icon: '💰', color: '#16a34a' },
+      { name: 'Mwenge Catholic Univ', area: 'Mwenge, Moshi', lat: -3.3540, lng: 37.3420, icon: '✝️', color: '#7c2d12' },
+      { name: 'Stefano Moshi Memorial', area: 'Mawenzi, Moshi', lat: -3.3650, lng: 37.3250, icon: '⛪', color: '#a16207' },
+      { name: 'Kilimanjaro School of Pharmacy', area: 'Sango, Moshi', lat: -3.3380, lng: 37.3450, icon: '💊', color: '#ec4899' },
+      { name: 'KICoM', area: "Kibong'oto, Kilimanjaro", lat: -3.3010, lng: 37.0240, icon: '⚕️', color: '#0e7490' },
+      { name: 'Kilimanjaro Inst of Tech', area: 'Karanga, Moshi', lat: -3.3780, lng: 37.3120, icon: '🔧', color: '#1d4ed8' },
+      { name: 'KITH (Tourism)', area: 'Moshi Town', lat: -3.3490, lng: 37.3320, icon: '🏨', color: '#0891b2' },
+      { name: 'Tengeru Inst Comm Dev', area: 'Tengeru', lat: -3.3914, lng: 36.9070, icon: '🌱', color: '#16a34a' },
+      { name: 'OUT Moshi Centre', area: 'Moshi Town', lat: -3.3500, lng: 37.3400, icon: '📖', color: '#0891b2' },
+      { name: "St Joseph Teachers' College", area: 'Old Moshi', lat: -3.3120, lng: 37.3680, icon: '🎓', color: '#7c2d12' },
+      { name: 'VETA Kilimanjaro', area: 'Pasua, Moshi', lat: -3.3700, lng: 37.3580, icon: '🔨', color: '#a16207' },
+      // Mwanza (8)
+      { name: 'SAUT', area: 'Malimbe, Mwanza', lat: -2.5350, lng: 32.9180, icon: '✝️', color: '#7c2d12' },
+      { name: 'CUHAS Bugando', area: 'Bugando, Mwanza', lat: -2.5160, lng: 32.9050, icon: '⚕️', color: '#7c3aed' },
+      { name: 'KIU Mwanza', area: 'Mwanza', lat: -2.5180, lng: 32.9220, icon: '🌍', color: '#ea580c' },
+      { name: 'Mwanza Polytechnic', area: 'Nyegezi, Mwanza', lat: -2.5750, lng: 32.9050, icon: '🔧', color: '#1d4ed8' },
+      { name: 'TIA Mwanza', area: 'Pamba Rd, Mwanza', lat: -2.5170, lng: 32.9080, icon: '📊', color: '#a16207' },
+      { name: 'VETA Mwanza', area: 'Nyegezi, Mwanza', lat: -2.5780, lng: 32.9020, icon: '🔨', color: '#dc2626' },
+      { name: 'Mwanza College Health', area: 'Bugando, Mwanza', lat: -2.5170, lng: 32.9070, icon: '⚕️', color: '#0d9488' },
+      { name: 'Catholic Univ Mwanza', area: 'Igoma, Mwanza', lat: -2.4980, lng: 32.9320, icon: '✝️', color: '#7c2d12' },
+      // Mbeya (5)
+      { name: 'MUST', area: 'Iyunga, Mbeya', lat: -8.9090, lng: 33.4540, icon: '🔬', color: '#1e40af' },
+      { name: 'Teofilo Kisanji', area: 'Mbeya', lat: -8.9050, lng: 33.4470, icon: '🎓', color: '#a855f7' },
+      { name: "Tukuyu Teachers' College", area: 'Tukuyu, Mbeya', lat: -9.2500, lng: 33.6500, icon: '🎓', color: '#7c3aed' },
+      { name: 'VETA Mbeya', area: 'Iyunga, Mbeya', lat: -8.9120, lng: 33.4520, icon: '🔨', color: '#dc2626' },
+      { name: 'Mbeya Inst of Sci & Tech', area: 'Mbeya', lat: -8.9000, lng: 33.4500, icon: '🔧', color: '#1d4ed8' },
+      // Iringa (5)
+      { name: 'MUCE', area: 'Mkwawa, Iringa', lat: -7.7700, lng: 35.6900, icon: '📚', color: '#0891b2' },
+      { name: 'RUCU', area: 'Iringa', lat: -7.7660, lng: 35.6950, icon: '✝️', color: '#7c2d12' },
+      { name: 'University of Iringa', area: 'Iringa', lat: -7.7700, lng: 35.7000, icon: '🎓', color: '#0f766e' },
+      { name: 'VETA Iringa', area: 'Iringa', lat: -7.7800, lng: 35.6850, icon: '🔨', color: '#dc2626' },
+      { name: "Iringa Teachers' College", area: 'Mkwawa, Iringa', lat: -7.7720, lng: 35.6920, icon: '🎓', color: '#a855f7' },
+      // Tanga (6)
+      { name: 'SEKOMU', area: 'Lushoto, Tanga', lat: -4.7900, lng: 38.2810, icon: '⛪', color: '#16a34a' },
+      { name: 'Eckernforde Tanga', area: 'Tanga', lat: -5.0700, lng: 39.0980, icon: '🌊', color: '#0e7490' },
+      { name: "Korogwe Teachers' College", area: 'Korogwe, Tanga', lat: -5.1500, lng: 38.4830, icon: '🎓', color: '#7c2d12' },
+      { name: "Lushoto Teachers' College", area: 'Lushoto, Tanga', lat: -4.7860, lng: 38.2790, icon: '🎓', color: '#a16207' },
+      { name: 'Tanga Inst of Accountancy', area: 'Tanga CBD', lat: -5.0680, lng: 39.0950, icon: '📊', color: '#9a3412' },
+      { name: 'VETA Tanga', area: 'Mwakidila, Tanga', lat: -5.0830, lng: 39.0780, icon: '🔨', color: '#dc2626' },
+      // Bukoba / Kagera (5)
+      { name: 'St Anthony of Padua University', area: 'Kagondo, Bukoba', lat: -1.3300, lng: 31.8200, icon: '✝️', color: '#7c2d12' },
+      { name: 'Kagera Polytechnic', area: 'Bukoba', lat: -1.3320, lng: 31.8120, icon: '🔧', color: '#1d4ed8' },
+      { name: "Bukoba Teachers' College", area: 'Kashai, Bukoba', lat: -1.3450, lng: 31.8270, icon: '🎓', color: '#7c3aed' },
+      { name: 'Catholic Univ Bukoba', area: 'Nyakato, Bukoba', lat: -1.3180, lng: 31.8050, icon: '✝️', color: '#7c2d12' },
+      { name: 'VETA Bukoba', area: 'Bukoba', lat: -1.3370, lng: 31.8130, icon: '🔨', color: '#dc2626' },
+      // Songea / Ruvuma (3)
+      { name: 'Peramiho Major Seminary', area: 'Peramiho, Songea', lat: -10.5630, lng: 35.4280, icon: '⛪', color: '#7c2d12' },
+      { name: "Songea Teachers' College", area: 'Songea', lat: -10.6850, lng: 35.6520, icon: '🎓', color: '#a855f7' },
+      { name: 'VETA Songea', area: 'Mletele, Songea', lat: -10.6750, lng: 35.6480, icon: '🔨', color: '#dc2626' },
+      // Mtwara / Lindi (3)
+      { name: 'Stella Maris Mtwara Univ', area: 'Mikindani, Mtwara', lat: -10.2680, lng: 40.1080, icon: '⛪', color: '#7c2d12' },
+      { name: "Mtwara Teachers' College", area: 'Mtwara', lat: -10.2630, lng: 40.1850, icon: '🎓', color: '#a855f7' },
+      { name: 'VETA Mtwara', area: 'Mtwara', lat: -10.2750, lng: 40.1820, icon: '🔨', color: '#dc2626' },
+      // Kigoma / Tabora / Sumbawanga (4)
+      { name: "Kigoma Teachers' College", area: 'Kigoma', lat: -4.8770, lng: 29.6260, icon: '🎓', color: '#a855f7' },
+      { name: 'VETA Kigoma', area: 'Kigoma', lat: -4.8830, lng: 29.6320, icon: '🔨', color: '#dc2626' },
+      { name: "Tabora Teachers' College", area: 'Tabora', lat: -5.0150, lng: 32.8050, icon: '🎓', color: '#7c3aed' },
+      { name: 'VETA Sumbawanga', area: 'Sumbawanga', lat: -7.9650, lng: 31.6120, icon: '🔨', color: '#a16207' },
+      // Singida / Manyara (2)
+      { name: 'VETA Singida', area: 'Singida', lat: -4.8170, lng: 34.7470, icon: '🔨', color: '#dc2626' },
+      { name: 'VETA Manyara', area: 'Babati', lat: -4.2120, lng: 35.7480, icon: '🔨', color: '#a16207' },
+      // Zanzibar (5)
+      { name: 'SUZA', area: 'Tunguu, Zanzibar', lat: -6.2570, lng: 39.2680, icon: '🏛️', color: '#dc2626' },
+      { name: 'Zanzibar University', area: 'Tunguu, Zanzibar', lat: -6.2580, lng: 39.2710, icon: '🎓', color: '#0d9488' },
+      { name: 'SUMAIT University', area: 'Chukwani, Zanzibar', lat: -6.2230, lng: 39.2050, icon: '☪️', color: '#16a34a' },
+      { name: 'Zanzibar Inst of Education', area: 'Beit el-Ras, Zanzibar', lat: -6.1450, lng: 39.1850, icon: '🎓', color: '#7c3aed' },
+      { name: 'VETA Zanzibar', area: 'Mtoni, Zanzibar', lat: -6.1380, lng: 39.1980, icon: '🔨', color: '#dc2626' }
+    ];
+    const map = L.map('liveMap').setView([-6.5, 37.5], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18, attribution: '© OpenStreetMap'
+    }).addTo(map);
+    const markers = [];
+    CAMPUSES.forEach(c => {
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="background:#fff;border:3px solid ${c.color};border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 3px 10px rgba(0,0,0,.3)">${c.icon}</div>`,
+        iconSize: [42, 42]
+      });
+      const m = L.marker([c.lat, c.lng], { icon }).addTo(map);
+      m.bindPopup(`
+        <div style="min-width:160px;text-align:center">
+          <strong style="color:${c.color};font-size:16px">${c.name}</strong><br>
+          <small>${c.area}</small><br>
+          <a href="/?tab=students" style="display:inline-block;margin-top:8px;background:${c.color};color:#fff;padding:6px 12px;border-radius:14px;text-decoration:none;font-weight:700;font-size:12px">Pata Nyumba →</a>
+        </div>
+      `);
+      markers.push(m);
+    });
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.2));
+  </script>
+</body>
+</html>

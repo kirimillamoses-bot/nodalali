@@ -2,6 +2,28 @@
 
 Set these on Render (or any host) → Settings → Environment.
 
+---
+
+## ⚠️ External setup still required (you must do these)
+
+These are the items that can't be solved in code alone — they need accounts/keys you create.
+
+| # | What | Why blocking | How |
+|---|------|--------------|-----|
+| 1 | **M-Pesa keys** (`ZENOPAY_API_KEY` + `ZENOPAY_WEBHOOK_SECRET`) | Real payments, paid features, featured listings | Sign up at https://zenoapi.com |
+| 3 | **SMS** (`BEEM_API_KEY` + `BEEM_SECRET_KEY`) | OTP, listing alerts | Sign up at https://beem.africa |
+| 3 | **Email** (`BREVO_API_KEY`) | Booking/lead notifications | Sign up at https://brevo.com |
+| 3 | **Image moderation** (`GCP_VISION_API_KEY`) | Auto-block scam/inappropriate photos | https://console.cloud.google.com → enable Vision API |
+| 4 | **Counter.dev analytics ID** | Page views/funnel tracking | Sign up at https://counter.dev → set `window.__COUNTER_ID` in your inline script before page load (e.g. via a `<script>window.__COUNTER_ID="abc123"</script>` injected per-environment) |
+| 5 | **Real owner verification** | The ✓ badge currently fake-seeded | Build admin flow: landlord uploads NIDA, you review, set `verifiedBadge:true` on their listings |
+| 6 | **Image upload storage** (Supabase or Firebase Storage) | Photos in post form go nowhere | Already half-wired — see `FINISH_SUPABASE.md`. Set `SUPABASE_URL` + `SUPABASE_ANON_KEY` |
+| 7 | **Phone OTP flow** | No proof landlord owns the WhatsApp number | After SMS keys are set, wire `sms.js sendOtp()` into the post flow |
+| 8 | **In-app messaging** | Chat lives only in WhatsApp | Add Firestore `messages` collection — schema sketch needed |
+| 17 | **Real Tanzanian house photos** | Unsplash photos look foreign | Hire a local photographer / source from Tanzanian stock |
+| 18 | **Video uploads** | Premium tour feature | Wire after image storage works |
+
+---
+
 ## 🔴 REQUIRED for production
 
 ### `ADMIN_TOKEN`

@@ -8,15 +8,13 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon-192.png" type="image/png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="style.css?v=10" />
+  <link rel="stylesheet" href="style.css?v=4" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <!-- Analytics: free, no cookies. Sign up at counter.dev and set window.__COUNTER_ID before this loads. -->
-  <script>(function(){var id=window.__COUNTER_ID;if(id&&id!=='YOUR_SITE_ID'){var s=document.createElement('script');s.async=true;s.src='https://cdn.counter.dev/script.js';s.setAttribute('data-id',id);s.setAttribute('data-utcoffset','3');document.head.appendChild(s);}})();</script>
+  <!-- Analytics: free, no cookies. Sign up at counter.dev (free, 1-min) and replace YOUR_SITE_ID -->
+  <script async src="https://cdn.counter.dev/script.js" data-id="YOUR_SITE_ID" data-utcoffset="3"></script>
 </head>
 <body>
   <header class="app-header">
@@ -31,7 +29,6 @@
       </div>
       <div class="header-actions">
         <button id="langBtn" class="btn-ghost icon-btn" onclick="toggleLang()" title="Language">🌐</button>
-        <button id="currencyBtn" class="btn-ghost icon-btn" onclick="toggleCurrency()" title="Currency">TZS</button>
         <button id="themeBtn" class="btn-ghost icon-btn" onclick="toggleTheme()" title="Theme">🌙</button>
         <button id="authBtn" class="btn-ghost">Ingia</button>
       </div>
@@ -42,13 +39,9 @@
     <button class="tab active" data-tab="browse" data-category="rent">🏠 Nyumba</button>
     <button class="tab" data-tab="browse-gh" data-category="stay">🏨 Guest House</button>
     <button class="tab" data-tab="browse-lounge" data-category="lounge">🎉 Lounge</button>
-    <button class="tab" data-tab="browse-frame" data-category="frame">🏪 Frame</button>
     <button class="tab" data-tab="nearme">📍 Karibu Nami</button>
     <button class="tab" data-tab="students">🎓 Wanafunzi</button>
     <button class="tab" data-tab="favorites">❤️ Pendwa</button>
-    <button class="tab" data-tab="messages">💬 Ujumbe<span id="unreadBadge" class="unread-badge" hidden>0</span></button>
-    <button class="tab" data-tab="recent">🕒 Hivi Karibuni</button>
-    <button class="tab" data-tab="compare">⚖️ Linganisha</button>
     <button class="tab" data-tab="my-listings">🏠 Zangu</button>
     <button class="tab" data-tab="post">➕ Tangaza</button>
   </nav>
@@ -68,21 +61,14 @@
           <option value="3">Vyumba 3</option>
           <option value="4">Vyumba 4+</option>
         </select>
-        <input id="filterPrice" type="number" min="0" step="10000" placeholder="Bei ya juu (TZS) — mfano 500000" />
-        <datalist id="filterPriceList">
-          <option value="50000"><option value="100000"><option value="200000">
-          <option value="500000"><option value="1000000"><option value="3000000"><option value="10000000">
-        </datalist>
+        <select id="filterPrice">
+          <option value="">Bei zote</option>
+          <option value="200000">Hadi 200,000</option>
+          <option value="500000">Hadi 500,000</option>
+          <option value="1000000">Hadi 1,000,000</option>
+          <option value="3000000">Hadi 3,000,000</option>
+        </select>
         <button id="toggleMapBtn" class="btn-ghost-dark" onclick="toggleMapView()">🗺️ Onyesha Ramani</button>
-      </div>
-      <div class="amenity-filter-row" id="amenityFilterRow">
-        <button class="amenity-chip" data-amenity="parking" onclick="toggleAmenityFilter('parking')">🚗 Parking</button>
-        <button class="amenity-chip" data-amenity="water24" onclick="toggleAmenityFilter('water24')">💧 Maji 24/7</button>
-        <button class="amenity-chip" data-amenity="security" onclick="toggleAmenityFilter('security')">🛡 Security</button>
-        <button class="amenity-chip" data-amenity="ac" onclick="toggleAmenityFilter('ac')">❄️ AC</button>
-        <button class="amenity-chip" data-amenity="generator" onclick="toggleAmenityFilter('generator')">⚡ Generator</button>
-        <button class="amenity-chip" data-amenity="wifi" onclick="toggleAmenityFilter('wifi')">📶 WiFi</button>
-        <button class="amenity-chip" data-amenity="furnished" onclick="toggleAmenityFilter('furnished')">🛋 Furnished</button>
       </div>
       <div class="split-view" id="splitView">
         <div id="listingsGrid" class="grid"></div>
@@ -104,7 +90,13 @@
           <option value="guesthouse">Guest House tu</option>
           <option value="bnb">B&B tu</option>
         </select>
-        <input id="ghFilterPrice" type="number" min="0" step="5000" oninput="renderCategory('stay')" placeholder="Bei ya juu/usiku (TZS) — mfano 50000" />
+        <select id="ghFilterPrice" onchange="renderCategory('stay')">
+          <option value="">Bei zote/usiku</option>
+          <option value="30000">Hadi 30,000</option>
+          <option value="60000">Hadi 60,000</option>
+          <option value="100000">Hadi 100,000</option>
+          <option value="200000">Hadi 200,000</option>
+        </select>
       </div>
       <div id="ghGrid" class="grid"></div>
     </section>
@@ -116,21 +108,14 @@
       </div>
       <div class="filters">
         <input id="loSearchCity" placeholder="Mji au eneo" oninput="renderCategory('lounge')" />
-        <input id="loFilterPrice" type="number" min="0" step="50000" oninput="renderCategory('lounge')" placeholder="Bei ya juu (TZS) — mfano 1000000" />
+        <select id="loFilterPrice" onchange="renderCategory('lounge')">
+          <option value="">Bei zote</option>
+          <option value="500000">Hadi 500,000</option>
+          <option value="1500000">Hadi 1,500,000</option>
+          <option value="3000000">Hadi 3,000,000</option>
+        </select>
       </div>
       <div id="loGrid" class="grid"></div>
-    </section>
-
-    <!-- BROWSE: Frame (shop spaces / commercial) -->
-    <section id="browse-frame" class="view">
-      <div class="cat-banner cat-frame">
-        🏪 <strong>Frame za Maduka & Biashara</strong> — Pata frame nzuri kwa duka, ofisi au biashara yako. Direct na mwenye frame, hakuna dalali.
-      </div>
-      <div class="filters">
-        <input id="frSearchCity" placeholder="Mji au eneo (mfano: Kariakoo, Posta)" oninput="renderCategory('frame')" />
-        <input id="frFilterPrice" type="number" min="0" step="50000" oninput="renderCategory('frame')" placeholder="Bei ya juu/mwezi (TZS) — mfano 500000" />
-      </div>
-      <div id="frGrid" class="grid"></div>
     </section>
 
     <!-- NEAR ME -->
@@ -186,7 +171,6 @@
           <option value="guesthouse">Guest House</option>
           <option value="bnb">B&B</option>
           <option value="lounge">Lounge / Bar</option>
-          <option value="frame">Frame (Duka/Biashara)</option>
         </select>
         <select id="nearmeRadius" onchange="renderNearMe()">
           <option value="2">Hadi 2 km</option>
@@ -215,44 +199,7 @@
     <!-- FAVORITES -->
     <section id="favorites" class="view">
       <h2>Nyumba Ulizopenda</h2>
-      <div class="row" style="margin-bottom:12px">
-        <button class="btn-ghost-dark" onclick="saveCurrentSearch()">🔔 Hifadhi search yangu</button>
-        <button class="btn-ghost-dark" onclick="showSavedSearches()">📋 Search zilizohifadhiwa</button>
-      </div>
-      <div id="savedSearchesList" class="saved-searches"></div>
       <div id="favoritesGrid" class="grid"></div>
-    </section>
-
-    <!-- RECENTLY VIEWED -->
-    <section id="recent" class="view">
-      <h2>🕒 Nyumba Ulizoangalia Karibuni</h2>
-      <p class="hint">Inaonyesha nyumba 20 za mwisho ulizofungua. Inahifadhiwa kwenye simu yako tu.</p>
-      <div id="recentGrid" class="grid"></div>
-    </section>
-
-    <!-- MESSAGES -->
-    <section id="messages" class="view">
-      <h2>💬 Ujumbe Wako</h2>
-      <p class="hint">Ongea na mwenye nyumba moja kwa moja. Ujumbe huhifadhiwa kwenye simu yako (na Supabase ukiwa umejisajili).</p>
-      <div id="threadsList" class="threads-list"></div>
-      <div id="activeChat" class="active-chat" hidden>
-        <div class="chat-header">
-          <button class="btn-ghost-dark" onclick="closeChat()">← Rudi</button>
-          <div id="chatPeerName"></div>
-        </div>
-        <div id="chatMessages" class="chat-messages"></div>
-        <form id="chatForm" class="chat-input-row">
-          <input id="chatInput" placeholder="Andika ujumbe..." autocomplete="off" required />
-          <button type="submit" class="btn-primary">Tuma</button>
-        </form>
-      </div>
-    </section>
-
-    <!-- COMPARE -->
-    <section id="compare" class="view">
-      <h2>⚖️ Linganisha Nyumba</h2>
-      <p class="hint">Bonyeza ⚖️ kwenye card ya nyumba kuongeza hapa. Kiwango cha juu: 3.</p>
-      <div id="compareGrid"></div>
     </section>
 
     <!-- MY LISTINGS -->
@@ -323,50 +270,9 @@
             <option value="guesthouse">Guest House</option>
             <option value="bnb">B&B (Bed & Breakfast)</option>
             <option value="lounge">Lounge / Bar</option>
-            <option value="frame">🏪 Frame (Duka/Biashara)</option>
+            <option value="commercial">Biashara/Ofisi</option>
           </select>
         </label>
-        <fieldset id="frameFields" class="frame-fields" hidden>
-          <legend>Maelezo ya Frame</legend>
-          <div class="row">
-            <label>Ukubwa (sqm)
-              <input name="sqm" type="number" min="0" step="1" placeholder="Mfano: 25" />
-            </label>
-            <label>Umeme
-              <select name="electricity">
-                <option value="">Chagua</option>
-                <option value="single-phase">Single phase</option>
-                <option value="3-phase">3-phase</option>
-                <option value="generator">Generator standby</option>
-              </select>
-            </label>
-            <label>Parking (magari)
-              <input name="parkingSpaces" type="number" min="0" max="50" placeholder="0" />
-            </label>
-          </div>
-          <label>Ground floor / Ghorofa
-            <select name="floor">
-              <option value="">Chagua</option>
-              <option value="ground">Ground floor (chini)</option>
-              <option value="1st">Ghorofa 1</option>
-              <option value="2nd">Ghorofa 2</option>
-              <option value="upper">Ghorofa 3+</option>
-            </select>
-          </label>
-        </fieldset>
-        <fieldset class="amenities">
-          <legend>Vifaa / Huduma</legend>
-          <div class="amenity-grid">
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="parking" /> 🚗 Parking</label>
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="water24" /> 💧 Maji 24/7</label>
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="security" /> 🛡 Security</label>
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="ac" /> ❄️ AC</label>
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="generator" /> ⚡ Generator</label>
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="wifi" /> 📶 WiFi/Fiber</label>
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="furnished" /> 🛋 Furnished</label>
-            <label class="amenity-chk"><input type="checkbox" name="amenity" value="fence" /> 🧱 Fence</label>
-          </div>
-        </fieldset>
         <label>Maelezo
           <textarea name="description" rows="4" placeholder="Eleza nyumba: maji, umeme, parking, security..."></textarea>
         </label>
@@ -454,11 +360,10 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="firebase-config.js?v=4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=1"></script>
   <script src="supabase-client.js?v=1"></script>
-  <script src="script.js?v=14"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

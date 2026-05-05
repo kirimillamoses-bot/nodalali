@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="sw">
+<head>
+<meta charset="utf-8" />
+<title>Nodalali — Poster</title>
+<style>
+  body { margin:0; font-family: system-ui, -apple-system, sans-serif; background:#0a0a0a; display:flex; align-items:center; justify-content:center; min-height:100vh; }
+  .poster {
+    width: 1080px; height: 1080px;
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFB627 100%);
+    color: #fff; padding: 80px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5); position: relative; overflow: hidden;
+  }
+  .poster::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.18), transparent 50%);
+  }
+  .top { display:flex; align-items:center; gap:20px; z-index:2; position:relative; }
+  .logo { font-size: 90px; }
+  .brand { font-size: 80px; font-weight: 900; letter-spacing: -2px; }
+  h1 { font-size: 110px; line-height: 1.05; margin: 0; font-weight: 900; letter-spacing:-3px; z-index:2; position:relative; }
+  h1 em { font-style: normal; color: #1a1a1a; background:#fff; padding: 0 16px; display:inline-block; transform:rotate(-2deg); }
+  .features { display:grid; gap: 24px; font-size: 44px; font-weight: 600; z-index:2; position:relative; }
+  .feat { display:flex; align-items:center; gap: 24px; }
+  .feat span { font-size: 56px; }
+  .cta { background: #1a1a1a; color: #FFB627; padding: 40px 50px; border-radius: 24px; z-index:2; position:relative; }
+  .cta .small { font-size: 30px; opacity: 0.85; margin-bottom: 12px; font-weight: 500; }
+  .cta .url { font-size: 48px; font-weight: 900; letter-spacing: -1px; }
+  .cta .phone { font-size: 36px; opacity: 0.85; margin-top: 14px; font-weight: 600; }
+  .scale { transform: scale(0.55); transform-origin: center; }
+  @media (max-width: 1200px) { body { padding: 20px; } .scale { transform: scale(0.42); } }
+  .controls { position: fixed; top:20px; right:20px; z-index:99; }
+  .controls button { padding: 12px 20px; background:#FFB627; color:#1a1a1a; border:none; font-weight:700; border-radius:8px; cursor:pointer; font-size:14px; }
+</style>
+</head>
+<body>
+  <div class="controls">
+    <button onclick="screenshot()">📸 Screenshot Hii (au tumia Cmd+Shift+4)</button>
+  </div>
+  <div class="scale">
+    <div class="poster" id="poster">
+      <div class="top">
+        <div class="logo">🏠</div>
+        <div class="brand">NODALALI</div>
+      </div>
+      <h1>Pata <em>nyumba</em><br/>bila <em>dalali</em>.</h1>
+      <div class="features">
+        <div class="feat"><span>✅</span> Wenye nyumba moja kwa moja</div>
+        <div class="feat"><span>📍</span> Nyumba karibu nawe — GPS</div>
+        <div class="feat"><span>🎓</span> Vyuo 95+ Tanzania nzima</div>
+        <div class="feat"><span>💬</span> WhatsApp moja kwa moja</div>
+      </div>
+      <div class="cta">
+        <div class="small">Pakia bure kwenye:</div>
+        <div class="url">no-dalali-2d927.web.app</div>
+        <div class="phone">📱 Msaada: +255 747 200 123</div>
+      </div>
+    </div>
+  </div>
+<script>
+  function screenshot() {
+    alert('Bonyeza Cmd+Shift+4, halafu chagua poster nzima.\n\nAu: right-click poster → "Save image as..." (haifanyi kazi kwa background gradients — tumia screenshot).');
+  }
+</script>
+</body>
+</html>

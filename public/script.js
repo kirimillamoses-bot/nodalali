@@ -478,63 +478,7 @@ const DEMO_LISTINGS = [
     bedrooms: 1, bathrooms: 1, price: 55000, type: 'bnb',
     description: 'View ya Ziwa Tanganyika, breakfast, fishing, AC.',
     images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'],
-    lat: -4.8770, lng: 29.6260, whatsapp: '255744300028', ownerId: 'demo' },
-
-  // ===== FRAME: shop spaces / commercial =====
-  { id: 'fr1', title: 'Frame Kariakoo — Mtaa wa Msimbazi', city: 'Dar es Salaam', area: 'Kariakoo',
-    bedrooms: 0, bathrooms: 1, price: 800000, type: 'frame',
-    description: 'Frame ya duka mtaa wa msimbazi, foot traffic kubwa, umeme 3-phase, security 24/7. Nzuri kwa nguo, vipodozi au electronics.',
-    images: [
-      'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800',
-      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800',
-      'https://images.unsplash.com/photo-1481437156560-3205f6a55735?w=800'
-    ],
-    lat: -6.8161, lng: 39.2724, whatsapp: '255744400001', ownerId: 'demo' },
-  { id: 'fr2', title: 'Frame Posta — Ground Floor Office', city: 'Dar es Salaam', area: 'Posta',
-    bedrooms: 0, bathrooms: 1, price: 1500000, type: 'frame',
-    description: 'Ground floor frame, AC, fiber internet, parking, lift. Eneo la biashara la juu kabisa Dar.',
-    images: [
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800',
-      'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800',
-      'https://images.unsplash.com/photo-1481437156560-3205f6a55735?w=800'
-    ],
-    lat: -6.8170, lng: 39.2895, whatsapp: '255744400002', ownerId: 'demo' },
-  { id: 'fr3', title: 'Frame Mwenge — Barabara Kuu', city: 'Dar es Salaam', area: 'Mwenge',
-    bedrooms: 0, bathrooms: 1, price: 600000, type: 'frame',
-    description: 'Frame barabarani Mwenge, customer flow nzuri, umeme TANESCO, maji, security.',
-    images: [
-      'https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800',
-      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800',
-      'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800'
-    ],
-    lat: -6.7700, lng: 39.2300, whatsapp: '255744400003', ownerId: 'demo' },
-  { id: 'fr4', title: 'Frame Arusha CBD', city: 'Arusha', area: 'Sokoine Road',
-    bedrooms: 0, bathrooms: 1, price: 700000, type: 'frame',
-    description: 'Frame mjini Arusha, CBD, parking, eneo la watalii na biashara.',
-    images: [
-      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800',
-      'https://images.unsplash.com/photo-1481437156560-3205f6a55735?w=800',
-      'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800'
-    ],
-    lat: -3.3680, lng: 36.6820, whatsapp: '255744400004', ownerId: 'demo' },
-  { id: 'fr5', title: 'Frame Mwanza — Rock City Mall area', city: 'Mwanza', area: 'Capripoint',
-    bedrooms: 0, bathrooms: 1, price: 500000, type: 'frame',
-    description: 'Frame karibu na Rock City, parking, security, umeme 3-phase. Nzuri kwa boutique au salon.',
-    images: [
-      'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800',
-      'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800',
-      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800'
-    ],
-    lat: -2.5160, lng: 32.9170, whatsapp: '255744400005', ownerId: 'demo' },
-  { id: 'fr6', title: 'Frame Moshi Town', city: 'Moshi', area: 'Moshi Town',
-    bedrooms: 0, bathrooms: 1, price: 400000, type: 'frame',
-    description: 'Frame mjini Moshi, foot traffic ya wanafunzi na watalii, bei nzuri kwa start-up.',
-    images: [
-      'https://images.unsplash.com/photo-1481437156560-3205f6a55735?w=800',
-      'https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800',
-      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800'
-    ],
-    lat: -3.3490, lng: 37.3320, whatsapp: '255744400006', ownerId: 'demo' }
+    lat: -4.8770, lng: 29.6260, whatsapp: '255744300028', ownerId: 'demo' }
 ];
 
 let allListings = [...DEMO_LISTINGS];
@@ -558,10 +502,6 @@ document.querySelectorAll('.tab').forEach(tab => {
     if (tab.dataset.tab === 'nearme') initNearMe();
     if (tab.dataset.tab === 'browse-gh') renderCategory('stay');
     if (tab.dataset.tab === 'browse-lounge') renderCategory('lounge');
-    if (tab.dataset.tab === 'browse-frame') renderCategory('frame');
-    if (tab.dataset.tab === 'recent') renderRecentlyViewed();
-    if (tab.dataset.tab === 'compare') renderCompare();
-    if (tab.dataset.tab === 'messages') renderThreads();
   });
 });
 
@@ -732,10 +672,8 @@ function renderNearMe() {
   }
   nearmeMapMarkers.forEach(m => nearmeMapInstance.removeLayer(m));
   nearmeMapMarkers = [];
-  if (nearmeMapInstance._cluster) nearmeMapInstance.removeLayer(nearmeMapInstance._cluster);
-  nearmeMapInstance._cluster = makeMarkerLayer(nearmeMapInstance);
 
-  // User pin (always added directly to map, not cluster)
+  // User pin
   const meIcon = L.divIcon({
     className: '',
     html: '<div style="background:#2563eb;border:3px solid #fff;border-radius:50%;width:22px;height:22px;box-shadow:0 0 0 6px rgba(37,99,235,.3);animation:mePulse 1.5s infinite"></div>',
@@ -750,11 +688,11 @@ function renderNearMe() {
   }).addTo(nearmeMapInstance);
   nearmeMapMarkers.push(circle);
 
-  // Listings (clustered)
+  // Listings
   nearby.forEach(l => {
     const priceShort = l.price >= 1000000 ? (l.price/1000000).toFixed(1)+'M' : Math.round(l.price/1000)+'k';
     const icon = L.divIcon({ className: 'price-marker', html: `TZS ${priceShort}`, iconSize: null });
-    const marker = L.marker([l.lat, l.lng], { icon });
+    const marker = L.marker([l.lat, l.lng], { icon }).addTo(nearmeMapInstance);
     marker.bindPopup(`
       <div style="min-width:180px">
         <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
@@ -764,7 +702,7 @@ function renderNearMe() {
         <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
       </div>
     `);
-    nearmeMapInstance._cluster.addLayer(marker);
+    nearmeMapMarkers.push(marker);
   });
 
   // List
@@ -933,79 +871,6 @@ const CAMPUSES = [
   { id: 'veta-znz', name: 'VETA Zanzibar',                  city: 'Zanzibar',      area: 'Mtoni',            lat: -6.1380, lng: 39.1980, color: '#dc2626', icon: '🔨' }
 ];
 
-// Auto-generate 1 student chumba near each campus so the Students tab is never empty.
-const CHUMBA_IMAGES = [
-  'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800',
-  'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-  'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-  'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800',
-  'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800'
-];
-const CAMPUS_DEMO_LISTINGS = CAMPUSES.map((c, i) => {
-  const seed = c.id.split('').reduce((s, ch) => s + ch.charCodeAt(0), 0);
-  const dLat = ((seed % 17) - 8) / 1500;        // ±~0.7 km
-  const dLng = ((seed % 13) - 6) / 1500;
-  const isSelf = (seed % 3) === 0;
-  const price = 60000 + ((seed % 13) * 10000);  // 60k–180k
-  return {
-    id: `cd_${c.id}`,
-    title: (isSelf ? 'Self contained karibu na ' : 'Chumba karibu na ') + c.name,
-    city: c.city,
-    area: c.area,
-    bedrooms: 1,
-    bathrooms: 1,
-    price,
-    type: isSelf ? 'self' : 'room',
-    description: `Karibu sana na ${c.name}. Maji, umeme, security. ${isSelf ? 'Self contained na bafu binafsi.' : 'Bafu ya kushiriki.'} Bei nzuri kwa wanafunzi.`,
-    images: [CHUMBA_IMAGES[i % CHUMBA_IMAGES.length]],
-    lat: c.lat + dLat,
-    lng: c.lng + dLng,
-    whatsapp: '255700000000',
-    ownerId: 'demo'
-  };
-});
-allListings.push(...CAMPUS_DEMO_LISTINGS);
-
-// ===== ENRICHMENT: make demo data feel real =====
-const TZ_LANDLORD_NAMES = [
-  'Mama Halima', 'Mzee Hamis', 'Mwalimu John Massawe', 'Fatuma Said',
-  'Joseph Mwakanyamale', 'Bi Asha', 'Mr. Mushi', 'Mama Neema',
-  'Bwana Juma', 'Mama Rehema', 'Mzee Salim', 'Sarah Mtui',
-  'Mwalimu Pendo', 'Hamis Kibao', 'Mama Zainabu', 'Bwana Kweli',
-  'Yusuph Saidi', 'Mama Grace', 'Mzee Pius', 'Sister Magdalena',
-  'Daudi Mwakipesile', 'Mama Aisha', 'Bwana Ramadhani', 'Neema Lyimo',
-  'Mzee Kassim', 'Mama Lulu', 'Peter Mwambene', 'Halima Juma'
-];
-const EXTRA_HOUSE_IMAGES = [
-  'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800',
-  'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-  'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-  'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800',
-  'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800',
-  'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800',
-  'https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800',
-  'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800'
-];
-
-function seedFromId(id) {
-  return String(id).split('').reduce((s, c) => s + c.charCodeAt(0), 0);
-}
-
-allListings.forEach(l => {
-  const seed = seedFromId(l.id);
-  if (!l.ownerName) l.ownerName = TZ_LANDLORD_NAMES[seed % TZ_LANDLORD_NAMES.length];
-  if (!l.postedDaysAgo) l.postedDaysAgo = (seed % 28) + 1;
-  if (!l.views) l.views = 40 + (seed % 480);
-  if (!l.verifiedBadge) l.verifiedBadge = (seed % 5) !== 0; // ~80% verified
-  // pad images so the gallery isn't empty
-  if (!l.images) l.images = [];
-  while (l.images.length < 3) {
-    const pick = EXTRA_HOUSE_IMAGES[(seed + l.images.length * 7) % EXTRA_HOUSE_IMAGES.length];
-    if (!l.images.includes(pick)) l.images.push(pick);
-    else l.images.push(EXTRA_HOUSE_IMAGES[(seed + l.images.length * 11) % EXTRA_HOUSE_IMAGES.length]);
-  }
-});
-
 let activeCity = 'all';
 
 let activeCampus = null;
@@ -1080,10 +945,8 @@ function renderCampusMap() {
 
   campusMapMarkers.forEach(m => campusMapInstance.removeLayer(m));
   campusMapMarkers = [];
-  if (campusMapInstance._cluster) campusMapInstance.removeLayer(campusMapInstance._cluster);
-  campusMapInstance._cluster = makeMarkerLayer(campusMapInstance);
 
-  // Campus marker (big, distinctive — added directly, not clustered)
+  // Campus marker (big, distinctive)
   const campusIcon = L.divIcon({
     className: 'campus-pin',
     html: activeCampus.icon,
@@ -1095,7 +958,7 @@ function renderCampusMap() {
     .openPopup();
   campusMapMarkers.push(campusMarker);
 
-  // Nearby house markers (clustered)
+  // Nearby house markers
   const nearby = allListings
     .filter(l => l.lat && l.lng && l.city === activeCampus.city)
     .map(l => ({ ...l, _distance: distanceKm(activeCampus.lat, activeCampus.lng, l.lat, l.lng) }))
@@ -1110,8 +973,7 @@ function renderCampusMap() {
       html: `TZS ${priceShort}`,
       iconSize: null
     });
-    const marker = L.marker([l.lat, l.lng], { icon });
-    campusMapInstance._cluster.addLayer(marker);
+    const marker = L.marker([l.lat, l.lng], { icon }).addTo(campusMapInstance);
     marker.bindPopup(`
       <div style="min-width:180px">
         <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
@@ -1162,8 +1024,6 @@ function renderCampusListings() {
 
 // ============== RENDER LISTINGS ==============
 function formatPrice(p, type) {
-  // Delegates to fmtMoney (which honors currentCurrency) when available.
-  if (typeof fmtMoney === 'function') return fmtMoney(p, type);
   const isShort = ['guesthouse', 'bnb'].includes(type);
   const suffix = isShort ? t('perNight') : t('perMonth');
   return 'TZS ' + Number(p).toLocaleString('en-US') + suffix;
@@ -1176,17 +1036,11 @@ function isBookable(type) {
 function listingCard(l) {
   const img = (l.images && l.images[0]) || 'icon.svg';
   const isFav = favorites.includes(l.id);
-  const inCompare = (typeof compareIds !== 'undefined') && compareIds.includes(l.id);
-  const amenityIcons = {parking:'🚗',water24:'💧',security:'🛡',ac:'❄️',generator:'⚡',wifi:'📶',furnished:'🛋',fence:'🧱'};
-  const amenityHtml = (l.amenities || []).slice(0, 4).map(a => `<span class="amenity-pill">${amenityIcons[a] || ''} ${a}</span>`).join('');
   return `
-    <div class="card ${l.featured ? 'featured' : ''}" onclick="openDetail('${l.id}')">
-      ${l.featured ? '<div class="featured-ribbon">⭐ FEATURED</div>' : ''}
+    <div class="card" onclick="openDetail('${l.id}')">
       <div class="card-image" style="background-image:url('${img}')">
         <span class="card-badge">${l.type}</span>
         <button class="card-fav" onclick="event.stopPropagation();toggleFav('${l.id}')">${isFav ? '❤️' : '🤍'}</button>
-        <button class="card-cmp ${inCompare ? 'active' : ''}" data-cmp-id="${l.id}" onclick="event.stopPropagation();toggleCompare('${l.id}')" title="Linganisha">⚖️</button>
-        <button class="card-share" onclick="event.stopPropagation();shareListing('${l.id}')" title="Share">🔗</button>
       </div>
       <div class="card-body">
         <div class="card-price">${formatPrice(l.price, l.type)}</div>
@@ -1198,15 +1052,13 @@ function listingCard(l) {
           <span>🛏 ${l.bedrooms}</span>
           <span>🚿 ${l.bathrooms}</span>
         </div>
-        ${amenityHtml ? `<div class="amenity-row">${amenityHtml}</div>` : ''}
       </div>
     </div>
   `;
 }
 
-// Long-term rent only (excludes guesthouse, bnb, lounge, frame)
-const RENT_TYPES = ['house', 'apartment', 'room', 'self'];
-const FRAME_TYPES = ['frame', 'commercial'];
+// Long-term rent only (excludes guesthouse, bnb, lounge)
+const RENT_TYPES = ['house', 'apartment', 'room', 'self', 'commercial'];
 
 function renderListings() {
   const city = document.getElementById('searchCity').value.toLowerCase();
@@ -1218,9 +1070,8 @@ function renderListings() {
     if (city && !(`${l.city} ${l.area}`.toLowerCase().includes(city))) return false;
     if (beds && (beds === '4' ? l.bedrooms < 4 : l.bedrooms != beds)) return false;
     if (maxPrice && l.price > Number(maxPrice)) return false;
-    if (!listingMatchesAmenities(l)) return false;
     return true;
-  }).sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+  });
 
   const grid = document.getElementById('listingsGrid');
   grid.innerHTML = filtered.length
@@ -1238,7 +1089,6 @@ function renderCategory(category) {
       if (type && l.type !== type) return false;
       if (city && !(`${l.city} ${l.area}`.toLowerCase().includes(city))) return false;
       if (maxPrice && l.price > Number(maxPrice)) return false;
-      if (!listingMatchesAmenities(l)) return false;
       return true;
     });
     const grid = document.getElementById('ghGrid');
@@ -1252,27 +1102,12 @@ function renderCategory(category) {
       if (l.type !== 'lounge') return false;
       if (city && !(`${l.city} ${l.area}`.toLowerCase().includes(city))) return false;
       if (maxPrice && l.price > Number(maxPrice)) return false;
-      if (!listingMatchesAmenities(l)) return false;
       return true;
     });
     const grid = document.getElementById('loGrid');
     grid.innerHTML = filtered.length
       ? filtered.map(listingCard).join('')
       : '<div class="empty">Hakuna lounge iliyopatikana.</div>';
-  } else if (category === 'frame') {
-    const city = document.getElementById('frSearchCity').value.toLowerCase();
-    const maxPrice = document.getElementById('frFilterPrice').value;
-    const filtered = allListings.filter(l => {
-      if (!FRAME_TYPES.includes(l.type)) return false;
-      if (city && !(`${l.city} ${l.area}`.toLowerCase().includes(city))) return false;
-      if (maxPrice && l.price > Number(maxPrice)) return false;
-      if (!listingMatchesAmenities(l)) return false;
-      return true;
-    });
-    const grid = document.getElementById('frGrid');
-    grid.innerHTML = filtered.length
-      ? filtered.map(listingCard).join('')
-      : '<div class="empty">Hakuna frame iliyopatikana. Jaribu vichujio vingine au tangaza yako!</div>';
   }
 }
 window.renderCategory = renderCategory;
@@ -1332,28 +1167,10 @@ async function openDetail(id) {
   } catch {}
   const flagged = reportCount >= 3;
 
-  const imgs = (l.images && l.images.length) ? l.images : ['icon-192.png'];
-  const initial = (l.ownerName || '?').trim().charAt(0).toUpperCase();
-  const galleryHtml = `
-    <div class="detail-gallery" id="gallery_${id}">
-      <img id="galleryMain_${id}" src="${escapeHtml(imgs[0])}" class="detail-img" />
-      ${imgs.length > 1 ? `
-        <button class="gallery-nav prev" onclick="galleryStep('${id}', -1)" aria-label="prev">‹</button>
-        <button class="gallery-nav next" onclick="galleryStep('${id}', 1)" aria-label="next">›</button>
-        <div class="gallery-count" id="galleryCount_${id}">1 / ${imgs.length}</div>
-      ` : ''}
-    </div>
-    ${imgs.length > 1 ? `
-      <div class="gallery-thumbs" id="galleryThumbs_${id}">
-        ${imgs.map((src, i) => `<img src="${escapeHtml(src)}" data-idx="${i}" class="${i === 0 ? 'active' : ''}" onclick="galleryGo('${id}', ${i})" />`).join('')}
-      </div>
-    ` : ''}
-  `;
-
   document.getElementById('detailBody').innerHTML = `
     <div data-listing-id="${id}">
     ${flagged ? `<div class="warn-banner">⚠️ Tangazo hili limeripotiwa na watumiaji ${reportCount}. Kuwa makini sana!</div>` : ''}
-    ${galleryHtml}
+    <img src="${escapeHtml((l.images && l.images[0]) || 'icon-192.png')}" class="detail-img" />
     <div class="trust-row">${trustBadge}</div>
     <div class="card-price">${formatPrice(l.price, l.type)}</div>
     <h2 id="detailTitle_${id}" style="margin:8px 0">${escapeHtml(l.title)}</h2>
@@ -1362,13 +1179,6 @@ async function openDetail(id) {
       <span>🛏 Vyumba ${l.bedrooms}</span>
       <span>🚿 Bafu ${l.bathrooms}</span>
       <span>🏷 ${escapeHtml(l.type)}</span>
-    </div>
-    <div class="owner-row">
-      <div class="owner-avatar">${escapeHtml(initial)}</div>
-      <div class="owner-info">
-        <div class="owner-name">${escapeHtml(l.ownerName || 'Mwenye nyumba')}${l.verifiedBadge ? ' <span class="verified-tick" title="Mwenye nyumba aliyethibitishwa">✓</span>' : ''}</div>
-        <div class="owner-meta">📅 Iliwekwa siku ${l.postedDaysAgo} zilizopita · 👁 ${l.views} views</div>
-      </div>
     </div>
     ${currentLang !== 'sw' ? `<button id="translateBtn_${id}" class="btn-translate" onclick="translateListingDetail('${id}')">${t('translate')}</button>` : ''}
     <p id="detailDesc_${id}" style="margin:16px 0;line-height:1.5">${escapeHtml(l.description || '')}</p>
@@ -1391,13 +1201,6 @@ async function openDetail(id) {
     <div class="contact-row">
       <a href="https://wa.me/${wa}?text=${msg}" target="_blank" class="btn-wa">💬 WhatsApp</a>
       <a href="tel:+${wa}" class="btn-call">📞 Piga simu</a>
-    </div>
-    <div class="row" style="gap:8px;margin-top:10px">
-      <button class="btn-primary" style="flex:1" onclick="openChat('${id}', '${escapeHtml(l.ownerId || 'demo')}', '${escapeHtml(l.ownerName || 'Mwenye nyumba')}')">💬 Andika ndani ya app</button>
-    </div>
-    <div class="row" style="gap:8px;margin-top:10px">
-      <button class="btn-ghost-dark" style="flex:1" onclick="shareListing('${id}')">🔗 Share</button>
-      <button class="btn-ghost-dark" style="flex:1" onclick="toggleCompare('${id}')">⚖️ Linganisha</button>
     </div>
     <button class="btn-report" onclick="openReport('${id}')">🚩 Ripoti tangazo hili</button>
 
@@ -1696,19 +1499,9 @@ function initBrowseMap() {
   refreshMapMarkers(browseMapInstance, browseMapMarkers);
 }
 
-function makeMarkerLayer(map) {
-  const layer = (typeof L !== 'undefined' && typeof L.markerClusterGroup === 'function')
-    ? L.markerClusterGroup({ chunkedLoading: true, spiderfyOnMaxZoom: true, showCoverageOnHover: false, maxClusterRadius: 60 })
-    : L.layerGroup();
-  layer.addTo(map);
-  return layer;
-}
-
-let browseMarkerLayer = null;
 function refreshMapMarkers(map, markers) {
   if (!map) return;
-  if (browseMarkerLayer) { map.removeLayer(browseMarkerLayer); }
-  browseMarkerLayer = makeMarkerLayer(map);
+  markers.forEach(m => map.removeLayer(m));
   markers.length = 0;
   const valid = allListings.filter(l => l.lat && l.lng);
   valid.forEach(l => {
@@ -1720,7 +1513,7 @@ function refreshMapMarkers(map, markers) {
       html: `TZS ${priceShort}`,
       iconSize: null
     });
-    const marker = L.marker([l.lat, l.lng], { icon });
+    const marker = L.marker([l.lat, l.lng], { icon }).addTo(map);
     marker.bindPopup(`
       <div style="min-width:180px">
         <img src="${(l.images && l.images[0]) || 'icon-192.png'}" style="width:100%;height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px" />
@@ -1730,7 +1523,6 @@ function refreshMapMarkers(map, markers) {
         <a href="#" onclick="closeDetail();openDetail('${l.id}');return false;" style="color:#0f766e;font-weight:600">Ona zaidi →</a>
       </div>
     `);
-    browseMarkerLayer.addLayer(marker);
     markers.push(marker);
   });
   if (valid.length) {
@@ -1763,13 +1555,8 @@ if (imageUploadInput) {
     const files = Array.from(e.target.files).slice(0, 5 - uploadedImages.length);
     for (const file of files) {
       if (file.size > 5 * 1024 * 1024) { toast('Picha kubwa sana (max 5MB): ' + file.name); continue; }
-      const { dataUrl, blob } = await compressImage(file);
-      let publicUrl = null;
-      if (window.nodalaliSupabase && typeof window.nodalaliSupabase.uploadListingImage === 'function') {
-        toast('⏳ Inapakia picha...');
-        publicUrl = await window.nodalaliSupabase.uploadListingImage(blob);
-      }
-      uploadedImages.push(publicUrl || dataUrl); // fall back to inline data URL
+      const compressed = await compressImage(file);
+      uploadedImages.push(compressed);
     }
     renderImagePreviews();
     e.target.value = '';
@@ -1786,7 +1573,6 @@ function renderImagePreviews() {
 }
 window.removeImage = (i) => { uploadedImages.splice(i, 1); renderImagePreviews(); };
 
-// Compress to JPEG; returns { dataUrl, blob } so callers can upload OR inline.
 function compressImage(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -1800,8 +1586,7 @@ function compressImage(file) {
         const canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-        canvas.toBlob((blob) => resolve({ dataUrl, blob }), 'image/jpeg', 0.7);
+        resolve(canvas.toDataURL('image/jpeg', 0.7));
       };
       img.src = e.target.result;
     };
@@ -1872,11 +1657,6 @@ document.getElementById('listingForm').addEventListener('submit', async (e) => {
     price: Number(fd.get('price')),
     type: fd.get('type'),
     description: fd.get('description'),
-    amenities: fd.getAll('amenity'),
-    sqm: fd.get('sqm') ? Number(fd.get('sqm')) : null,
-    electricity: fd.get('electricity') || null,
-    parkingSpaces: fd.get('parkingSpaces') ? Number(fd.get('parkingSpaces')) : null,
-    floor: fd.get('floor') || null,
     images: [...uploadedImages],
     lat: fd.get('lat') ? Number(fd.get('lat')) : null,
     lng: fd.get('lng') ? Number(fd.get('lng')) : null,
@@ -1953,504 +1733,6 @@ window.closeAuth = closeAuth;
 window.closeDetail = closeDetail;
 window.openDetail = openDetail;
 window.toggleFav = toggleFav;
-
-// ============== CURRENCY (TZS / USD) ==============
-let currentCurrency = localStorage.getItem('nodalali_currency') || 'TZS';
-const USD_PER_TZS = 1 / 2500; // approx; update if needed
-function toggleCurrency() {
-  currentCurrency = currentCurrency === 'TZS' ? 'USD' : 'TZS';
-  localStorage.setItem('nodalali_currency', currentCurrency);
-  const btn = document.getElementById('currencyBtn');
-  if (btn) btn.textContent = currentCurrency;
-  rerenderActiveView();
-}
-window.toggleCurrency = toggleCurrency;
-(function initCurrency() {
-  const btn = document.getElementById('currencyBtn');
-  if (btn) btn.textContent = currentCurrency;
-})();
-function fmtMoney(tzs, type) {
-  const isShort = ['guesthouse', 'bnb'].includes(type);
-  const suffix = isShort ? (currentLang === 'sw' ? '/usiku' : '/night') : (currentLang === 'sw' ? '/mwezi' : '/month');
-  if (currentCurrency === 'USD') {
-    const usd = Math.max(1, Math.round(Number(tzs) * USD_PER_TZS));
-    return `$${usd.toLocaleString('en-US')}${suffix}`;
-  }
-  return 'TZS ' + Number(tzs).toLocaleString('en-US') + suffix;
-}
-// Override formatPrice so all listing cards/detail use new currency formatter
-window.formatPrice = fmtMoney;
-
-function rerenderActiveView() {
-  const active = document.querySelector('.tab.active');
-  if (!active) return;
-  const tab = active.dataset.tab;
-  if (tab === 'browse') renderListings();
-  else if (tab === 'browse-gh') renderCategory('stay');
-  else if (tab === 'browse-lounge') renderCategory('lounge');
-  else if (tab === 'browse-frame') renderCategory('frame');
-  else if (tab === 'favorites') renderFavorites();
-  else if (tab === 'recent') renderRecentlyViewed();
-  else if (tab === 'compare') renderCompare();
-  else if (tab === 'my-listings') renderMyListings();
-  else if (tab === 'students') renderCampuses();
-}
-
-// ============== AMENITY FILTERS ==============
-let activeAmenities = new Set();
-function toggleAmenityFilter(name) {
-  if (activeAmenities.has(name)) activeAmenities.delete(name);
-  else activeAmenities.add(name);
-  document.querySelectorAll(`.amenity-chip[data-amenity="${name}"]`).forEach(b => b.classList.toggle('active'));
-  rerenderActiveView();
-}
-window.toggleAmenityFilter = toggleAmenityFilter;
-function listingMatchesAmenities(l) {
-  if (!activeAmenities.size) return true;
-  const has = new Set(l.amenities || []);
-  for (const a of activeAmenities) if (!has.has(a)) return false;
-  return true;
-}
-
-// Seed amenities into demo listings deterministically so the new filter has matches
-allListings.forEach(l => {
-  if (l.amenities) return;
-  const seed = seedFromId(l.id);
-  const all = ['parking','water24','security','ac','generator','wifi','furnished','fence'];
-  l.amenities = all.filter((_, i) => ((seed >> i) & 1) === 1);
-});
-
-// ============== RECENTLY VIEWED ==============
-let recentIds = JSON.parse(localStorage.getItem('nodalali_recent') || '[]');
-function trackRecent(id) {
-  recentIds = [id, ...recentIds.filter(x => x !== id)].slice(0, 20);
-  localStorage.setItem('nodalali_recent', JSON.stringify(recentIds));
-}
-function renderRecentlyViewed() {
-  const grid = document.getElementById('recentGrid');
-  if (!grid) return;
-  const items = recentIds.map(id => allListings.find(x => x.id === id)).filter(Boolean);
-  grid.innerHTML = items.length
-    ? items.map(listingCard).join('')
-    : '<div class="empty">Bado hujaona nyumba yoyote. Bonyeza nyumba kuiona.</div>';
-}
-window.renderRecentlyViewed = renderRecentlyViewed;
-
-// ============== COMPARE (max 3) ==============
-let compareIds = JSON.parse(localStorage.getItem('nodalali_compare') || '[]');
-function toggleCompare(id) {
-  if (compareIds.includes(id)) {
-    compareIds = compareIds.filter(x => x !== id);
-  } else {
-    if (compareIds.length >= 3) {
-      toast(currentLang === 'sw' ? 'Unaweza kulinganisha hadi 3 tu' : 'You can compare up to 3 only');
-      return;
-    }
-    compareIds.push(id);
-  }
-  localStorage.setItem('nodalali_compare', JSON.stringify(compareIds));
-  toast(currentLang === 'sw' ? 'Imeongezwa kwenye linganisha' : 'Added to compare');
-  // Refresh card UI if visible
-  const c = document.querySelector(`[data-cmp-id="${id}"]`);
-  if (c) c.classList.toggle('active', compareIds.includes(id));
-}
-window.toggleCompare = toggleCompare;
-function renderCompare() {
-  const out = document.getElementById('compareGrid');
-  if (!out) return;
-  const items = compareIds.map(id => allListings.find(x => x.id === id)).filter(Boolean);
-  if (!items.length) {
-    out.innerHTML = '<div class="empty">Hujaongeza nyumba ya kulinganisha bado.</div>';
-    return;
-  }
-  const rows = [
-    { label: 'Bei', val: l => fmtMoney(l.price, l.type) },
-    { label: 'Aina', val: l => l.type },
-    { label: 'Mji', val: l => `${l.area}, ${l.city}` },
-    { label: 'Vyumba', val: l => l.bedrooms },
-    { label: 'Bafu', val: l => l.bathrooms },
-    { label: 'Vifaa', val: l => (l.amenities || []).join(', ') || '—' },
-    { label: 'Mwenye', val: l => l.ownerName || '—' }
-  ];
-  out.innerHTML = `
-    <div class="compare-grid" style="grid-template-columns: 120px repeat(${items.length}, 1fr)">
-      <div></div>
-      ${items.map(l => `<div class="compare-head">
-        <img src="${escapeHtml(l.images?.[0] || 'icon-192.png')}" />
-        <div class="compare-title">${escapeHtml(l.title)}</div>
-        <button class="btn-ghost-dark" onclick="toggleCompare('${l.id}');renderCompare()">✕ Toa</button>
-      </div>`).join('')}
-      ${rows.map(r => `<div class="compare-label">${r.label}</div>${items.map(l => `<div class="compare-cell">${escapeHtml(String(r.val(l)))}</div>`).join('')}`).join('')}
-    </div>
-  `;
-}
-window.renderCompare = renderCompare;
-
-// ============== SAVED SEARCHES ==============
-function getCurrentSearchSnapshot() {
-  const tab = document.querySelector('.tab.active')?.dataset.tab || 'browse';
-  const cat = document.querySelector('.tab.active')?.dataset.category || 'rent';
-  let city = '', maxPrice = '', beds = '';
-  if (tab === 'browse') {
-    city = document.getElementById('searchCity').value;
-    maxPrice = document.getElementById('filterPrice').value;
-    beds = document.getElementById('filterBedrooms').value;
-  } else if (tab === 'browse-gh') {
-    city = document.getElementById('ghSearchCity').value;
-    maxPrice = document.getElementById('ghFilterPrice').value;
-  } else if (tab === 'browse-lounge') {
-    city = document.getElementById('loSearchCity').value;
-    maxPrice = document.getElementById('loFilterPrice').value;
-  } else if (tab === 'browse-frame') {
-    city = document.getElementById('frSearchCity').value;
-    maxPrice = document.getElementById('frFilterPrice').value;
-  }
-  return { cat, city, maxPrice, beds, amenities: [...activeAmenities], ts: Date.now() };
-}
-function saveCurrentSearch() {
-  const snap = getCurrentSearchSnapshot();
-  if (!snap.city && !snap.maxPrice && !snap.beds && !snap.amenities.length) {
-    toast('Weka filters kwanza kabla ya kuhifadhi');
-    return;
-  }
-  const all = JSON.parse(localStorage.getItem('nodalali_saved_searches') || '[]');
-  all.unshift(snap);
-  localStorage.setItem('nodalali_saved_searches', JSON.stringify(all.slice(0, 10)));
-  toast('🔔 Search yako imehifadhiwa');
-  showSavedSearches();
-}
-function showSavedSearches() {
-  const list = document.getElementById('savedSearchesList');
-  if (!list) return;
-  const all = JSON.parse(localStorage.getItem('nodalali_saved_searches') || '[]');
-  if (!all.length) { list.innerHTML = ''; return; }
-  list.innerHTML = `<h3 style="margin:8px 0">🔔 Search Zilizohifadhiwa</h3>` + all.map((s, i) => `
-    <div class="saved-search">
-      <div>
-        <strong>${s.cat}</strong>
-        ${s.city ? ` · 📍 ${escapeHtml(s.city)}` : ''}
-        ${s.maxPrice ? ` · Hadi ${Number(s.maxPrice).toLocaleString()}` : ''}
-        ${s.beds ? ` · 🛏 ${s.beds}` : ''}
-        ${s.amenities?.length ? ` · ${s.amenities.join(', ')}` : ''}
-      </div>
-      <button class="btn-ghost-dark" onclick="deleteSavedSearch(${i})">🗑</button>
-    </div>
-  `).join('');
-}
-function deleteSavedSearch(i) {
-  const all = JSON.parse(localStorage.getItem('nodalali_saved_searches') || '[]');
-  all.splice(i, 1);
-  localStorage.setItem('nodalali_saved_searches', JSON.stringify(all));
-  showSavedSearches();
-}
-window.saveCurrentSearch = saveCurrentSearch;
-window.showSavedSearches = showSavedSearches;
-window.deleteSavedSearch = deleteSavedSearch;
-
-// ============== SHARE ==============
-function shareListing(id) {
-  const l = allListings.find(x => x.id === id);
-  if (!l) return;
-  const url = `${location.origin}/?listing=${id}`;
-  const text = `${l.title} — ${fmtMoney(l.price, l.type)} (${l.area}, ${l.city})\n${url}`;
-  if (navigator.share) {
-    navigator.share({ title: l.title, text, url }).catch(() => {});
-    return;
-  }
-  navigator.clipboard?.writeText(text).then(
-    () => toast(currentLang === 'sw' ? '🔗 Link imenakiliwa' : '🔗 Link copied'),
-    () => prompt(currentLang === 'sw' ? 'Nakili link:' : 'Copy link:', text)
-  );
-}
-window.shareListing = shareListing;
-
-// ============== FRAME FIELDS TOGGLE ==============
-(function wireFrameFieldsToggle() {
-  const sel = document.querySelector('#listingForm select[name="type"]');
-  const fs = document.getElementById('frameFields');
-  if (!sel || !fs) return;
-  const apply = () => { fs.hidden = sel.value !== 'frame'; };
-  sel.addEventListener('change', apply);
-  apply();
-})();
-
-// ============== FEATURED FLAG (demo) ==============
-allListings.forEach(l => {
-  if (l.featured == null) l.featured = (seedFromId(l.id) % 11) === 0; // ~9% featured
-});
-
-// Track recent on detail open by wrapping
-const _origOpenDetail = window.openDetail;
-window.openDetail = function(id) {
-  trackRecent(id);
-  return _origOpenDetail(id);
-};
-
-// ============== IN-APP MESSAGING ==============
-// Local-first: works via localStorage immediately. Upgrades to Supabase
-// Realtime if the `messages` table exists and user is signed in.
-
-function getMyChatId() {
-  // Prefer Supabase user, then Firebase, fall back to anon device ID
-  if (window.nodalaliSupabase && window.nodalaliSupabase.raw) {
-    const u = window.nodalaliSupabase.raw.auth.getSession?.();
-    // session may be a Promise — we handle async in messageStore.send
-  }
-  if (currentUser && currentUser.uid) return currentUser.uid;
-  let id = localStorage.getItem('nodalali_anon_id');
-  if (!id) {
-    id = 'anon-' + Math.random().toString(36).slice(2, 10);
-    localStorage.setItem('nodalali_anon_id', id);
-  }
-  return id;
-}
-
-function makeThreadId(listingId, a, b) {
-  const [x, y] = [a, b].sort();
-  return `t_${listingId}__${x}__${y}`;
-}
-
-const messageStore = {
-  _local() {
-    return JSON.parse(localStorage.getItem('nodalali_messages') || '{}');
-  },
-  _saveLocal(map) {
-    localStorage.setItem('nodalali_messages', JSON.stringify(map));
-  },
-  async list(threadId) {
-    // Try Supabase first
-    if (window.nodalaliSupabase && window.nodalaliSupabase.raw) {
-      try {
-        const { data, error } = await window.nodalaliSupabase.raw
-          .from('messages').select('*').eq('thread_id', threadId)
-          .order('created_at', { ascending: true });
-        if (!error && data) return data;
-      } catch {}
-    }
-    return (this._local()[threadId] || []);
-  },
-  async send(msg) {
-    // Try Supabase first
-    if (window.nodalaliSupabase && window.nodalaliSupabase.raw) {
-      try {
-        const { error } = await window.nodalaliSupabase.raw.from('messages').insert(msg);
-        if (!error) return msg;
-      } catch {}
-    }
-    const map = this._local();
-    if (!map[msg.thread_id]) map[msg.thread_id] = [];
-    map[msg.thread_id].push(msg);
-    this._saveLocal(map);
-    return msg;
-  },
-  async listMyThreads(myId) {
-    if (window.nodalaliSupabase && window.nodalaliSupabase.raw) {
-      try {
-        const { data } = await window.nodalaliSupabase.raw
-          .from('messages').select('*')
-          .or(`sender_id.eq.${myId},recipient_id.eq.${myId}`)
-          .order('created_at', { ascending: false });
-        if (data) {
-          // Group by thread, return latest per thread
-          const seen = new Map();
-          for (const m of data) if (!seen.has(m.thread_id)) seen.set(m.thread_id, m);
-          return [...seen.values()];
-        }
-      } catch {}
-    }
-    const map = this._local();
-    const out = [];
-    for (const tid of Object.keys(map)) {
-      const arr = map[tid];
-      const last = arr[arr.length - 1];
-      if (last && (last.sender_id === myId || last.recipient_id === myId)) {
-        out.push(last);
-      }
-    }
-    return out.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  },
-  async markRead(threadId, myId) {
-    const map = this._local();
-    const arr = map[threadId] || [];
-    arr.forEach(m => { if (m.recipient_id === myId && !m.read_at) m.read_at = new Date().toISOString(); });
-    this._saveLocal(map);
-    if (window.nodalaliSupabase && window.nodalaliSupabase.raw) {
-      try {
-        await window.nodalaliSupabase.raw.from('messages')
-          .update({ read_at: new Date().toISOString() })
-          .eq('thread_id', threadId).eq('recipient_id', myId).is('read_at', null);
-      } catch {}
-    }
-  },
-  subscribe(myId, onIncoming) {
-    if (!window.nodalaliSupabase || !window.nodalaliSupabase.raw) return () => {};
-    try {
-      const ch = window.nodalaliSupabase.raw.channel('messages-' + myId)
-        .on('postgres_changes',
-            { event: 'INSERT', schema: 'public', table: 'messages', filter: `recipient_id=eq.${myId}` },
-            (payload) => onIncoming(payload.new))
-        .subscribe();
-      return () => window.nodalaliSupabase.raw.removeChannel(ch);
-    } catch { return () => {}; }
-  }
-};
-
-let activeThreadId = null;
-let activeListing = null;
-let activePeerId = null;
-
-async function openChat(listingId, peerId, peerName) {
-  const myId = getMyChatId();
-  if (myId === peerId) {
-    toast('Huwezi kuandikiana wewe mwenyewe');
-    return;
-  }
-  activeListing = allListings.find(l => l.id === listingId);
-  activePeerId = peerId;
-  activeThreadId = makeThreadId(listingId, myId, peerId);
-
-  // Switch to messages tab
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelector('[data-tab="messages"]').classList.add('active');
-  document.getElementById('messages').classList.add('active');
-
-  document.getElementById('threadsList').hidden = true;
-  document.getElementById('activeChat').hidden = false;
-  document.getElementById('chatPeerName').innerHTML =
-    `<strong>${escapeHtml(peerName || 'Mwenye nyumba')}</strong><br><small>${escapeHtml(activeListing?.title || '')}</small>`;
-
-  await renderActiveChat();
-  await messageStore.markRead(activeThreadId, myId);
-  updateUnreadBadge();
-}
-window.openChat = openChat;
-
-function closeChat() {
-  activeThreadId = null;
-  document.getElementById('threadsList').hidden = false;
-  document.getElementById('activeChat').hidden = true;
-  renderThreads();
-}
-window.closeChat = closeChat;
-
-async function renderActiveChat() {
-  if (!activeThreadId) return;
-  const myId = getMyChatId();
-  const msgs = await messageStore.list(activeThreadId);
-  const box = document.getElementById('chatMessages');
-  box.innerHTML = msgs.length
-    ? msgs.map(m => `
-        <div class="msg ${m.sender_id === myId ? 'mine' : 'theirs'}">
-          <div class="msg-body">${escapeHtml(m.body)}</div>
-          <div class="msg-time">${new Date(m.created_at).toLocaleString()}</div>
-        </div>
-      `).join('')
-    : '<div class="empty" style="padding:20px;text-align:center">Bado hakuna ujumbe. Anza mazungumzo!</div>';
-  box.scrollTop = box.scrollHeight;
-}
-
-async function sendChatMessage(e) {
-  e.preventDefault();
-  const input = document.getElementById('chatInput');
-  const body = input.value.trim();
-  if (!body || !activeThreadId) return;
-  const myId = getMyChatId();
-  const msg = {
-    id: 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-    thread_id: activeThreadId,
-    listing_id: activeListing?.id || '',
-    sender_id: myId,
-    recipient_id: activePeerId,
-    body,
-    created_at: new Date().toISOString(),
-    read_at: null
-  };
-  input.value = '';
-  await messageStore.send(msg);
-  await renderActiveChat();
-}
-
-async function renderThreads() {
-  const list = document.getElementById('threadsList');
-  if (!list) return;
-  const myId = getMyChatId();
-  const threads = await messageStore.listMyThreads(myId);
-  if (!threads.length) {
-    list.innerHTML = '<div class="empty">Bado hakuna mazungumzo. Bonyeza "💬 Chat" kwenye nyumba yoyote kuanza.</div>';
-    return;
-  }
-  list.innerHTML = threads.map(m => {
-    const peerId = m.sender_id === myId ? m.recipient_id : m.sender_id;
-    const listing = allListings.find(l => l.id === m.listing_id);
-    const peerName = listing ? listing.ownerName : 'Mtumiaji';
-    const unread = m.recipient_id === myId && !m.read_at ? '<span class="unread-dot"></span>' : '';
-    const initial = (peerName || '?').trim().charAt(0).toUpperCase();
-    return `
-      <div class="thread-item" onclick="openChat('${m.listing_id}', '${peerId}', '${escapeHtml(peerName)}')">
-        <div class="thread-avatar">${escapeHtml(initial)}</div>
-        <div class="thread-body">
-          <div class="thread-name">${escapeHtml(peerName)} ${unread}</div>
-          <div class="thread-listing">${escapeHtml(listing?.title || m.listing_id)}</div>
-          <div class="thread-preview">${m.sender_id === myId ? '↑ ' : ''}${escapeHtml(m.body.slice(0, 60))}</div>
-        </div>
-        <div class="thread-time">${new Date(m.created_at).toLocaleDateString()}</div>
-      </div>
-    `;
-  }).join('');
-}
-window.renderThreads = renderThreads;
-
-async function updateUnreadBadge() {
-  const badge = document.getElementById('unreadBadge');
-  if (!badge) return;
-  const myId = getMyChatId();
-  const threads = await messageStore.listMyThreads(myId);
-  const unread = threads.filter(m => m.recipient_id === myId && !m.read_at).length;
-  if (unread) { badge.textContent = unread; badge.hidden = false; }
-  else { badge.hidden = true; }
-}
-
-// Wire form submit
-(function wireChat() {
-  const form = document.getElementById('chatForm');
-  if (form) form.addEventListener('submit', sendChatMessage);
-})();
-
-// Subscribe to realtime incoming + refresh badge on load
-(function initChat() {
-  const myId = getMyChatId();
-  messageStore.subscribe(myId, async (newMsg) => {
-    if (newMsg.thread_id === activeThreadId) await renderActiveChat();
-    await updateUnreadBadge();
-    toast(`💬 Ujumbe mpya: ${String(newMsg.body || '').slice(0, 40)}`);
-  });
-  updateUnreadBadge();
-})();
-
-// ===== DETAIL GALLERY =====
-function galleryGo(id, idx) {
-  const l = allListings.find(x => x.id === id);
-  if (!l || !l.images) return;
-  const total = l.images.length;
-  const i = ((idx % total) + total) % total;
-  const main = document.getElementById('galleryMain_' + id);
-  const count = document.getElementById('galleryCount_' + id);
-  const thumbs = document.getElementById('galleryThumbs_' + id);
-  if (main) main.src = l.images[i];
-  if (count) count.textContent = `${i + 1} / ${total}`;
-  if (thumbs) {
-    [...thumbs.children].forEach((el, n) => el.classList.toggle('active', n === i));
-  }
-  main && main.setAttribute('data-idx', i);
-}
-function galleryStep(id, dir) {
-  const main = document.getElementById('galleryMain_' + id);
-  const cur = parseInt(main && main.getAttribute('data-idx') || '0', 10);
-  galleryGo(id, cur + dir);
-}
-window.galleryGo = galleryGo;
-window.galleryStep = galleryStep;
 
 authBtn.addEventListener('click', () => {
   if (currentUser) {

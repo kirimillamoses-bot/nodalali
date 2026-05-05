@@ -334,9 +334,15 @@ app.get(['/wanafunzi', '/student'], (_, res) => res.redirect('/students'));
 app.use(express.static(__dirname));
 app.use((req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
+// Refuse to start in production with default admin token
+if (process.env.NODE_ENV === 'production' && security.ADMIN_TOKEN === 'change-me-in-production') {
+  console.error('❌ FATAL: ADMIN_TOKEN env var must be set in production. Refusing to start.');
+  process.exit(1);
+}
+
 app.listen(PORT, () => {
   console.log(`🏠 Nodalali on http://localhost:${PORT}`);
   console.log(`   M-Pesa: ${ZENOPAY_API_KEY ? 'LIVE' : 'demo'} | webhook: ${ZENOPAY_WEBHOOK_SECRET ? 'verified' : '⚠️ unsigned'}`);
   console.log(`   SMS: ${process.env.BEEM_API_KEY ? 'live' : 'demo'} | Email: ${process.env.BREVO_API_KEY ? 'live' : 'demo'} | Moderation: ${process.env.GCP_VISION_API_KEY ? 'live' : 'demo'}`);
-  console.log(`   Admin: http://localhost:${PORT}/admin (token: ${security.ADMIN_TOKEN === 'change-me-in-production' ? '⚠️ DEFAULT' : '✓ custom'})`);
+  console.log(`   Admin: http://localhost:${PORT}/admin (token: ${security.ADMIN_TOKEN === 'change-me-in-production' ? '⚠️ DEFAULT (set ADMIN_TOKEN env)' : '✓ custom'})`);
 });

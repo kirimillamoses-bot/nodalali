@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="sw">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nodalali — Pakia Tangazo</title>
+<link rel="icon" href="icon-192.png" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 16px; }
+  .wrap { max-width: 600px; margin: 0 auto; }
+  h1 { color: #fbbf24; margin-bottom: 6px; }
+  .sub { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+  .panel { background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 14px; }
+  label { display: block; font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin: 12px 0 4px; }
+  input, select, textarea, button {
+    width: 100%; padding: 12px; border-radius: 8px;
+    border: 1px solid #334155; background: #0f172a; color: #e2e8f0; font-size: 15px;
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  button.primary { background: #FF6B35; color: #fff; font-weight: 800; font-size: 17px; border: none; cursor: pointer; padding: 16px; }
+  button.primary:hover { background: #f55a23; }
+  button.primary:disabled { background: #475569; cursor: wait; }
+  .drop {
+    border: 2px dashed #475569; border-radius: 10px; padding: 30px; text-align: center;
+    color: #94a3b8; cursor: pointer; transition: all 0.2s;
+  }
+  .drop:hover, .drop.over { border-color: #FFB627; color: #FFB627; background: rgba(255,182,39,0.05); }
+  .thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; margin-top: 10px; }
+  .thumb { position: relative; padding-top: 100%; background: #0f172a; border-radius: 6px; overflow: hidden; }
+  .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .thumb .x { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.7); color: #fff; border: none; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: #fff; padding: 12px 20px; border-radius: 8px; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+  .gate { max-width: 400px; margin: 80px auto; }
+  .pill { display: inline-block; padding: 4px 10px; background: #334155; border-radius: 999px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📸 Pakia Tangazo</h1>
+  <p class="sub">Founder mode — pakia nyumba moja kwa moja kwenye Supabase. <span class="pill" id="badge">Inaanzisha...</span></p>
+
+  <div id="gate" class="gate panel" style="display:none">
+    <h2 style="color:#fbbf24;margin-bottom:8px">🔒 Ingiza nenosiri</h2>
+    <p class="sub">Hii ni kurasa ya msimamizi tu.</p>
+    <input id="pw" type="password" placeholder="Password" style="margin:14px 0" />
+    <button class="primary" onclick="checkPw()">Ingia</button>
+  </div>
+
+  <div id="app" style="display:none">
+    <div class="panel">
+      <label>Picha (chagua au vuta hadi 5)</label>
+      <div class="drop" id="drop">
+        <div style="font-size:36px">📷</div>
+        <div>Bonyeza au vuta picha hapa</div>
+        <input type="file" id="files" multiple accept="image/*" style="display:none" />
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+
+    <div class="panel">
+      <label>Kichwa cha tangazo</label>
+      <input id="title" placeholder="Mfano: Nyumba 3BR Mjohoroni Moshi" />
+
+      <div class="row">
+        <div>
+          <label>Mji</label>
+          <select id="city">
+            <optgroup label="Mainland">
+              <option>Moshi</option><option>Arusha</option><option>Babati</option>
+              <option>Bariadi</option><option>Bukoba</option><option>Dar es Salaam</option>
+              <option>Dodoma</option><option>Geita</option><option>Iringa</option>
+              <option>Kibaha</option><option>Kigoma</option><option>Lindi</option>
+              <option>Mbeya</option><option>Morogoro</option><option>Mpanda</option>
+              <option>Mtwara</option><option>Musoma</option><option>Mwanza</option>
+              <option>Njombe</option><option>Shinyanga</option><option>Singida</option>
+              <option>Songea</option><option>Sumbawanga</option><option>Tabora</option>
+              <option>Tanga</option><option>Vwawa</option>
+            </optgroup>
+            <optgroup label="Zanzibar / Pemba">
+              <option>Zanzibar</option><option>Stone Town</option>
+              <option>Chake Chake</option><option>Wete</option><option>Mkoani</option>
+            </optgroup>
+            <optgroup label="Miji Mingine">
+              <option>Bagamoyo</option><option>Biharamulo</option><option>Handeni</option>
+              <option>Ifakara</option><option>Kahama</option><option>Kasulu</option>
+              <option>Kibondo</option><option>Kilwa</option><option>Kondoa</option>
+              <option>Korogwe</option><option>Lushoto</option><option>Mafia</option>
+              <option>Mafinga</option><option>Manyoni</option><option>Masasi</option>
+              <option>Mbinga</option><option>Mbozi</option><option>Mbulu</option>
+              <option>Nachingwea</option><option>Newala</option><option>Nzega</option>
+              <option>Pangani</option><option>Same</option><option>Tarime</option>
+              <option>Tukuyu</option><option>Tunduma</option><option>Tunduru</option>
+            </optgroup>
+          </select>
+        </div>
+        <div>
+          <label>Eneo</label>
+          <input id="area" placeholder="Mjohoroni" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Aina</label>
+          <select id="rentType">
+            <option value="house">Nyumba</option>
+            <option value="apartment">Apartment</option>
+            <option value="room">Chumba</option>
+            <option value="self">Self-contained</option>
+            <option value="commercial">Biashara</option>
+            <option value="guesthouse">Guest House</option>
+            <option value="bnb">B&B</option>
+            <option value="lounge">Lounge</option>
+          </select>
+        </div>
+        <div>
+          <label>Aina ya tangazo</label>
+          <select id="category">
+            <option value="rental">Rental</option>
+            <option value="stay">Stay (Guest/B&B)</option>
+            <option value="lounge">Lounge</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div><label>Vyumba</label><input id="bedrooms" type="number" value="2" min="0" /></div>
+        <div><label>Bafu</label><input id="bathrooms" type="number" value="1" min="0" /></div>
+      </div>
+
+      <label>Bei (TZS/mwezi)</label>
+      <input id="price" type="number" placeholder="500000" />
+
+      <label>WhatsApp ya mwenye nyumba (255...)</label>
+      <input id="whatsapp" placeholder="255712345678" />
+
+      <label>Maelezo</label>
+      <textarea id="description" placeholder="Maji, umeme, parking, security..."></textarea>
+
+      <div class="row">
+        <div><label>Latitude (hiari)</label><input id="lat" type="number" step="any" placeholder="-3.3496" /></div>
+        <div><label>Longitude (hiari)</label><input id="lng" type="number" step="any" placeholder="37.6622" /></div>
+      </div>
+      <button onclick="grabGPS()" style="background:#0f766e;color:#fff;border:none;margin-top:6px;font-size:13px;padding:8px">📍 Tumia GPS yangu</button>
+    </div>
+
+    <button class="primary" id="submit" onclick="submit()">📤 PAKIA TANGAZO</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js?v=1"></script>
+<script>
+  const PW = 'mjohoroni2026';  // change this anytime
+  const sb = window.supabase.createClient(window.supabaseConfig.url, window.supabaseConfig.anonKey);
+  const badge = document.getElementById('badge');
+  const photos = []; // {file, url}
+
+  if (sessionStorage.getItem('founder_ok') === '1') showApp();
+  else { document.getElementById('gate').style.display = 'block'; badge.textContent = 'Funga'; }
+
+  function checkPw() {
+    if (document.getElementById('pw').value === PW) {
+      sessionStorage.setItem('founder_ok', '1');
+      document.getElementById('gate').style.display = 'none';
+      showApp();
+    } else toast('❌ Nenosiri si sahihi');
+  }
+  function showApp() {
+    document.getElementById('app').style.display = 'block';
+    badge.textContent = 'Tayari';
+  }
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // Drag & drop
+  const drop = document.getElementById('drop');
+  const fileInput = document.getElementById('files');
+  drop.onclick = () => fileInput.click();
+  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = (e) => {
+    e.preventDefault(); drop.classList.remove('over');
+    handleFiles(e.dataTransfer.files);
+  };
+  fileInput.onchange = (e) => handleFiles(e.target.files);
+
+  function handleFiles(files) {
+    for (const f of files) {
+      if (photos.length >= 5) return toast('Picha 5 tu');
+      if (!f.type.startsWith('image/')) continue;
+      photos.push({ file: f, url: URL.createObjectURL(f) });
+    }
+    renderThumbs();
+  }
+  function renderThumbs() {
+    document.getElementById('thumbs').innerHTML = photos.map((p, i) =>
+      `<div class="thumb"><img src="${p.url}"><button class="x" onclick="removePhoto(${i})">×</button></div>`
+    ).join('');
+  }
+  function removePhoto(i) { photos.splice(i, 1); renderThumbs(); }
+  window.removePhoto = removePhoto;
+
+  function grabGPS() {
+    if (!navigator.geolocation) return toast('GPS haipatikani');
+    navigator.geolocation.getCurrentPosition(p => {
+      document.getElementById('lat').value = p.coords.latitude.toFixed(6);
+      document.getElementById('lng').value = p.coords.longitude.toFixed(6);
+      toast('📍 GPS imewekwa');
+    }, () => toast('❌ GPS imekataliwa'));
+  }
+  window.grabGPS = grabGPS;
+
+  async function submit() {
+    const btn = document.getElementById('submit');
+    const required = { title:'Kichwa', area:'Eneo', price:'Bei', whatsapp:'WhatsApp' };
+    for (const [k, label] of Object.entries(required)) {
+      if (!document.getElementById(k).value.trim()) return toast('Jaza: ' + label);
+    }
+    const wa = document.getElementById('whatsapp').value.trim();
+    if (!/^255[67][0-9]{8}$/.test(wa)) return toast('WhatsApp: anza na 255 + namba 9');
+
+    btn.disabled = true; btn.textContent = '⏳ Inapakia picha...';
+
+    // Upload photos
+    const photoUrls = [];
+    for (let i = 0; i < photos.length; i++) {
+      const f = photos[i].file;
+      const ext = f.name.split('.').pop();
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+      const { error } = await sb.storage.from('listing-photos').upload(path, f, { contentType: f.type });
+      if (error) { toast('❌ Picha ' + (i+1) + ': ' + error.message); btn.disabled = false; btn.textContent = '📤 PAKIA TANGAZO'; return; }
+      const { data } = sb.storage.from('listing-photos').getPublicUrl(path);
+      photoUrls.push(data.publicUrl);
+    }
+
+    btn.textContent = '⏳ Inahifadhi tangazo...';
+
+    const row = {
+      title: document.getElementById('title').value.trim(),
+      city: document.getElementById('city').value,
+      area: document.getElementById('area').value.trim(),
+      rent_type: document.getElementById('rentType').value,
+      category: document.getElementById('category').value,
+      bedrooms: Number(document.getElementById('bedrooms').value) || 0,
+      bathrooms: Number(document.getElementById('bathrooms').value) || 0,
+      price: Number(document.getElementById('price').value),
+      whatsapp: wa,
+      description: document.getElementById('description').value.trim() || null,
+      photos: photoUrls,
+      lat: document.getElementById('lat').value ? Number(document.getElementById('lat').value) : null,
+      lng: document.getElementById('lng').value ? Number(document.getElementById('lng').value) : null,
+      verified: true,   // founder uploads are pre-verified
+      paid: true        // and don't need payment
+    };
+
+    const { data, error } = await sb.from('listings').insert(row).select().single();
+    if (error) {
+      toast('❌ ' + error.message); btn.disabled = false; btn.textContent = '📤 PAKIA TANGAZO'; return;
+    }
+    toast('✅ Tangazo limewekwa! ID: ' + data.id.slice(0, 8));
+    // Reset form
+    ['title','area','price','whatsapp','description','lat','lng'].forEach(id => document.getElementById(id).value = '');
+    photos.length = 0; renderThumbs();
+    btn.disabled = false; btn.textContent = '📤 PAKIA TANGAZO TENA';
+  }
+  window.submit = submit;
+</script>
+</body>
+</html>
