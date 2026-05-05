@@ -324,6 +324,13 @@ app.post('/api/admin/reports/dismiss', requireAdmin, (req, res) => {
 // ────────────────────────────────────────────────
 // STATIC + LEGAL
 // ────────────────────────────────────────────────
+app.get('/robots.txt', (_, res) => {
+  res.type('text/plain').sendFile(path.join(__dirname, 'robots.txt'));
+});
+app.get('/sitemap.xml', (_, res) => {
+  res.type('application/xml').sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
 app.get('/admin', (_, res) => res.sendFile(path.join(__dirname, 'admin.html')));
 app.get('/privacy', (_, res) => res.sendFile(path.join(__dirname, 'privacy.html')));
 app.get('/terms', (_, res) => res.sendFile(path.join(__dirname, 'terms.html')));
